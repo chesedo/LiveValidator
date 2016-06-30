@@ -1,0 +1,25 @@
+{
+  "name": "live-validator",
+  "description": "A jQuery plugin that does live validation for form inputs",
+  "main": "index.js",
+  "authors": [
+    "chesedo"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jQuery",
+    "validation",
+    "forms"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^3.0.0"
+  }
+}
