@@ -6,7 +6,14 @@
      */
     var pluginName = 'LiveValidator';
 
-    $.fn[ pluginName ] = function() {
+    $[ pluginName ] = $.fn[ pluginName ] = function( options ) {
+
+        // If this is only to change the defaults
+        if ( !( this instanceof $ ) ) {
+            $.extend( true, $.fn[ pluginName ].defaults, options );
+            return;
+        }
+
         /**
          * Filtering used to prevent plugin to bind to unsupported inputs
          *
@@ -24,7 +31,24 @@
             .filter( validInputs )
             .add( this.find( validInputs ) )
             .each( function() {
-                $.data( this, pluginName, 'data-value' );
+
+                // Only set when not already set
+                if ( !$.data( this, pluginName ) ) {
+                    $.data( this, pluginName, new LiveValidator( $, this, options ) );
+                }
             } );
+    };
+
+    // Stores the defaults for the plugin - allow a system-wide overrite
+    $.fn[ pluginName ].defaults =  {
+        class: {
+            error: 'error',
+            missing: 'missing',
+            parentSelector: 'row'
+        },
+        required: false,
+        requiredHTML: '<strong style="padding-left:1em">*</strong>',
+        checks: [],
+        debug: false
     };
 } )( jQuery, window, document );
