@@ -8,4 +8,7 @@ describe( 'Core', function() {
     describe( 'check `_isValidTheme`', function() {
         core._isValidThemeSpec();
     } );
+    describe( 'check `_blur` when input is', function() {
+        core._blurSpec();
+    } );
 } );

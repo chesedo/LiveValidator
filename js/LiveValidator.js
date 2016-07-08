@@ -45,6 +45,32 @@ LiveValidator.prototype = {
         this._log( 'Custom theme is valid' );
         return true;
     },
+    /**
+     * Function that gets trigger on blur event
+     *
+     * @param  {event} e Event data
+     */
+    _blur: function( e ) {
+        var value = this.$element.val(),
+            trimmedValue = this.jq.trim( value );
+
+        if ( value !== trimmedValue ) {
+            this.$element.val( trimmedValue );
+        }
+
+        if ( trimmedValue === '' ) {
+            if ( this.options.required ) {
+                this.theme.setMissing();
+                return;
+            }
+        } else {
+            this._performChecks();
+        }
+        this.theme.unsetMissing();
+    },
+    _performChecks: function() {
+
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;
