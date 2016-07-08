@@ -4,7 +4,8 @@
  * Based on all available inputs gotten from
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
  */
-describe( 'Check that the plugin filter', function() {
+var plugin = plugin || {};
+plugin.filterSpec = function() {
     it( 'allows checkbox inputs', function() {
         setFixtures( '<input type="checkbox" />' );
         var input = $( 'input' );
@@ -280,4 +281,4 @@ describe( 'Check that the plugin filter', function() {
         expect( $.data( div.find( 'input' )[ 0 ] ).LiveValidator ).toBeUndefined();
         expect( $.data( div.find( 'input' )[ 1 ] ).LiveValidator ).toBeUndefined();
     } );
-} );
+};
