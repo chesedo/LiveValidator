@@ -15,6 +15,13 @@ core.instantiationSpec = function() {
         };
     } );
 
+    it( 'when called without `new`', function() {
+        var instance = LiveValidator( $, helper.bareInput() );
+
+        expect( instance.options ).toBeDefined();
+        expect( window.options ).toBeUndefined();
+    } );
+
     it( 'for default options', function() {
         var instance = new LiveValidator( $, helper.bareInput() );
 
@@ -35,8 +42,7 @@ core.instantiationSpec = function() {
     } );
 
     it( 'for required attr set on input', function() {
-        setFixtures( '<input required />' );
-        var instance = new LiveValidator( $,  $( 'input' ) );
+        var instance = new LiveValidator( $,  helper.requiredInput() );
 
         expect( instance.options.required ).toBe( true );
     } );

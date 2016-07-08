@@ -1,5 +1,10 @@
 var LiveValidator = function( $, element, options ) {
 
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidator ) ) {
+        return new LiveValidator( $, element, options );
+    }
+
     // Stores a reference to jQuery
     this.jq = $;
 
