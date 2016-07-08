@@ -22,3 +22,33 @@ var LiveValidator = function( $, element, options ) {
         options
     );
 };
+
+LiveValidator.prototype = {
+    /**
+     * Check if a theme is valid by making sure it has the required methods
+     *
+     * @param  {function} theme The theme `class` to checkbox
+     *
+     * @return {boolean}        True if valid
+     */
+    _isValidTheme: function( theme ) {
+        var requiredMethods = [ 'markRequired', 'unmarkRequired', 'setMissing', 'unsetMissing' ];
+        this._log( 'Testing if theme is valid' );
+
+        for ( var i = 0; i < requiredMethods.length; i++ ) {
+            if ( typeof theme.prototype[ requiredMethods[ i ] ] !== 'function' ) {
+                this._log( 'Custom theme is not valid - missing the function ' + requiredMethods[ i ] );
+                return false;
+            }
+        }
+
+        this._log( 'Custom theme is valid' );
+        return true;
+    },
+    _log: function( text, level ) {
+        if ( this.options.debug ) {
+            level = level || 2;
+            console.log( this.logLevels[ level ] + ': ' + text );
+        }
+    }
+};
