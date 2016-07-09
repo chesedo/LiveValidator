@@ -91,6 +91,15 @@ LiveValidator.prototype = {
             this._blur.apply( this );
         }
     },
+    /**
+     * Public method to change input to not required state
+     */
+    unsetRequired: function() {
+        this.options.required = false;
+
+        this.theme.unmarkRequired();
+        this.theme.unsetMissing();
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

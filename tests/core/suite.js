@@ -14,4 +14,7 @@ describe( 'Core', function() {
     describe( 'check `setRequired` when called', function() {
         core.setRequiredSpec();
     } );
+    describe( 'check `unsetRequired` when called', function() {
+        core.unsetRequiredSpec();
+    } );
 } );
