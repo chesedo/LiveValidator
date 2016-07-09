@@ -11,4 +11,7 @@ describe( 'Plugin', function() {
     describe( 'check that creation', function() {
         plugin.creationSpec();
     } );
+    describe( 'check that the methods', function() {
+        plugin.methodsSpec();
+    } );
 } );
