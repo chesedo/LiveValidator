@@ -76,6 +76,21 @@ LiveValidator.prototype = {
     _performChecks: function() {
 
     },
+    /**
+     * Public method to change the input to required state
+     *
+     * @param  {boolean} doCheck Should it recheck if input is empty (default: false)
+     */
+    setRequired: function( doCheck ) {
+        doCheck = doCheck || false;
+
+        this.options.required = true;
+        this.theme.markRequired();
+
+        if ( doCheck ) {
+            this._blur.apply( this );
+        }
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

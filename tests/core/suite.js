@@ -11,4 +11,7 @@ describe( 'Core', function() {
     describe( 'check `_blur` when input is', function() {
         core._blurSpec();
     } );
+    describe( 'check `setRequired` when called', function() {
+        core.setRequiredSpec();
+    } );
 } );
