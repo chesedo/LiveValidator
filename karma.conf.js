@@ -14,7 +14,7 @@ module.exports = function( config ) {
         // List of files / patterns to load in the browser
         files: [
             'bower_components/jquery/dist/jquery.js',
-            'js/**/*.js',
+            'src/js/**/*.js',
             'tests/**/*.js'
         ],
 
@@ -25,7 +25,7 @@ module.exports = function( config ) {
         // Preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'js/**/*.js': [ 'coverage' ]
+            'src/js/**/*.js': [ 'coverage' ]
         },
 
         // Test results reporter to use
