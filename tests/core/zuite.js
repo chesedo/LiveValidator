@@ -17,4 +17,7 @@ describe( 'Core', function() {
     describe( 'check `unsetRequired` when called', function() {
         core.unsetRequiredSpec();
     } );
+    describe( 'check `_performChecks` when', function() {
+        core._performChecksSpec();
+    } );
 } );

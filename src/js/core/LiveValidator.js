@@ -26,6 +26,12 @@ var LiveValidator = function( $, element, options ) {
         this.$element.data(),
         options
     );
+
+    // This holds the tester object which performs the tests
+    this.tester = new LiveValidatorTester();
+
+    // This will hold all the input errors if there are any
+    this.errors = [];
 };
 
 LiveValidator.prototype = {
@@ -69,12 +75,35 @@ LiveValidator.prototype = {
                 return;
             }
         } else {
-            this._performChecks();
+            this._performChecks( trimmedValue );
         }
         this.theme.unsetMissing();
     },
-    _performChecks: function() {
+    /**
+     * Performs the set checks on the input value
+     *
+     * @param  {string} value Value to run checks on
+     */
+    _performChecks: function( value ) {
 
+        // Clear all errors
+        this.tester.clearErrors();
+
+        // Loop over all the checks
+        for ( var i = 0; i < this.options.checks.length; i++ ) {
+            var check = this.options.checks[ i ];
+            this.tester[ check ]( value );
+        }
+
+        // Get all the errors from tester
+        this.errors = this.tester.getErrors();
+
+        // Update theme based on errors
+        if ( this.errors.length === 0 ) {
+            this.theme.clearErrors();
+        } else {
+            this.theme.addErrors( this.errors );
+        }
     },
     /**
      * Public method to change the input to required state
