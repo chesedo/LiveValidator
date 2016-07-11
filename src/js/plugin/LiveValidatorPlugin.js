@@ -81,6 +81,7 @@
             parentSelector: 'row'
         },
         required: false,
+        liveEnabled: true,
         requiredHTML: '<strong style="padding-left:1em">*</strong>',
         checks: [],
         debug: false

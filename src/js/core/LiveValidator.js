@@ -147,6 +147,24 @@ LiveValidator.prototype = {
         this.theme.unmarkRequired();
         this.theme.unsetMissing();
     },
+    /**
+     * Enable the checkers by binding them to the `input` event
+     *
+     * @param  {boolean} doCheck Should it also perform a check (default: false)
+     */
+    enableLive: function( doCheck ) {
+        doCheck = doCheck || false;
+
+        this.liveEnabled = true;
+
+        this.$element.on( 'input.LiveValidator', function() {
+            this._performChecks( this.$element.val() );
+        }.bind( this ) );
+
+        if ( doCheck ) {
+            this._performChecks( this.$element.val() );
+        }
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

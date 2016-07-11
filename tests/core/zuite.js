@@ -23,4 +23,7 @@ describe( 'Core', function() {
     describe( 'check `_filterChecks` when', function() {
         core._filterChecksSpec();
     } );
+    describe( 'check `enableLive` when called', function() {
+        core.enableLiveSpec();
+    } );
 } );
