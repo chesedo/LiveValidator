@@ -8,14 +8,16 @@ core._blurSpec = function() {
         this.input = helper.bareInput();
         this.inputRequired = helper.requiredInput();
 
-        this.instance = LiveValidator( $, this.input );
-        this.instanceRequired = LiveValidator( $, this.inputRequired );
+        this.spyTheme = helper.createSpyTheme();
+
+        this.instance = LiveValidator( $, this.input, { theme: this.spyTheme } );
+        this.instanceRequired = LiveValidator( $, this.inputRequired, { theme: this.spyTheme } );
 
         $( this.input ).blur( this.instance._blur.bind( this.instance ) );
         $( this.inputRequired ).blur( this.instanceRequired._blur.bind( this.instanceRequired ) );
 
-        this.setMissing = spyOn( LiveValidatorTheme.prototype, 'setMissing' );
-        this.unsetMissing = spyOn( LiveValidatorTheme.prototype, 'unsetMissing' );
+        this.setMissing = spyOn( this.spyTheme.prototype, 'setMissing' );
+        this.unsetMissing = spyOn( this.spyTheme.prototype, 'unsetMissing' );
         this._performChecks = spyOn( LiveValidator.prototype, '_performChecks' );
     } );
 

@@ -7,9 +7,10 @@ core.unsetRequiredSpec = function() {
     beforeEach( function() {
         setFixtures( '<input />' );
         this.input = $( 'input' );
-        this.instance = LiveValidator( $, this.input );
-        this.unmarkRequired = spyOn( LiveValidatorTheme.prototype, 'unmarkRequired' );
-        this.unsetMissing = spyOn( LiveValidatorTheme.prototype, 'unsetMissing' );
+        this.spyTheme = helper.createSpyTheme();
+        this.instance = LiveValidator( $, this.input, { theme: this.spyTheme } );
+        this.unmarkRequired = spyOn( this.spyTheme.prototype, 'unmarkRequired' );
+        this.unsetMissing = spyOn( this.spyTheme.prototype, 'unsetMissing' );
     } );
 
     it( 'without input', function() {
