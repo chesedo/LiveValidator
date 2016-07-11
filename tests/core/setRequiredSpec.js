@@ -5,8 +5,7 @@ var core = core || {};
 
 core.setRequiredSpec = function() {
     beforeEach( function() {
-        setFixtures( '<input />' );
-        this.input = $( 'input' );
+        this.input = helper.bareInput();
         this.spyTheme = helper.createSpyTheme();
         this.instance = LiveValidator( $, this.input, { theme: this.spyTheme } );
         this._blur = spyOn( LiveValidator.prototype, '_blur' );
