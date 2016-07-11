@@ -20,4 +20,7 @@ describe( 'Core', function() {
     describe( 'check `_performChecks` when', function() {
         core._performChecksSpec();
     } );
+    describe( 'check `_filterChecks` when', function() {
+        core._filterChecksSpec();
+    } );
 } );

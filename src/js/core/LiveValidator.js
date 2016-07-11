@@ -36,6 +36,24 @@ var LiveValidator = function( $, element, options ) {
 
 LiveValidator.prototype = {
     /**
+     * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
+     */
+    _filterChecks: function() {
+        var seen = {};
+        return this.options.checks.filter( function( check ) {
+
+            // Check if check is declared in tester
+            if ( typeof this.tester[ check ] === 'function' ) {
+
+                // Remove duplicates
+                return seen.hasOwnProperty( check ) ? false : ( seen[ check ] = true );
+            } else {
+                this._log( '`' + check + '` check does not exist so it is removed from checks' );
+                return false;
+            }
+        }, this );
+    },
+    /**
      * Check if a theme is valid by making sure it has the required methods
      *
      * @param  {function} theme The theme `class` to checkbox
