@@ -29,4 +29,7 @@ describe( 'Core', function() {
     describe( 'check `disableLive` when called', function() {
         core.disableLiveSpec();
     } );
+    describe( 'check `_init` when', function() {
+        core._initSpec();
+    } );
 } );

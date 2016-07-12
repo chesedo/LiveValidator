@@ -32,9 +32,49 @@ var LiveValidator = function( $, element, options ) {
 
     // This will hold all the input errors if there are any
     this.errors = [];
+
+    // Holds the debugging levels
+    this.logLevels = [ 'ERROR', 'INFO', 'DEBUG' ];
+
+    // Get the input and all the properties ready
+    this._init();
 };
 
 LiveValidator.prototype = {
+    /**
+     * Setup the plugin to be ready based on options
+     */
+    _init: function() {
+
+        // Setup the needed theme
+        if ( this._isValidTheme( this.options.theme ) ) {
+            this.theme = new this.options.theme( this.jq, this.element );
+            this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name, 1 );
+        } else {
+            this.theme = new LiveValidatorTheme( this.jq, this.element );
+            this._log( 'LiveValidator is using the default theme', 1 );
+        }
+
+        // Set required if needed
+        if ( this.options.required ) {
+            this.setRequired();
+        } else {
+            this.unsetRequired();
+        }
+
+        // Set if live is enabled
+        if ( this.options.liveEnabled ) {
+            this.enableLive();
+        } else {
+            this.disableLive();
+        }
+
+        // Bind `blur` function
+        this.$element.on( 'blur.LiveValidator', this._blur.bind( this ) );
+
+        // Filter checks to remove duplicates and invalids/undeclared
+        this.options.checks = this._filterChecks();
+    },
     /**
      * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
      */
