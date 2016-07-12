@@ -30,6 +30,9 @@ var LiveValidator = function( $, element, options ) {
     // This holds the tester object which performs the tests
     this.tester = new LiveValidatorTester();
 
+    // Holds wheter the input is missing - blank and required
+    this.missing = false;
+
     // This will hold all the input errors if there are any
     this.errors = [];
 
@@ -141,23 +144,32 @@ LiveValidator.prototype = {
      *
      * @param  {event} e Event data
      */
-    _blur: function( e ) {
+    _blur: function() {
         var value = this.$element.val(),
             trimmedValue = this.jq.trim( value );
 
+        // Update value if trim was successful
         if ( value !== trimmedValue ) {
             this.$element.val( trimmedValue );
         }
 
+        // Assume not missing
+        this.missing = false;
+
         if ( trimmedValue === '' ) {
             if ( this.options.required ) {
-                this.theme.setMissing();
-                return;
+                this.missing = true;
             }
+            this.theme.clearErrors();
         } else {
             this._performChecks( trimmedValue );
         }
-        this.theme.unsetMissing();
+
+        if ( this.missing ) {
+            this.theme.setMissing();
+        } else {
+            this.theme.unsetMissing();
+        }
     },
     /**
      * Performs the set checks on the input value
