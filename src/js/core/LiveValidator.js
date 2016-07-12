@@ -165,6 +165,13 @@ LiveValidator.prototype = {
             this._performChecks( this.$element.val() );
         }
     },
+    /**
+     * Unbind the checks so that they are not run on the `input` event
+     */
+    disableLive: function() {
+        this.liveEnabled = false;
+        this.$element.off( 'input.LiveValidator' );
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

@@ -26,4 +26,7 @@ describe( 'Core', function() {
     describe( 'check `enableLive` when called', function() {
         core.enableLiveSpec();
     } );
+    describe( 'check `disableLive` when called', function() {
+        core.disableLiveSpec();
+    } );
 } );
