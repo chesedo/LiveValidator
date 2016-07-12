@@ -253,6 +253,23 @@ LiveValidator.prototype = {
     removeAllChecks: function() {
         this.options.checks = [];
     },
+    /**
+     * Remove a set of checks from checks
+     *
+     * @param  {array} checks Array of checks to remove
+     */
+    removeChecks: function( checks ) {
+
+        // Make sure checks is an array
+        if ( !Array.isArray( checks ) ) {
+            this._log( 'removeChecks can not handle a non-array element' );
+            return;
+        }
+
+        this.options.checks = this.options.checks.filter( function( check ) {
+            return checks.indexOf( check ) === -1;
+        } );
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;
