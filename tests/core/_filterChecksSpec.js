@@ -8,9 +8,9 @@ core._filterChecksSpec = function() {
         var input = helper.bareInput(),
             instance = LiveValidator( $, this.input );
 
-        instance.options.checks = checks || [];
+        checks = checks || [];
 
-        return instance._filterChecks.call( instance );
+        return instance._filterChecks( checks );
     }
 
     beforeAll( function() {
@@ -61,5 +61,11 @@ core._filterChecksSpec = function() {
         var checks = [ 'declaredCheck', 'undeclaredCheck' ];
 
         expect( getChecks( checks ) ).toEqual( [ 'declaredCheck' ] );
+    } );
+
+    it( 'passing a non-array', function() {
+        var checks = { 'declaredCheck': true };
+
+        expect( getChecks( checks ) ).toEqual( [] );
     } );
 };

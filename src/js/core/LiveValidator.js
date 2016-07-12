@@ -73,14 +73,24 @@ LiveValidator.prototype = {
         this.$element.on( 'blur.LiveValidator', this._blur.bind( this ) );
 
         // Filter checks to remove duplicates and invalids/undeclared
-        this.options.checks = this._filterChecks();
+        this.options.checks = this._filterChecks( this.options.checks );
     },
     /**
      * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
+     *
+     * @param  {array} checks Checks to Filter
+     *
+     * @return {array}        Array of valid checks
      */
-    _filterChecks: function() {
+    _filterChecks: function( checks ) {
         var seen = {};
-        return this.options.checks.filter( function( check ) {
+
+        if ( checks.constructor.name !== 'Array' ) {
+            this._log( 'Checks is not an array; cannot use it' );
+            return [];
+        }
+
+        return checks.filter( function( check ) {
 
             // Check if check is declared in tester
             if ( typeof this.tester[ check ] === 'function' ) {
@@ -88,7 +98,7 @@ LiveValidator.prototype = {
                 // Remove duplicates
                 return seen.hasOwnProperty( check ) ? false : ( seen[ check ] = true );
             } else {
-                this._log( '`' + check + '` check does not exist so it is removed from checks' );
+                this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
