@@ -5,17 +5,19 @@ var core = core || {};
 
 core._isValidThemeSpec = function() {
     beforeEach( function() {
+        this.instance = new LiveValidator( $, helper.bareInput() );
+
         this.theme = function testTheme() {};
         this.theme.prototype.markRequired = function() {};
         this.theme.prototype.unmarkRequired = function() {};
         this.theme.prototype.unsetMissing = function() {};
         this.theme.prototype.setMissing = function() {};
+        this.theme.prototype.clearErrors = function() {};
+        this.theme.prototype.addErrors = function() {};
     } );
 
     it( 'for a valid theme', function() {
-        var instance = new LiveValidator( $, helper.bareInput(), { theme: this.theme } );
-
-        expect( instance.theme.constructor.name ).toEqual( 'testTheme' );
+        expect( this.instance._isValidTheme( this.theme ) ).toBe( true );
     } );
 
     it( 'for an invalid theme', function() {
@@ -23,8 +25,12 @@ core._isValidThemeSpec = function() {
         // Make the theme invalid
         delete this.theme.prototype.markRequired;
 
-        var instance = new LiveValidator( $, helper.bareInput(), { theme: this.theme } );
+        expect( this.instance._isValidTheme( this.theme ) ).toBe( false );
+    } );
 
-        expect( instance.theme.constructor.name ).toEqual( 'LiveValidatorTheme' );
+    it( 'for an non-object theme', function() {
+        var theme = 'The theme';
+
+        expect( this.instance._isValidTheme( theme ) ).toBe( false );
     } );
 };

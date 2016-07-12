@@ -61,8 +61,20 @@ LiveValidator.prototype = {
      * @return {boolean}        True if valid
      */
     _isValidTheme: function( theme ) {
-        var requiredMethods = [ 'markRequired', 'unmarkRequired', 'setMissing', 'unsetMissing' ];
+        var requiredMethods = [
+            'markRequired',
+            'unmarkRequired',
+            'setMissing',
+            'unsetMissing',
+            'clearErrors',
+            'addErrors'
+        ];
         this._log( 'Testing if theme is valid' );
+
+        if ( typeof theme !== 'function' ) {
+            this._log( 'Custom theme is not a function' );
+            return false;
+        }
 
         for ( var i = 0; i < requiredMethods.length; i++ ) {
             if ( typeof theme.prototype[ requiredMethods[ i ] ] !== 'function' ) {
