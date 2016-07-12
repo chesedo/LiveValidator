@@ -35,4 +35,7 @@ describe( 'Core', function() {
     describe( 'check `addChecks` when', function() {
         core.addChecksSpec();
     } );
+    describe( 'check `removeAllChecks` when', function() {
+        core.removeAllChecksSpec();
+    } );
 } );

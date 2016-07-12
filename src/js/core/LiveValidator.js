@@ -247,6 +247,12 @@ LiveValidator.prototype = {
         // Filter all the checks
         this.options.checks = this._filterChecks( allChecks );
     },
+    /**
+     * Removes all the set checks; plugin will not be doing any checking
+     */
+    removeAllChecks: function() {
+        this.options.checks = [];
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;
