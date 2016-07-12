@@ -32,4 +32,7 @@ describe( 'Core', function() {
     describe( 'check `_init` when', function() {
         core._initSpec();
     } );
+    describe( 'check `addChecks` when', function() {
+        core.addChecksSpec();
+    } );
 } );

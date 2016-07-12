@@ -234,6 +234,19 @@ LiveValidator.prototype = {
         this.liveEnabled = false;
         this.$element.off( 'input.LiveValidator' );
     },
+    /**
+     * Add extra checks to the current ones
+     *
+     * @param  {array} checks Array of checks to add
+     */
+    addChecks: function( checks ) {
+
+        // Add with current
+        var allChecks = this.options.checks.concat( checks );
+
+        // Filter all the checks
+        this.options.checks = this._filterChecks( allChecks );
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;
