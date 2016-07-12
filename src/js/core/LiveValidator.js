@@ -282,6 +282,18 @@ LiveValidator.prototype = {
             return checks.indexOf( check ) === -1;
         } );
     },
+    /**
+     * Returns whether input is valid based on checks and if required
+     *
+     * @return {boolean} True if valid
+     */
+    isValid: function() {
+
+        // Rerun checks first
+        this._blur();
+
+        return this.errors.length === 0 && !this.missing;
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

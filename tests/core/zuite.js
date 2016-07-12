@@ -41,4 +41,7 @@ describe( 'Core', function() {
     describe( 'check `removeChecks` when', function() {
         core.removeChecksSpec();
     } );
+    describe( 'check `isValid` when input', function() {
+        core.isValidSpec();
+    } );
 } );
