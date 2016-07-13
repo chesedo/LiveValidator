@@ -4,4 +4,4 @@ node_js:
 before_script:
     - bower install
 after_script:
-    - cat .coverage/lcov/lcov.info | ./node_modules/.bin/coveralls && rm -rf ./coverage
+    - cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls && rm -rf ./coverage
