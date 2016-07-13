@@ -57,6 +57,31 @@
         // If a plugin method was called - private methods start with an underscore
         else if ( typeof options === 'string' && options[ 0 ] !== '_' ) {
 
+            // If calling the `isValid` method
+            if ( options === 'isValid' ) {
+
+                // Assume is valid
+                var valid = true;
+
+                // Check for each input
+                validInputs.each( function() {
+                    var instance = $.data( this, pluginName );
+                    if ( instance instanceof LiveValidator ) {
+
+                        // All invalid when one is invalid
+                        if ( !instance.isValid() ) {
+                            valid = false;
+                        }
+                    } else {
+
+                        // Does not have plugin instance so am assuming invalid
+                        valid = false;
+                    }
+                } );
+
+                return valid;
+            }
+
             // Call the method on each input
             return validInputs.each( function() {
                 var instance = $.data( this, pluginName );
