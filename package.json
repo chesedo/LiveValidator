@@ -1,9 +1,11 @@
 {
   "name": "live-validator",
-  "version": "0.9.0",
-  "description": "A jQuery plugin that does live validation for form inputs",
-  "main": "index.js",
-  "dependencies": {},
+  "version": "0.0.1",
+  "description": "A themeable jQuery plugin that does live validation for form inputs based on buildin or custom checks",
+  "main": "src/js/core/LiveValidator.js",
+  "dependencies": {
+    "jquery": "^3.0.0"
+  },
   "devDependencies": {
     "bower": "^1.7.9",
     "gulp": "^3.9.1",
@@ -19,13 +21,20 @@
     "karma-spec-reporter": "0.0.26"
   },
   "scripts": {
-    "test": "karma run"
+    "test": "node_modules/.bin/karma start --single-run"
   },
   "keywords": [
     "jQuery",
     "validation",
-    "forms"
+    "forms",
+    "themeable",
+    "customizable"
   ],
   "author": "chesedo",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": "https://github.com/chesedo/LiveValidator/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chesedo/LiveValidator.git"
+  }
 }
