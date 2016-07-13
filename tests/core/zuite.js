@@ -44,4 +44,7 @@ describe( 'Core', function() {
     describe( 'check `isValid` when input', function() {
         core.isValidSpec();
     } );
+    describe( 'check `destroy` when called', function() {
+        core.destroySpec();
+    } );
 } );

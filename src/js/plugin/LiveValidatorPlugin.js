@@ -87,7 +87,14 @@
                 var instance = $.data( this, pluginName );
                 if ( instance instanceof LiveValidator ) {
                     if ( typeof instance[ options ] === 'function' ) {
-                        instance[ options ].apply( instance, Array.prototype.slice.call( args, 1 ) );
+
+                        // If this was destroy - then also remove the instance
+                        if ( options === 'destroy' ) {
+                            instance.destroy();
+                            $( this ).removeData( pluginName );
+                        } else {
+                            instance[ options ].apply( instance, Array.prototype.slice.call( args, 1 ) );
+                        }
                     } else {
                         instance._log( '`' + options + '` method does not exist on plugin', 1 );
                     }

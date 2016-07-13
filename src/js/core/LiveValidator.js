@@ -300,6 +300,16 @@ LiveValidator.prototype = {
 
         return this.errors.length === 0 && !this.missing;
     },
+    /**
+     * Destroyes this plugin instance
+     */
+    destroy: function() {
+        this._log( 'Destroying plugin instance' );
+
+        this.$element.off( '.LiveValidator' );
+        this.theme.clearErrors();
+        this.theme.unsetMissing();
+    },
     _log: function( text, level ) {
         if ( this.options.debug ) {
             level = level || 2;

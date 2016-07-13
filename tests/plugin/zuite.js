@@ -17,4 +17,7 @@ describe( 'Plugin', function() {
     describe( 'check the `isValid` method when', function() {
         plugin.isValidMethodSpec();
     } );
+    describe( 'check the `destroy` method when', function() {
+        plugin.destroyMethodSpec();
+    } );
 } );
