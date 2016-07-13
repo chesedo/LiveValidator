@@ -80,6 +80,39 @@ LiveValidator.prototype = {
         this.options.checks = this._filterChecks( this.options.checks );
     },
     /**
+    * Check if a theme is valid by making sure it has the required methods
+    *
+    * @param  {function} theme The theme `class` to check
+    *
+    * @return {boolean}        True if valid
+    */
+    _isValidTheme: function( theme ) {
+        var requiredMethods = [
+            'markRequired',
+            'unmarkRequired',
+            'setMissing',
+            'unsetMissing',
+            'clearErrors',
+            'addErrors'
+        ];
+        this._log( 'Testing if theme is valid', 2 );
+
+        if ( typeof theme !== 'function' ) {
+            this._log( 'Custom theme is not a function', 3 );
+            return false;
+        }
+
+        for ( var i = 0; i < requiredMethods.length; i++ ) {
+            if ( typeof theme.prototype[ requiredMethods[ i ] ] !== 'function' ) {
+                this._log( 'Custom theme is not valid - missing the function `' + requiredMethods[ i ] + '`', 2 );
+                return false;
+            }
+        }
+
+        this._log( 'Custom theme is valid', 2 );
+        return true;
+    },
+    /**
      * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
      *
      * @param  {array} checks Checks to Filter
@@ -111,39 +144,6 @@ LiveValidator.prototype = {
 
         this._log( 'Valid checks are: ' + validChecks );
         return validChecks;
-    },
-    /**
-     * Check if a theme is valid by making sure it has the required methods
-     *
-     * @param  {function} theme The theme `class` to check
-     *
-     * @return {boolean}        True if valid
-     */
-    _isValidTheme: function( theme ) {
-        var requiredMethods = [
-            'markRequired',
-            'unmarkRequired',
-            'setMissing',
-            'unsetMissing',
-            'clearErrors',
-            'addErrors'
-        ];
-        this._log( 'Testing if theme is valid', 2 );
-
-        if ( typeof theme !== 'function' ) {
-            this._log( 'Custom theme is not a function', 3 );
-            return false;
-        }
-
-        for ( var i = 0; i < requiredMethods.length; i++ ) {
-            if ( typeof theme.prototype[ requiredMethods[ i ] ] !== 'function' ) {
-                this._log( 'Custom theme is not valid - missing the function `' + requiredMethods[ i ] + '`', 2 );
-                return false;
-            }
-        }
-
-        this._log( 'Custom theme is valid', 2 );
-        return true;
     },
     /**
      * Function that gets triggered on blur event
