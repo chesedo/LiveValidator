@@ -1,7 +1,11 @@
 {
   "name": "live-validator",
-  "description": "A jQuery plugin that does live validation for form inputs",
-  "main": "index.js",
+  "description": "A themeable jQuery plugin that does live validation for form inputs based on buildin or custom checks",
+  "main": [
+      "src/js/core/LiveValidator.js",
+      "src/js/plugin/LiveValidatorPlugin.js"
+  ],
+  "moduleType": "globals",
   "authors": [
     "chesedo"
   ],
@@ -9,17 +13,22 @@
   "keywords": [
     "jQuery",
     "validation",
-    "forms"
+    "forms",
+    "themeable",
+    "customizable"
   ],
   "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chesedo/LiveValidator.git"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
     "tests"
   ],
-  "devDependencies": {
+  "dependencies": {
     "jquery": "^3.0.0"
   }
 }
