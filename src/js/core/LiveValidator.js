@@ -37,7 +37,7 @@ var LiveValidator = function( $, element, options ) {
     this.errors = [];
 
     // Holds the debugging levels
-    this.logLevels = [ 'ERROR', 'INFO', 'DEBUG' ];
+    this.logLevels = [ 'DEBUG', 'INFO', 'ERROR' ];
 
     // Get the input and all the properties ready
     this._init();
@@ -52,10 +52,10 @@ LiveValidator.prototype = {
         // Setup the needed theme
         if ( this._isValidTheme( this.options.theme ) ) {
             this.theme = new this.options.theme( this.jq, this.element );
-            this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name, 1 );
+            this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name );
         } else {
             this.theme = new LiveValidatorTheme( this.jq, this.element );
-            this._log( 'LiveValidator is using the default theme', 1 );
+            this._log( 'LiveValidator is using the default theme' );
         }
 
         // Set required if needed
@@ -73,6 +73,7 @@ LiveValidator.prototype = {
         }
 
         // Bind `blur` function
+        this._log( 'Binding the blur event', 2 );
         this.$element.on( 'blur.LiveValidator', this._blur.bind( this ) );
 
         // Filter checks to remove duplicates and invalids/undeclared
@@ -88,28 +89,33 @@ LiveValidator.prototype = {
     _filterChecks: function( checks ) {
         var seen = {};
 
+        this._log( 'Filtering checks', 2 );
+
         if ( checks.constructor.name !== 'Array' ) {
-            this._log( 'Checks is not an array; cannot use it' );
+            this._log( 'Checks is not an array; cannot use it', 3 );
             return [];
         }
 
-        return checks.filter( function( check ) {
+        var validChecks = checks.filter( function( check ) {
 
             // Check if check is declared in tester
             if ( typeof this.tester[ check ] === 'function' ) {
 
-                // Remove duplicates
+                // Check for duplicate
                 return seen.hasOwnProperty( check ) ? false : ( seen[ check ] = true );
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
+
+        this._log( 'Valid checks are: ' + validChecks );
+        return validChecks;
     },
     /**
      * Check if a theme is valid by making sure it has the required methods
      *
-     * @param  {function} theme The theme `class` to checkbox
+     * @param  {function} theme The theme `class` to check
      *
      * @return {boolean}        True if valid
      */
@@ -122,35 +128,36 @@ LiveValidator.prototype = {
             'clearErrors',
             'addErrors'
         ];
-        this._log( 'Testing if theme is valid' );
+        this._log( 'Testing if theme is valid', 2 );
 
         if ( typeof theme !== 'function' ) {
-            this._log( 'Custom theme is not a function' );
+            this._log( 'Custom theme is not a function', 3 );
             return false;
         }
 
         for ( var i = 0; i < requiredMethods.length; i++ ) {
             if ( typeof theme.prototype[ requiredMethods[ i ] ] !== 'function' ) {
-                this._log( 'Custom theme is not valid - missing the function ' + requiredMethods[ i ] );
+                this._log( 'Custom theme is not valid - missing the function `' + requiredMethods[ i ] + '`', 2 );
                 return false;
             }
         }
 
-        this._log( 'Custom theme is valid' );
+        this._log( 'Custom theme is valid', 2 );
         return true;
     },
     /**
-     * Function that gets trigger on blur event
-     *
-     * @param  {event} e Event data
+     * Function that gets triggered on blur event
      */
     _blur: function() {
         var value = this.$element.val(),
             trimmedValue = this.jq.trim( value );
 
+        this._log( 'Blur triggered' );
+
         // Update value if trim was successful
         if ( value !== trimmedValue ) {
             this.$element.val( trimmedValue );
+            this._log( 'Trimed spaces from input', 2 );
         }
 
         // Assume not missing
@@ -158,13 +165,17 @@ LiveValidator.prototype = {
 
         if ( trimmedValue === '' ) {
             if ( this.options.required ) {
+                this._log( 'Input is empty and required', 2 );
                 this.missing = true;
             }
+            this._log( 'Input is empty and not required', 2 );
             this.theme.clearErrors();
         } else {
+            this._log( 'Input has data so will perform checks', 2 );
             this._performChecks( trimmedValue );
         }
 
+        // Update missing state
         if ( this.missing ) {
             this.theme.setMissing();
         } else {
@@ -185,6 +196,7 @@ LiveValidator.prototype = {
         for ( var i = 0; i < this.options.checks.length; i++ ) {
             var check = this.options.checks[ i ];
             this.tester[ check ]( value );
+            this._log( 'Performed check `' + check + '`', 2 );
         }
 
         // Get all the errors from tester
@@ -205,10 +217,13 @@ LiveValidator.prototype = {
     setRequired: function( doCheck ) {
         doCheck = doCheck || false;
 
+        this._log( 'Input is now required' );
+
         this.options.required = true;
         this.theme.markRequired();
 
         if ( doCheck ) {
+            this._log( 'Checking input after making it required', 2 );
             this._blur.apply( this );
         }
     },
@@ -216,6 +231,7 @@ LiveValidator.prototype = {
      * Public method to change input to not required state
      */
     unsetRequired: function() {
+        this._log( 'Input is now not required' );
         this.options.required = false;
 
         this.theme.unmarkRequired();
@@ -229,19 +245,25 @@ LiveValidator.prototype = {
     enableLive: function( doCheck ) {
         doCheck = doCheck || false;
 
+        this._log( 'Live checking is now enabled' );
         this.liveEnabled = true;
 
+        // Bind to the input event
         this.$element.on( 'input.LiveValidator', function() {
             var value = this.$element.val();
 
+            // Cannot do checks on empty value
             if ( value !== '' ) {
+                this._log( 'Value not empty so will perform checks', 2 );
                 this._performChecks( this.$element.val() );
             } else {
+                this._log( 'Value is empty so am removing errors', 2 );
                 this.theme.clearErrors();
             }
         }.bind( this ) );
 
         if ( doCheck ) {
+            this._log( 'Performing checks after enabling live checking', 2 );
             this._performChecks( this.$element.val() );
         }
     },
@@ -249,6 +271,7 @@ LiveValidator.prototype = {
      * Unbind the checks so that they are not run on the `input` event
      */
     disableLive: function() {
+        this._log( 'Live checking is now disabled' );
         this.liveEnabled = false;
         this.$element.off( 'input.LiveValidator' );
     },
@@ -258,6 +281,7 @@ LiveValidator.prototype = {
      * @param  {array} checks Array of checks to add
      */
     addChecks: function( checks ) {
+        this._log( 'Will now try to add checks: ' + checks );
 
         // Add with current
         var allChecks = this.options.checks.concat( checks );
@@ -269,6 +293,7 @@ LiveValidator.prototype = {
      * Removes all the set checks; plugin will not be doing any checking
      */
     removeAllChecks: function() {
+        this._log( 'All check are now removed' );
         this.options.checks = [];
     },
     /**
@@ -277,10 +302,11 @@ LiveValidator.prototype = {
      * @param  {array} checks Array of checks to remove
      */
     removeChecks: function( checks ) {
+        this._log( 'Will now try to remove checks: ' + checks );
 
         // Make sure checks is an array
         if ( !Array.isArray( checks ) ) {
-            this._log( 'removeChecks can not handle a non-array element' );
+            this._log( 'removeChecks can not handle a non-array element', 3 );
             return;
         }
 
@@ -294,6 +320,7 @@ LiveValidator.prototype = {
      * @return {boolean} True if valid
      */
     isValid: function() {
+        this._log( 'Checking if input is valid' );
 
         // Rerun checks first
         this._blur();
@@ -304,16 +331,24 @@ LiveValidator.prototype = {
      * Destroyes this plugin instance
      */
     destroy: function() {
-        this._log( 'Destroying plugin instance' );
+        this._log( 'Destroying plugin instance and reseting the input\'s state' );
 
         this.$element.off( '.LiveValidator' );
         this.theme.clearErrors();
         this.theme.unsetMissing();
     },
+    /**
+     * Internal function used for loggin purposes when debugging is enabled
+     *
+     * @param  {string} text  Text to log
+     * @param  {int}    level The debugging level it belongs to (default: 1)
+     */
     _log: function( text, level ) {
-        if ( this.options.debug ) {
-            level = level || 2;
-            console.log( this.logLevels[ level ] + ': ' + text );
+        if ( typeof level === 'undefined' ) {
+            level = 1;
+        }
+        if ( level <= this.options.debug ) {
+            console.log( this.logLevels[ --level ] + ': ' + text );
         }
     }
 };

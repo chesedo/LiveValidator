@@ -47,4 +47,7 @@ describe( 'Core', function() {
     describe( 'check `destroy` when called', function() {
         core.destroySpec();
     } );
+    describe( 'check `_log` when debug is', function() {
+        core._logSpec();
+    } );
 } );
