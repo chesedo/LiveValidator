@@ -5,7 +5,7 @@ var core = core || {};
 
 core.enableLiveSpec = function() {
     beforeEach( function() {
-        this.input = helper.bareInput();
+        this.input = helper.bareInput().val( 'value' );
         this.instance = LiveValidator( $, this.input, { liveEnabled: false } );
         this._performChecks = spyOn( LiveValidator.prototype, '_performChecks' );
     } );
@@ -38,5 +38,16 @@ core.enableLiveSpec = function() {
         expect( this.instance.liveEnabled ).toBe( true );
         this.input.trigger( 'input.LiveValidator' );
         expect( this._performChecks ).toHaveBeenCalled();
+    } );
+
+    it( 'when input is empty', function() {
+        this.input.val( '' );
+        this.input.trigger( 'input.LiveValidator' );
+        expect( this._performChecks ).not.toHaveBeenCalled();
+        this.instance.enableLive();
+        expect( this._performChecks ).not.toHaveBeenCalled();
+        expect( this.instance.liveEnabled ).toBe( true );
+        this.input.trigger( 'input.LiveValidator' );
+        expect( this._performChecks ).not.toHaveBeenCalled();
     } );
 };

@@ -232,7 +232,13 @@ LiveValidator.prototype = {
         this.liveEnabled = true;
 
         this.$element.on( 'input.LiveValidator', function() {
-            this._performChecks( this.$element.val() );
+            var value = this.$element.val();
+
+            if ( value !== '' ) {
+                this._performChecks( this.$element.val() );
+            } else {
+                this.theme.clearErrors();
+            }
         }.bind( this ) );
 
         if ( doCheck ) {
