@@ -26,7 +26,10 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "tests"
+    "tests",
+    "gulpfile.js",
+    "karma.conf.js",
+    "package.json"
   ],
   "dependencies": {
     "jquery": "^3.0.0"
