@@ -3,7 +3,10 @@ var gulp = require( 'gulp' ),
     jscs = require( 'gulp-jscs' ),
     jshint = require( 'gulp-jshint' ),
     stylish = require( 'gulp-jscs-stylish' ),
-    path = require( 'path' );
+    path = require( 'path' ),
+    rename = require( 'gulp-rename' ),
+    less = require( 'gulp-less' ),
+    cleanCSS = require( 'gulp-clean-css' );
 
 /* jshint undef: false */
 gulp.task( 'code-test', function( done ) {
@@ -43,5 +46,13 @@ gulp.task( 'code-standards', function() {
             .pipe( jshint.reporter( 'fail' ) );
 } );
 
+gulp.task( 'dist-css', function() {
+    return gulp.src( 'src/less/*.less' )
+            .pipe( less() )
+            .pipe( gulp.dest( 'dist/css' ) )
+            .pipe( cleanCSS() )
+            .pipe( rename( { suffix: '.min' } ) )
+            .pipe( gulp.dest( 'dist/css' ) );
+} );
 
 gulp.task( 'default', [ 'code-test', 'code-standards' ] );
