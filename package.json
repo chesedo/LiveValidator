@@ -1,6 +1,6 @@
 {
   "name": "live-validator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A themeable jQuery plugin that does live validation for form inputs based on buildin or custom checks",
   "main": "src/js/core/LiveValidator.js",
   "dependencies": {
