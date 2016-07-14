@@ -6,9 +6,37 @@ var gulp = require( 'gulp' ),
     path = require( 'path' ),
     rename = require( 'gulp-rename' ),
     less = require( 'gulp-less' ),
-    cleanCSS = require( 'gulp-clean-css' );
+    cleanCSS = require( 'gulp-clean-css' ),
+    concat = require( 'gulp-concat' ),
+    uglify = require( 'gulp-uglify' );
 
 /* jshint undef: false */
+function distCss() {
+    return gulp.src( 'src/less/*.less' )
+            .pipe( less() )
+            .pipe( gulp.dest( 'dist/css' ) )
+            .pipe( cleanCSS() )
+            .pipe( rename( { suffix: '.min' } ) )
+            .pipe( gulp.dest( 'dist/css' ) );
+}
+
+function distJsPlugin() {
+    return gulp.src( [ 'src/js/plugin/*.js', 'src/js/core/*.js', 'src/js/tester/*.js' ] )
+            .pipe( concat( 'jquery-live-validator.js' ) )
+            .pipe( gulp.dest( 'dist/js' ) )
+            .pipe( uglify() )
+            .pipe( rename( { suffix: '.min' } ) )
+            .pipe( gulp.dest( 'dist/js' ) );
+}
+
+function distJsThemes() {
+    return gulp.src( 'src/js/themes/*.js' )
+            .pipe( gulp.dest( 'dist/js' ) )
+            .pipe( uglify() )
+            .pipe( rename( { suffix: '.min' } ) )
+            .pipe( gulp.dest( 'dist/js' ) );
+}
+
 gulp.task( 'code-test', function( done ) {
     return new karmaServer( {
         configFile: path.join( __dirname, '/karma.conf.js' ),
@@ -46,13 +74,16 @@ gulp.task( 'code-standards', function() {
             .pipe( jshint.reporter( 'fail' ) );
 } );
 
-gulp.task( 'dist-css', function() {
-    return gulp.src( 'src/less/*.less' )
-            .pipe( less() )
-            .pipe( gulp.dest( 'dist/css' ) )
-            .pipe( cleanCSS() )
-            .pipe( rename( { suffix: '.min' } ) )
-            .pipe( gulp.dest( 'dist/css' ) );
+gulp.task( 'dist-css', distCss );
+
+gulp.task( 'dist-js-plugin', distJsPlugin );
+
+gulp.task( 'dist-js-themes', distJsThemes );
+
+gulp.task( 'dist', [ 'default' ], function() {
+    distCss();
+    distJsPlugin();
+    distJsThemes();
 } );
 
 gulp.task( 'default', [ 'code-test', 'code-standards' ] );
