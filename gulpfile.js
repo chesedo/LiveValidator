@@ -1,17 +1,21 @@
 var gulp = require( 'gulp' ),
     karmaServer = require( 'karma' ).Server,
-    jscs = require( 'gulp-jscs' );
+    jscs = require( 'gulp-jscs' ),
+    jshint = require( 'gulp-jshint' ),
+    stylish = require( 'gulp-jscs-stylish' ),
+    path = require( 'path' );
 
+/* jshint undef: false */
 gulp.task( 'code-test', function( done ) {
     return new karmaServer( {
-        configFile: __dirname + '/karma.conf.js',
+        configFile: path.join( __dirname, '/karma.conf.js' ),
         singleRun: true
     }, done ).start();
 } );
 
 gulp.task( 'tdd', function( done ) {
     return new karmaServer( {
-        configFile: __dirname + '/karma.conf.js',
+        configFile: path.join( __dirname, '/karma.conf.js' ),
         autoWatch: true,
         reporters: [ 'spec', 'notify' ],
         specReporter: {
@@ -31,8 +35,13 @@ gulp.task( 'tdd', function( done ) {
 
 gulp.task( 'code-standards', function() {
     return gulp.src( [ 'src/js/**/*.js', 'tests/**/*.js', '*.js' ] )
+            .pipe( jshint( '.jshintrc' ) )
             .pipe( jscs( { configPath: '.jscsrc' } ) )
-            .pipe( jscs.reporter() );
+            .pipe( stylish.combineWithHintResults() )
+            .pipe( jshint.reporter( 'jshint-stylish' ) )
+            .pipe( jscs.reporter( 'fail' ) )
+            .pipe( jshint.reporter( 'fail' ) );
 } );
+
 
 gulp.task( 'default', [ 'code-test', 'code-standards' ] );

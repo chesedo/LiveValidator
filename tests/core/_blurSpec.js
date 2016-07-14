@@ -15,7 +15,7 @@ core._blurSpec = function() {
         this.createInstance = function( required ) {
             this.input = helper.bareInput();
 
-            return LiveValidator( $, this.input, { theme: this.spyTheme, required: required } );
+            return new LiveValidator( $, this.input, { theme: this.spyTheme, required: required } );
         };
     } );
 

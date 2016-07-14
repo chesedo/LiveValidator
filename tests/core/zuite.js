@@ -1,6 +1,8 @@
 /**
  * The test suite for the core plugin "class" (LiveValidator.js)
  */
+
+/* globals core */
 describe( 'Core', function() {
     describe( 'check instantiation', function() {
         core.instantiationSpec();

@@ -6,7 +6,7 @@ var core = core || {};
 core.enableLiveSpec = function() {
     beforeEach( function() {
         this.input = helper.bareInput().val( 'value' );
-        this.instance = LiveValidator( $, this.input, { liveEnabled: false } );
+        this.instance = new LiveValidator( $, this.input, { liveEnabled: false } );
         this._performChecks = spyOn( LiveValidator.prototype, '_performChecks' );
     } );
 

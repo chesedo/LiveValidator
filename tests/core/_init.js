@@ -6,7 +6,7 @@ var core = core || {};
 core._initSpec = function() {
     function setupInstance( options ) {
         options = options || {};
-        return LiveValidator( $, helper.bareInput(), options );
+        return new LiveValidator( $, helper.bareInput(), options );
     }
 
     it( 'theme is invalid', function() {
@@ -24,8 +24,7 @@ core._initSpec = function() {
     } );
 
     it( 'theme is not set', function() {
-        var theme = [],
-            instance = setupInstance();
+        var instance = setupInstance();
 
         expect( instance.theme.constructor.name ).toEqual( 'LiveValidatorTheme' );
     } );

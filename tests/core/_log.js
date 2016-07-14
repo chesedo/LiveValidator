@@ -10,17 +10,17 @@ core._logSpec = function() {
 
     function setupInstance( options ) {
         options = options || {};
-        return LiveValidator( $, helper.bareInput(), options );
+        return new LiveValidator( $, helper.bareInput(), options );
     }
 
     it( 'false', function() {
-        var instance = setupInstance( { debug: false } );
+        setupInstance( { debug: false } );
 
         expect( this.log ).not.toHaveBeenCalled();
     } );
 
     it( 'true', function() {
-        var instance = setupInstance( { debug: true } );
+        setupInstance( { debug: true } );
 
         expect( this.log ).toHaveBeenCalled();
         this.log.calls.allArgs().forEach( function( args ) {
@@ -29,7 +29,7 @@ core._logSpec = function() {
     } );
 
     it( 'level 1', function() {
-        var instance = setupInstance( { debug: 1 } );
+        setupInstance( { debug: 1 } );
 
         expect( this.log ).toHaveBeenCalled();
         this.log.calls.allArgs().forEach( function( args ) {
@@ -38,7 +38,7 @@ core._logSpec = function() {
     } );
 
     it( 'level 2', function() {
-        var instance = setupInstance( { debug: 2 } );
+        setupInstance( { debug: 2 } );
 
         expect( this.log ).toHaveBeenCalled();
         this.log.calls.allArgs().forEach( function( args ) {
@@ -47,7 +47,7 @@ core._logSpec = function() {
     } );
 
     it( 'level 3', function() {
-        var instance = setupInstance( { debug: 3 } );
+        setupInstance( { debug: 3 } );
 
         expect( this.log ).toHaveBeenCalled();
         this.log.calls.allArgs().forEach( function( args ) {

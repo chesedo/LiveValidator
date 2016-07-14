@@ -1,6 +1,8 @@
 /**
  * The test suite for the jquery plugin creation code (LiveValidatorPlugin.js)
  */
+
+/* globals plugin */
 describe( 'Plugin', function() {
     describe( 'check that the filter', function() {
         plugin.filterSpec();

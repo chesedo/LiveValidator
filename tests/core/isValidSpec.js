@@ -7,7 +7,7 @@ core.isValidSpec = function() {
     beforeEach( function() {
         this.createInstance = function( required, checks ) {
             this.input = helper.bareInput();
-            return LiveValidator( $, this.input, { checks: checks, required: required } );
+            return new LiveValidator( $, this.input, { checks: checks, required: required } );
         };
     } );
 

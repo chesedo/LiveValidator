@@ -6,7 +6,7 @@ var core = core || {};
 core._filterChecksSpec = function() {
     function getChecks( checks ) {
         var input = helper.bareInput(),
-            instance = LiveValidator( $, this.input );
+            instance = new LiveValidator( $, input );
 
         checks = checks || [];
 

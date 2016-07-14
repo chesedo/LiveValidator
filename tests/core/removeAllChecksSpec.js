@@ -5,7 +5,7 @@ var core = core || {};
 
 core.removeAllChecksSpec = function() {
     beforeEach( function() {
-        this.instance = LiveValidator( $, helper.bareInput(), { checks: [ 'check', 'check2' ] } );
+        this.instance = new LiveValidator( $, helper.bareInput(), { checks: [ 'check', 'check2' ] } );
     } );
 
     beforeAll( function() {

@@ -135,7 +135,7 @@ LiveValidator.prototype = {
             if ( typeof this.tester[ check ] === 'function' ) {
 
                 // Check for duplicate
-                return seen.hasOwnProperty( check ) ? false : ( seen[ check ] = true );
+                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true ;
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;

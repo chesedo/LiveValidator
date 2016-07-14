@@ -15,7 +15,7 @@ core._performChecksSpec = function() {
 
             var input = helper.bareInput();
 
-            this.instance = LiveValidator( $, this.input, { theme: spyTheme } );
+            this.instance = new LiveValidator( $, input, { theme: spyTheme } );
             this.instance.options.checks = checks;
 
             this.instance._performChecks( 'value' );
