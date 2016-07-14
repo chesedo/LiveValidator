@@ -20,21 +20,21 @@ plugin.defaultsSpec = function() {
 
     it( 'can be overwritten through `$.fn.LiveValidator.defaults`', function() {
         $.fn.LiveValidator.defaults.requiredHTML = '*';
-        $.fn.LiveValidator.defaults.class.parentSelector = 'group';
+        $.fn.LiveValidator.defaults.themeData.parentSelector = 'group';
 
         expect( $.fn.LiveValidator.defaults.requiredHTML ).toEqual( '*' );
-        expect( $.fn.LiveValidator.defaults.class.parentSelector ).toEqual( 'group' );
+        expect( $.fn.LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
     } );
 
     it( 'can be overwritten by calling `LiveValidator`', function() {
         $.LiveValidator( {
             requiredHTML: '*',
-            class: {
+            themeData: {
                 parentSelector: 'group'
             }
         } );
 
         expect( $.fn.LiveValidator.defaults.requiredHTML ).toEqual( '*' );
-        expect( $.fn.LiveValidator.defaults.class.parentSelector ).toEqual( 'group' );
+        expect( $.fn.LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
     } );
 };

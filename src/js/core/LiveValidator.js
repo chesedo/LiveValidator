@@ -51,10 +51,10 @@ LiveValidator.prototype = {
 
         // Setup the needed theme
         if ( this._isValidTheme( this.options.theme ) ) {
-            this.theme = new this.options.theme( this.jq, this.element );
+            this.theme = new this.options.theme( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name );
         } else {
-            this.theme = new LiveValidatorTheme( this.jq, this.element );
+            this.theme = new LiveValidatorTheme( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the default theme' );
         }
 

@@ -107,14 +107,13 @@
 
     // Stores the defaults for the plugin - allow a system-wide overrite
     $.fn[ pluginName ].defaults =  {
-        class: {
+        themeData: {
             error: 'error',
             missing: 'missing',
-            parentSelector: 'row'
+            parentSelector: '.row'
         },
         required: false,
         liveEnabled: true,
-        requiredHTML: '<strong style="padding-left:1em">*</strong>',
         checks: [],
         debug: false
     };

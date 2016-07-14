@@ -3,14 +3,13 @@ var core = core || {};
 core.instantiationSpec = function() {
     beforeEach( function() {
         this.options = {
-            class: {
+            themeData: {
                 error: 'error',
                 missing: 'missing',
-                parentSelector: 'row'
+                parentSelector: '.row'
             },
             required: false,
             liveEnabled: true,
-            requiredHTML: '<strong style="padding-left:1em">*</strong>',
             checks: [],
             debug: false
         };
@@ -33,11 +32,11 @@ core.instantiationSpec = function() {
         var instance = new LiveValidator(
             $,
             helper.bareInput(),
-            { required: true, class: { parentSelector: 'group' }
+            { required: true, themeData: { parentSelector: 'group' }
         } );
 
         this.options.required = true;
-        this.options.class.parentSelector = 'group';
+        this.options.themeData.parentSelector = 'group';
 
         expect( instance.options ).toEqual( this.options );
     } );
@@ -49,11 +48,11 @@ core.instantiationSpec = function() {
     } );
 
     it( 'for data set on the input', function() {
-        setFixtures( '<input data-required="true" data-class=\'{"parentSelector": "group"}\' />' );
+        setFixtures( '<input data-required="true" data-theme-data=\'{"parentSelector": "group"}\' />' );
         var instance = new LiveValidator( $,  $( 'input' ) );
 
         this.options.required = true;
-        this.options.class.parentSelector = 'group';
+        this.options.themeData.parentSelector = 'group';
 
         expect( instance.options ).toEqual( this.options );
     } );
