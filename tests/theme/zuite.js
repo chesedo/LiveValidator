@@ -19,4 +19,10 @@ describe( 'Default theme', function() {
     describe( 'check `unsetMissing` when', function() {
         theme.default.unsetMissingSpec();
     } );
+    describe( 'check `addErrors` when', function() {
+        theme.default.addErrorsSpec();
+    } );
+    describe( 'check `clearErrors` when', function() {
+        theme.default.clearErrorsSpec();
+    } );
 } );
