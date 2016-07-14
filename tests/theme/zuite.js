@@ -13,4 +13,10 @@ describe( 'Default theme', function() {
     describe( 'check `unmarkRequired` when', function() {
         theme.default.unmarkRequiredSpec();
     } );
+    describe( 'check `setMissing` when', function() {
+        theme.default.setMissingSpec();
+    } );
+    describe( 'check `unsetMissing` when', function() {
+        theme.default.unsetMissingSpec();
+    } );
 } );
