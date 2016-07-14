@@ -7,4 +7,10 @@ describe( 'Default theme', function() {
     describe( 'check instantiation', function() {
         theme.default.instantiationSpec();
     } );
+    describe( 'check `markRequired` when', function() {
+        theme.default.markRequiredSpec();
+    } );
+    describe( 'check `unmarkRequired` when', function() {
+        theme.default.unmarkRequiredSpec();
+    } );
 } );

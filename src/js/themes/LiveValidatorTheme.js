@@ -21,8 +21,10 @@ var LiveValidatorTheme = function LiveValidatorTheme( $, element, options ) {
 };
 
 LiveValidatorTheme.prototype.markRequired = function() {
+    this.$element.parent( this.options.parentSelector ).addClass( 'required' );
 };
 LiveValidatorTheme.prototype.unmarkRequired = function() {
+    this.$element.parent( this.options.parentSelector ).removeClass( 'required' );
 };
 LiveValidatorTheme.prototype.setMissing = function() {
 };

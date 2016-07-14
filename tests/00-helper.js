@@ -1,4 +1,4 @@
-var helper = {};
+var helper = helper || {};
 
 helper.bareInput = function() {
     setFixtures( '<input />' );
