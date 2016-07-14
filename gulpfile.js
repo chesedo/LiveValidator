@@ -30,7 +30,7 @@ gulp.task( 'tdd', function( done ) {
 } );
 
 gulp.task( 'code-standards', function() {
-    return gulp.src( [ 'js/*.js', 'tests/*.js', '*.js' ] )
+    return gulp.src( [ 'src/js/**/*.js', 'tests/**/*.js', '*.js' ] )
             .pipe( jscs( { configPath: '.jscsrc' } ) )
             .pipe( jscs.reporter() );
 } );
