@@ -132,20 +132,26 @@ LiveValidator.Core.prototype = {
             return [];
         }
 
+        var validArr = [];
         var validChecks = checks.filter( function( check ) {
+
+            // Check if it is a check that has parameters
+            if ( typeof check === 'object' ) {
+                check = Object.keys( check )[ 0 ];
+            }
 
             // Check if check is declared in tester
             if ( typeof this.tester[ check ] === 'function' ) {
 
                 // Check for duplicate
-                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true ;
+                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true && validArr.push( check );
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
 
-        this._log( 'Valid checks are: ' + validChecks );
+        this._log( 'Valid checks are: ' + validArr );
         return validChecks;
     },
     /**
@@ -197,8 +203,14 @@ LiveValidator.Core.prototype = {
 
         // Loop over all the checks
         for ( var i = 0; i < this.options.checks.length; i++ ) {
-            var check = this.options.checks[ i ];
-            this.tester[ check ]( value );
+            var check = this.options.checks[ i ],
+                params = null;
+
+            // Check if it is a check with parameters
+            if ( typeof check === 'object' ) {
+                params = check[ check = Object.keys( check )[ 0 ] ];
+            }
+            this.tester[ check ]( value, params );
             this._log( 'Performed check `' + check + '`', 2 );
         }
 

@@ -31,12 +31,14 @@ core._performChecksSpec = function() {
         };
         LiveValidator.Tester.prototype.declaredCheckPass = function() {
         };
+        LiveValidator.Tester.prototype.checkParam = function() {};
     } );
 
     afterAll( function() {
         delete LiveValidator.Tester.prototype.declaredCheckFail;
         delete LiveValidator.Tester.prototype.declaredCheckFail2;
         delete LiveValidator.Tester.prototype.declaredCheckPass;
+        delete LiveValidator.Tester.prototype.checkParam;
     } );
 
     it( 'there are no checks', function() {
@@ -56,10 +58,20 @@ core._performChecksSpec = function() {
     } );
 
     it( 'the check passes', function() {
+        var spy = spyOn( LiveValidator.Tester.prototype, 'declaredCheckPass' );
         this.setupInput( [ 'declaredCheckPass' ] );
 
         expect( this.addErrors ).not.toHaveBeenCalled();
         expect( this.clearErrors ).toHaveBeenCalled();
+        expect( spy ).toHaveBeenCalledWith( 'value', null );
+    } );
+
+    it( 'the check has parameters', function() {
+        var spy = spyOn( LiveValidator.Tester.prototype, 'checkParam' );
+        this.setupInput( [ { 'checkParam': 5 } ] );
+
+        expect( spy ).toHaveBeenCalled();
+        expect( spy ).toHaveBeenCalledWith( 'value', 5 );
     } );
 
     it( 'multiple checks fail', function() {

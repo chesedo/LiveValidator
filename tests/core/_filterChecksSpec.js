@@ -16,11 +16,13 @@ core._filterChecksSpec = function() {
     beforeAll( function() {
         LiveValidator.Tester.prototype.declaredCheck = function() {};
         LiveValidator.Tester.prototype.declaredCheck2 = function() {};
+        LiveValidator.Tester.prototype.checkParam = function() {};
     } );
 
     afterAll( function() {
         delete LiveValidator.Tester.prototype.declaredCheck;
         delete LiveValidator.Tester.prototype.declaredCheck2;
+        delete LiveValidator.Tester.prototype.checkParam;
     } );
 
     it( 'there are no checks', function() {
@@ -63,8 +65,14 @@ core._filterChecksSpec = function() {
         expect( getChecks( checks ) ).toEqual( [ 'declaredCheck' ] );
     } );
 
+    it( 'passing a check that has parameters', function() {
+        var checks = [ { 'checkParam': 5 } ];
+
+        expect( getChecks( checks ) ).toEqual( [ { checkParam: 5 } ] );
+    } );
+
     it( 'passing a non-array', function() {
-        var checks = { 'declaredCheck': true };
+        var checks = { 'checkParam': 5 };
 
         expect( getChecks( checks ) ).toEqual( [] );
     } );
