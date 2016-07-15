@@ -1,4 +1,10 @@
 var LiveValidatorTester = function() {
+
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidatorTester ) ) {
+        return new LiveValidatorTester();
+    }
+
     this.errors = [];
 };
 
