@@ -1,5 +1,5 @@
 /**
- * The test suite for the jquery plugin creation code (LiveValidatorPlugin.js)
+ * The test suite for the jquery plugin creation code (plugin/LiveValidatorPlugin.js)
  */
 
 /* globals plugin */

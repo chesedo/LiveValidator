@@ -1,5 +1,5 @@
 /**
- * The test suite for the default theme "class" (LiveValidatorTheme.js)
+ * The test suite for the default theme "class" (themes/Default.js)
  */
 
 /* globals theme */

@@ -5,11 +5,12 @@ var core = core || {};
 
 core.setRequiredSpec = function() {
     beforeEach( function() {
-        this.input = helper.bareInput();
-        this.spyTheme = helper.createSpyTheme();
-        this.instance = new LiveValidator( $, this.input, { theme: this.spyTheme } );
-        this._blur = spyOn( LiveValidator.prototype, '_blur' );
-        this.markRequired = spyOn( this.spyTheme.prototype, 'markRequired' );
+        var input = helper.bareInput(),
+            spyTheme = helper.createSpyTheme();
+
+        this.instance = new LiveValidator.Core( $, input, { theme: spyTheme } );
+        this._blur = spyOn( LiveValidator.Core.prototype, '_blur' );
+        this.markRequired = spyOn( spyTheme.prototype, 'markRequired' );
     } );
 
     it( 'without input', function() {

@@ -21,8 +21,6 @@
 
     "globals": {
         "LiveValidator": true,
-        "LiveValidatorTester": true,
-        "LiveValidatorTheme": true,
         "helper": true,
 
         "console": true,

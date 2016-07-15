@@ -5,8 +5,8 @@ var plugin = plugin || {};
 
 plugin.methodsSpec = function() {
     beforeEach( function() {
-        this.setRequired = spyOn( LiveValidator.prototype, 'setRequired' );
-        this._blur = spyOn( LiveValidator.prototype, '_blur' );
+        this.setRequired = spyOn( LiveValidator.Core.prototype, 'setRequired' );
+        this._blur = spyOn( LiveValidator.Core.prototype, '_blur' );
     } );
 
     it( 'can been called through the plugin', function() {

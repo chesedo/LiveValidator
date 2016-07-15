@@ -7,20 +7,20 @@ core.isValidSpec = function() {
     beforeEach( function() {
         this.createInstance = function( required, checks ) {
             this.input = helper.bareInput();
-            return new LiveValidator( $, this.input, { checks: checks, required: required } );
+            return new LiveValidator.Core( $, this.input, { checks: checks, required: required } );
         };
     } );
 
     beforeAll( function() {
-        LiveValidatorTester.prototype.checkPass = function() {};
-        LiveValidatorTester.prototype.checkFail = function() {
+        LiveValidator.Tester.prototype.checkPass = function() {};
+        LiveValidator.Tester.prototype.checkFail = function() {
             this.addError( 'Failed' );
         };
     } );
 
     afterAll( function() {
-        delete LiveValidatorTester.prototype.checkPass;
-        delete LiveValidatorTester.prototype.checkFail;
+        delete LiveValidator.Tester.prototype.checkPass;
+        delete LiveValidator.Tester.prototype.checkFail;
     } );
 
     it( 'not required and checks passes - empty value', function() {

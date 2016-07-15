@@ -1,21 +1,24 @@
-var LiveValidatorTester = function() {
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Tester = function() {
 
     // Scope-safe the object
-    if ( !( this instanceof LiveValidatorTester ) ) {
-        return new LiveValidatorTester();
+    if ( !( this instanceof LiveValidator.Tester ) ) {
+        return new LiveValidator.Tester();
     }
 
     this.errors = [];
 };
 
-LiveValidatorTester.prototype.clearErrors = function() {
+LiveValidator.Tester.prototype.clearErrors = function() {
     this.errors = [];
 };
 
-LiveValidatorTester.prototype.addError = function( error ) {
+LiveValidator.Tester.prototype.addError = function( error ) {
     this.errors.push( error );
 };
 
-LiveValidatorTester.prototype.getErrors = function() {
+LiveValidator.Tester.prototype.getErrors = function() {
     return this.errors;
 };

@@ -6,7 +6,7 @@ var core = core || {};
 core._filterChecksSpec = function() {
     function getChecks( checks ) {
         var input = helper.bareInput(),
-            instance = new LiveValidator( $, input );
+            instance = new LiveValidator.Core( $, input );
 
         checks = checks || [];
 
@@ -14,13 +14,13 @@ core._filterChecksSpec = function() {
     }
 
     beforeAll( function() {
-        LiveValidatorTester.prototype.declaredCheck = function() {};
-        LiveValidatorTester.prototype.declaredCheck2 = function() {};
+        LiveValidator.Tester.prototype.declaredCheck = function() {};
+        LiveValidator.Tester.prototype.declaredCheck2 = function() {};
     } );
 
     afterAll( function() {
-        delete LiveValidatorTester.prototype.declaredCheck;
-        delete LiveValidatorTester.prototype.declaredCheck2;
+        delete LiveValidator.Tester.prototype.declaredCheck;
+        delete LiveValidator.Tester.prototype.declaredCheck2;
     } );
 
     it( 'there are no checks', function() {

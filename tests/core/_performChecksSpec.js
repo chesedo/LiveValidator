@@ -15,7 +15,7 @@ core._performChecksSpec = function() {
 
             var input = helper.bareInput();
 
-            this.instance = new LiveValidator( $, input, { theme: spyTheme } );
+            this.instance = new LiveValidator.Core( $, input, { theme: spyTheme } );
             this.instance.options.checks = checks;
 
             this.instance._performChecks( 'value' );
@@ -23,20 +23,20 @@ core._performChecksSpec = function() {
     } );
 
     beforeAll( function() {
-        LiveValidatorTester.prototype.declaredCheckFail = function() {
+        LiveValidator.Tester.prototype.declaredCheckFail = function() {
             this.addError( 'declaredCheckFail error' );
         };
-        LiveValidatorTester.prototype.declaredCheckFail2 = function() {
+        LiveValidator.Tester.prototype.declaredCheckFail2 = function() {
             this.addError( 'declaredCheckFail2 error' );
         };
-        LiveValidatorTester.prototype.declaredCheckPass = function() {
+        LiveValidator.Tester.prototype.declaredCheckPass = function() {
         };
     } );
 
     afterAll( function() {
-        delete LiveValidatorTester.prototype.declaredCheckFail;
-        delete LiveValidatorTester.prototype.declaredCheckFail2;
-        delete LiveValidatorTester.prototype.declaredCheckPass;
+        delete LiveValidator.Tester.prototype.declaredCheckFail;
+        delete LiveValidator.Tester.prototype.declaredCheckFail2;
+        delete LiveValidator.Tester.prototype.declaredCheckPass;
     } );
 
     it( 'there are no checks', function() {

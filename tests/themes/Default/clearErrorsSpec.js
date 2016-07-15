@@ -3,8 +3,8 @@ theme.default = theme.default || {};
 
 theme.default.clearErrorsSpec = function() {
     beforeEach( function() {
-        this.row = helper.theme.default.getRow();
-        this.theme = new LiveValidatorTheme( $, $( this.row ).find( 'input' ) );
+        this.row = helper.themes.default.getRow();
+        this.theme = new LiveValidator.themes.Default( $, $( this.row ).find( 'input' ) );
     } );
 
     it( 'already has errors', function() {

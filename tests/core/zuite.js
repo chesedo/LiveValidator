@@ -1,5 +1,5 @@
 /**
- * The test suite for the core plugin "class" (LiveValidator.js)
+ * The test suite for the core plugin "class" (core/LiveValidator.js)
  */
 
 /* globals core */

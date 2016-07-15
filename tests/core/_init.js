@@ -6,7 +6,7 @@ var core = core || {};
 core._initSpec = function() {
     function setupInstance( options ) {
         options = options || {};
-        return new LiveValidator( $, helper.bareInput(), options );
+        return new LiveValidator.Core( $, helper.bareInput(), options );
     }
 
     it( 'theme is invalid', function() {
@@ -30,7 +30,7 @@ core._initSpec = function() {
     } );
 
     it( 'required is false', function() {
-        var unsetRequired = spyOn( LiveValidator.prototype, 'unsetRequired' );
+        var unsetRequired = spyOn( LiveValidator.Core.prototype, 'unsetRequired' );
 
         expect( unsetRequired ).not.toHaveBeenCalled();
         setupInstance( { required: false } );
@@ -38,7 +38,7 @@ core._initSpec = function() {
     } );
 
     it( 'required is true', function() {
-        var setRequired = spyOn( LiveValidator.prototype, 'setRequired' );
+        var setRequired = spyOn( LiveValidator.Core.prototype, 'setRequired' );
 
         expect( setRequired ).not.toHaveBeenCalled();
         setupInstance( { required: true } );
@@ -46,7 +46,7 @@ core._initSpec = function() {
     } );
 
     it( 'liveEnabled is false', function() {
-        var disableLive = spyOn( LiveValidator.prototype, 'disableLive' );
+        var disableLive = spyOn( LiveValidator.Core.prototype, 'disableLive' );
 
         expect( disableLive ).not.toHaveBeenCalled();
         setupInstance( { liveEnabled: false } );
@@ -54,7 +54,7 @@ core._initSpec = function() {
     } );
 
     it( 'liveEnabled is true', function() {
-        var enableLive = spyOn( LiveValidator.prototype, 'enableLive' );
+        var enableLive = spyOn( LiveValidator.Core.prototype, 'enableLive' );
 
         expect( enableLive ).not.toHaveBeenCalled();
         setupInstance( { liveEnabled: true } );

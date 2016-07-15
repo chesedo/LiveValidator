@@ -49,7 +49,7 @@
 
                 // Only set when not already set
                 if ( !$.data( this, pluginName ) ) {
-                    $.data( this, pluginName, new LiveValidator( $, this, options ) );
+                    $.data( this, pluginName, new LiveValidator.Core( $, this, options ) );
                 }
             } );
         }
@@ -66,7 +66,7 @@
                 // Check for each input
                 validInputs.each( function() {
                     var instance = $.data( this, pluginName );
-                    if ( instance instanceof LiveValidator ) {
+                    if ( instance instanceof LiveValidator.Core ) {
 
                         // All invalid when one is invalid
                         if ( !instance.isValid() ) {
@@ -85,7 +85,7 @@
             // Call the method on each input
             return validInputs.each( function() {
                 var instance = $.data( this, pluginName );
-                if ( instance instanceof LiveValidator ) {
+                if ( instance instanceof LiveValidator.Core ) {
                     if ( typeof instance[ options ] === 'function' ) {
 
                         // If this was destroy - then also remove the instance

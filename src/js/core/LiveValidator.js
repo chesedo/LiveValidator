@@ -1,8 +1,11 @@
-var LiveValidator = function( $, element, options ) {
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Core = function( $, element, options ) {
 
     // Scope-safe the object
-    if ( !( this instanceof LiveValidator ) ) {
-        return new LiveValidator( $, element, options );
+    if ( !( this instanceof LiveValidator.Core ) ) {
+        return new LiveValidator.Core( $, element, options );
     }
 
     // Stores a reference to jQuery
@@ -28,7 +31,7 @@ var LiveValidator = function( $, element, options ) {
     );
 
     // This holds the tester object which performs the tests
-    this.tester = new LiveValidatorTester();
+    this.tester = new LiveValidator.Tester();
 
     // Holds wheter the input is missing - blank and required
     this.missing = false;
@@ -43,7 +46,7 @@ var LiveValidator = function( $, element, options ) {
     this._init();
 };
 
-LiveValidator.prototype = {
+LiveValidator.Core.prototype = {
     /**
      * Setup the plugin to be ready based on options
      */
@@ -54,7 +57,7 @@ LiveValidator.prototype = {
             this.theme = new this.options.theme( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name );
         } else {
-            this.theme = new LiveValidatorTheme( this.jq, this.element, this.options.themeData );
+            this.theme = new LiveValidator.themes.Default( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the default theme' );
         }
 
@@ -113,7 +116,7 @@ LiveValidator.prototype = {
         return true;
     },
     /**
-     * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
+     * Filter the checks to contain only those defined/declared on LiveValidator.Tester and remove duplicates
      *
      * @param  {array} checks Checks to Filter
      *

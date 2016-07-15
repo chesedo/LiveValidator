@@ -5,17 +5,17 @@ var core = core || {};
 
 core.removeAllChecksSpec = function() {
     beforeEach( function() {
-        this.instance = new LiveValidator( $, helper.bareInput(), { checks: [ 'check', 'check2' ] } );
+        this.instance = new LiveValidator.Core( $, helper.bareInput(), { checks: [ 'check', 'check2' ] } );
     } );
 
     beforeAll( function() {
-        LiveValidatorTester.prototype.check = function() {};
-        LiveValidatorTester.prototype.check2 = function() {};
+        LiveValidator.Tester.prototype.check = function() {};
+        LiveValidator.Tester.prototype.check2 = function() {};
     } );
 
     afterAll( function() {
-        delete LiveValidatorTester.prototype.check;
-        delete LiveValidatorTester.prototype.check2;
+        delete LiveValidator.Tester.prototype.check;
+        delete LiveValidator.Tester.prototype.check2;
     } );
 
     it( 'called', function() {

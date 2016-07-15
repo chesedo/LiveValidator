@@ -2,7 +2,7 @@ var tester = tester || {};
 
 tester.addErrorSpec = function() {
     beforeEach( function() {
-        this.tester = new LiveValidatorTester();
+        this.tester = new LiveValidator.Tester();
     } );
 
     it( 'already has errors', function() {

@@ -5,11 +5,12 @@ var core = core || {};
 
 core.unsetRequiredSpec = function() {
     beforeEach( function() {
-        this.input = helper.bareInput();
-        this.spyTheme = helper.createSpyTheme();
-        this.instance = new LiveValidator( $, this.input, { theme: this.spyTheme } );
-        this.unmarkRequired = spyOn( this.spyTheme.prototype, 'unmarkRequired' );
-        this.unsetMissing = spyOn( this.spyTheme.prototype, 'unsetMissing' );
+        var input = helper.bareInput(),
+            spyTheme = helper.createSpyTheme();
+
+        this.instance = new LiveValidator.Core( $, input, { theme: spyTheme } );
+        this.unmarkRequired = spyOn( spyTheme.prototype, 'unmarkRequired' );
+        this.unsetMissing = spyOn( spyTheme.prototype, 'unsetMissing' );
     } );
 
     it( 'without input', function() {

@@ -10,7 +10,7 @@ core._logSpec = function() {
 
     function setupInstance( options ) {
         options = options || {};
-        return new LiveValidator( $, helper.bareInput(), options );
+        return new LiveValidator.Core( $, helper.bareInput(), options );
     }
 
     it( 'false', function() {

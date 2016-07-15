@@ -2,7 +2,7 @@ var tester = tester || {};
 
 tester.getErrorsSpec = function() {
     beforeEach( function() {
-        this.tester = new LiveValidatorTester();
+        this.tester = new LiveValidator.Tester();
     } );
 
     it( 'there are errors', function() {

@@ -1,5 +1,5 @@
 /**
- * The test suite for the tester "class" (LiveValidatorTester.js)
+ * The test suite for the tester "class" (tester/LiveValidatorTester.js)
  */
 
 /* globals tester */

@@ -10,12 +10,12 @@ core._blurSpec = function() {
         this.setMissing = spyOn( this.spyTheme.prototype, 'setMissing' );
         this.unsetMissing = spyOn( this.spyTheme.prototype, 'unsetMissing' );
         this.clearErrors = spyOn( this.spyTheme.prototype, 'clearErrors' );
-        this._performChecks = spyOn( LiveValidator.prototype, '_performChecks' );
+        this._performChecks = spyOn( LiveValidator.Core.prototype, '_performChecks' );
 
         this.createInstance = function( required ) {
             this.input = helper.bareInput();
 
-            return new LiveValidator( $, this.input, { theme: this.spyTheme, required: required } );
+            return new LiveValidator.Core( $, this.input, { theme: this.spyTheme, required: required } );
         };
     } );
 

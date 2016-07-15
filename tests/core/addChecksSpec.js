@@ -6,17 +6,17 @@ var core = core || {};
 core.addChecksSpec = function() {
     function setupInstance( checks ) {
         checks = checks || [];
-        return new LiveValidator( $, helper.bareInput(), { checks: checks } );
+        return new LiveValidator.Core( $, helper.bareInput(), { checks: checks } );
     }
 
     beforeAll( function() {
-        LiveValidatorTester.prototype.check = function() {};
-        LiveValidatorTester.prototype.check2 = function() {};
+        LiveValidator.Tester.prototype.check = function() {};
+        LiveValidator.Tester.prototype.check2 = function() {};
     } );
 
     afterAll( function() {
-        delete LiveValidatorTester.prototype.check;
-        delete LiveValidatorTester.prototype.check2;
+        delete LiveValidator.Tester.prototype.check;
+        delete LiveValidator.Tester.prototype.check2;
     } );
 
     it( 'adding one check to empty checks', function() {

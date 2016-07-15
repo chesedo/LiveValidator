@@ -2,7 +2,7 @@ var tester = tester || {};
 
 tester.clearErrorsSpec = function() {
     it( 'called', function() {
-        var tester = new LiveValidatorTester();
+        var tester = new LiveValidator.Tester();
 
         tester.errors = [ 'Error1', 'Error2' ];
         expect( tester.errors ).toEqual( [ 'Error1', 'Error2' ] );

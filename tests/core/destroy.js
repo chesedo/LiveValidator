@@ -7,11 +7,11 @@ core.destroySpec = function() {
     beforeEach( function() {
         var spyTheme = helper.createSpyTheme();
         this.input = helper.bareInput().val( 'value' );
-        this.instance = new LiveValidator( $, this.input, { theme: spyTheme } );
+        this.instance = new LiveValidator.Core( $, this.input, { theme: spyTheme } );
 
         this.unsetMissing = spyOn( spyTheme.prototype, 'unsetMissing' );
         this.clearErrors = spyOn( spyTheme.prototype, 'clearErrors' );
-        this._performChecks = spyOn( LiveValidator.prototype, '_performChecks' );
+        this._performChecks = spyOn( LiveValidator.Core.prototype, '_performChecks' );
     } );
 
     it( 'without input', function() {
