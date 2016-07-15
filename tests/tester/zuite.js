@@ -10,4 +10,7 @@ describe( 'Tester', function() {
     describe( 'check `clearErrors` when', function() {
         tester.clearErrorsSpec();
     } );
+    describe( 'check `addError` when', function() {
+        tester.addErrorSpec();
+    } );
 } );
