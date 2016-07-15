@@ -7,4 +7,7 @@ describe( 'Tester', function() {
     describe( 'check instantiation', function() {
         tester.instantiationSpec();
     } );
+    describe( 'check `clearErrors` when', function() {
+        tester.clearErrorsSpec();
+    } );
 } );
