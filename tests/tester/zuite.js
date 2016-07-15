@@ -13,4 +13,7 @@ describe( 'Tester', function() {
     describe( 'check `addError` when', function() {
         tester.addErrorSpec();
     } );
+    describe( 'check `getErrors` when', function() {
+        tester.getErrorsSpec();
+    } );
 } );
