@@ -1,8 +1,12 @@
-var LiveValidatorTheme = function LiveValidatorTheme( $, element, options ) {
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+LiveValidator.themes = LiveValidator.themes || {};
+
+LiveValidator.themes.Default = function LiveValidatorTheme( $, element, options ) {
 
     // Scope-safe the object
-    if ( !( this instanceof LiveValidatorTheme ) ) {
-        return new LiveValidatorTheme( $, element, options );
+    if ( !( this instanceof LiveValidator.themes.Default ) ) {
+        return new LiveValidator.themes.Default( $, element, options );
     }
 
     this.jq = $;
@@ -20,22 +24,22 @@ var LiveValidatorTheme = function LiveValidatorTheme( $, element, options ) {
     this.$parent = this.$element.parent( this.options.parentSelector );
 };
 
-LiveValidatorTheme.prototype.markRequired = function() {
+LiveValidator.themes.Default.prototype.markRequired = function() {
     this.$parent.addClass( 'required' );
 };
-LiveValidatorTheme.prototype.unmarkRequired = function() {
+LiveValidator.themes.Default.prototype.unmarkRequired = function() {
     this.$parent.removeClass( 'required' );
 };
-LiveValidatorTheme.prototype.setMissing = function() {
+LiveValidator.themes.Default.prototype.setMissing = function() {
     this.$parent.addClass( this.options.missing );
 };
-LiveValidatorTheme.prototype.unsetMissing = function() {
+LiveValidator.themes.Default.prototype.unsetMissing = function() {
     this.$parent.removeClass( this.options.missing );
 };
-LiveValidatorTheme.prototype.clearErrors = function() {
+LiveValidator.themes.Default.prototype.clearErrors = function() {
     this.$parent.removeClass( this.options.error ).find( 'ul' ).remove();
 };
-LiveValidatorTheme.prototype.addErrors = function( errors ) {
+LiveValidator.themes.Default.prototype.addErrors = function( errors ) {
 
     // Remove old errors
     this.clearErrors();

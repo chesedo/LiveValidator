@@ -1,6 +1,6 @@
 {
   "name": "live-validator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A themeable jQuery plugin that does live validation for form inputs based on buildin or custom checks",
   "main": "src/js/core/LiveValidator.js",
   "dependencies": {
@@ -9,6 +9,7 @@
   "devDependencies": {
     "bower": "^1.7.9",
     "coveralls": "^2.11.11",
+    "del": "^2.2.1",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.11",
     "gulp-concat": "^2.6.0",

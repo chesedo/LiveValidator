@@ -49,7 +49,7 @@
 
                 // Only set when not already set
                 if ( !$.data( this, pluginName ) ) {
-                    $.data( this, pluginName, new LiveValidator( $, this, options ) );
+                    $.data( this, pluginName, new LiveValidator.Core( $, this, options ) );
                 }
             } );
         }
@@ -66,7 +66,7 @@
                 // Check for each input
                 validInputs.each( function() {
                     var instance = $.data( this, pluginName );
-                    if ( instance instanceof LiveValidator ) {
+                    if ( instance instanceof LiveValidator.Core ) {
 
                         // All invalid when one is invalid
                         if ( !instance.isValid() ) {
@@ -85,7 +85,7 @@
             // Call the method on each input
             return validInputs.each( function() {
                 var instance = $.data( this, pluginName );
-                if ( instance instanceof LiveValidator ) {
+                if ( instance instanceof LiveValidator.Core ) {
                     if ( typeof instance[ options ] === 'function' ) {
 
                         // If this was destroy - then also remove the instance
@@ -119,11 +119,14 @@
     };
 } )( jQuery, window, document );
 
-var LiveValidator = function( $, element, options ) {
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Core = function( $, element, options ) {
 
     // Scope-safe the object
-    if ( !( this instanceof LiveValidator ) ) {
-        return new LiveValidator( $, element, options );
+    if ( !( this instanceof LiveValidator.Core ) ) {
+        return new LiveValidator.Core( $, element, options );
     }
 
     // Stores a reference to jQuery
@@ -137,6 +140,9 @@ var LiveValidator = function( $, element, options ) {
     // IE9 does not support the :required selector
     var required = this.$element.is( '[required] ' );
 
+    // Find HTML5 validation checks on the input
+    var autoChecks = new LiveValidator.AutoChecks( this.element );
+
     // Get the options for this element by extending the defaults with detected required (above),
     // those set on data and those passed in
     this.options = this.jq.extend(
@@ -144,12 +150,13 @@ var LiveValidator = function( $, element, options ) {
         {},
         this.jq.fn.LiveValidator.defaults,
         { required: required },
+        { checks: autoChecks.getChecks() },
         this.$element.data(),
         options
     );
 
     // This holds the tester object which performs the tests
-    this.tester = new LiveValidatorTester();
+    this.tester = new LiveValidator.Tester();
 
     // Holds wheter the input is missing - blank and required
     this.missing = false;
@@ -164,7 +171,7 @@ var LiveValidator = function( $, element, options ) {
     this._init();
 };
 
-LiveValidator.prototype = {
+LiveValidator.Core.prototype = {
     /**
      * Setup the plugin to be ready based on options
      */
@@ -175,7 +182,7 @@ LiveValidator.prototype = {
             this.theme = new this.options.theme( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name );
         } else {
-            this.theme = new LiveValidatorTheme( this.jq, this.element, this.options.themeData );
+            this.theme = new LiveValidator.themes.Default( this.jq, this.element, this.options.themeData );
             this._log( 'LiveValidator is using the default theme' );
         }
 
@@ -234,7 +241,7 @@ LiveValidator.prototype = {
         return true;
     },
     /**
-     * Filter the checks to contain only those defined/declared on LiveValidatorTester and remove duplicates
+     * Filter the checks to contain only those defined/declared on LiveValidator.Tester and remove duplicates
      *
      * @param  {array} checks Checks to Filter
      *
@@ -250,20 +257,26 @@ LiveValidator.prototype = {
             return [];
         }
 
+        var validArr = [];
         var validChecks = checks.filter( function( check ) {
+
+            // Check if it is a check that has parameters
+            if ( typeof check === 'object' ) {
+                check = Object.keys( check )[ 0 ];
+            }
 
             // Check if check is declared in tester
             if ( typeof this.tester[ check ] === 'function' ) {
 
                 // Check for duplicate
-                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true ;
+                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true && validArr.push( check );
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
 
-        this._log( 'Valid checks are: ' + validChecks );
+        this._log( 'Valid checks are: ' + validArr );
         return validChecks;
     },
     /**
@@ -315,8 +328,14 @@ LiveValidator.prototype = {
 
         // Loop over all the checks
         for ( var i = 0; i < this.options.checks.length; i++ ) {
-            var check = this.options.checks[ i ];
-            this.tester[ check ]( value );
+            var check = this.options.checks[ i ],
+                params = null;
+
+            // Check if it is a check with parameters
+            if ( typeof check === 'object' ) {
+                params = check[ check = Object.keys( check )[ 0 ] ];
+            }
+            this.tester[ check ]( value, params );
             this._log( 'Performed check `' + check + '`', 2 );
         }
 
@@ -474,18 +493,175 @@ LiveValidator.prototype = {
     }
 };
 
-var LiveValidatorTester = function() {
+/**
+ * Try to detect checks based on some input attributes ( to 'polyfill' for browsers not supporting them )
+ * Based on https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+ */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.AutoChecks = function( element ) {
+
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidator.AutoChecks ) ) {
+        return new LiveValidator.AutoChecks( $, element );
+    }
+
+    this.element = element;
+    this.checks = [];
+
+    // TODO: date-time input also have `min` and `max` support which is still missing
+    // Types of inputs to look for in each group
+    this.types = {
+        numerics: [ 'number', 'range' ],
+        text: [ 'email', 'password', 'search', 'tel', 'text', 'url' ]
+    };
+};
+
+LiveValidator.AutoChecks.prototype = {
+    /**
+     * Get the checks for this input
+     *
+     * @return {Array} Array of checks detected with their parameters
+     */
+    getChecks: function() {
+        var type = this.element.type;
+
+        if ( this.types.numerics.indexOf( type ) !== -1 ) {
+            this._filterNumeric();
+        }
+
+        if ( this.types.text.indexOf( type ) !== -1 ) {
+            this._filterText();
+        }
+
+        return this.checks;
+    },
+    /**
+     * Check for `min` and `max` attributes on numeric inputs
+     */
+    _filterNumeric: function() {
+        this._addCheck( 'min' );
+        this._addCheck( 'max' );
+    },
+    /**
+     * Check for `minlength`, `maxlength` and `pattern` attributes on "text" inputs
+     */
+    _filterText: function() {
+        this._addCheck( 'minlength' );
+        this._addCheck( 'maxlength' );
+
+        if ( this.element.hasAttribute( 'pattern' ) ) {
+            var params = {};
+            params.regex = this.element.getAttribute( 'pattern' );
+            params.title = this.element.getAttribute( 'title' );
+            this.checks.push( { 'pattern':  params } );
+        }
+    },
+    /**
+     * Try to find the 'check' attribute and add its check if it exists
+     *
+     * @param  {string} check The attribte to look for. Eg. `min`
+     */
+    _addCheck: function( check ) {
+        if ( this.element.hasAttribute( check ) ) {
+            var checkObj = {};
+            checkObj[ check ] = parseInt( this.element.getAttribute( check ) );
+            this.checks.push( checkObj );
+        }
+    }
+};
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Tester = function() {
+
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidator.Tester ) ) {
+        return new LiveValidator.Tester();
+    }
+
     this.errors = [];
 };
 
-LiveValidatorTester.prototype.clearErrors = function() {
+LiveValidator.Tester.prototype.clearErrors = function() {
     this.errors = [];
 };
 
-LiveValidatorTester.prototype.addError = function( error ) {
+LiveValidator.Tester.prototype.addError = function( error ) {
     this.errors.push( error );
 };
 
-LiveValidatorTester.prototype.getErrors = function() {
+LiveValidator.Tester.prototype.getErrors = function() {
     return this.errors;
+};
+
+/**
+ * This adds the testers for the auto checks detector
+ */
+
+LiveValidator.Tester.prototype.min = function( value, min ) {
+    if ( this.isNumber( value ) ) {
+        if ( value < min ) {
+            this.addError( 'Should be more than or equal %d'.replace( '%d', min ) );
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+LiveValidator.Tester.prototype.max = function( value, max ) {
+    if ( this.isNumber( value ) ) {
+        if ( value > max ) {
+            this.addError( 'Should be less than or equal %d'.replace( '%d', max ) );
+            return false;
+        } else {
+            return true;
+        }
+    }
+    return false;
+};
+
+LiveValidator.Tester.prototype.minlength = function( value, min ) {
+    if ( value.length < min ) {
+        this.addError( 'Should be %d characters or more'.replace( '%d', min ) );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.maxlength = function( value, max ) {
+    if ( value.length > max ) {
+        this.addError( 'Should be %d characters or less'.replace( '%d', max ) );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.pattern = function( value, params ) {
+
+    // TODO: Add the `u` - the docs state that this is used
+    var regex = new RegExp( params.regex );
+    if ( !regex.test( value ) ) {
+        this.addError( params.title );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.isNumber = function( value ) {
+    if ( isNaN( Number( value ) ) ) {
+        this.addError( 'Value should be a number' );
+        return false;
+    } else {
+        return true;
+    }
 };

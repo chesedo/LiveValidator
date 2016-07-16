@@ -5,6 +5,7 @@ var gulp = require( 'gulp' ),
     stylish = require( 'gulp-jscs-stylish' ),
     path = require( 'path' ),
     rename = require( 'gulp-rename' ),
+    del = require( 'del' ),
     less = require( 'gulp-less' ),
     cleanCSS = require( 'gulp-clean-css' ),
     concat = require( 'gulp-concat' ),
@@ -31,6 +32,9 @@ function distJsPlugin() {
 
 function distJsThemes() {
     return gulp.src( 'src/js/themes/*.js' )
+            .pipe( rename( function( path ) {
+                path.basename = 'live-validator-theme-' + path.basename.toLowerCase();
+            } ) )
             .pipe( gulp.dest( 'dist/js' ) )
             .pipe( uglify() )
             .pipe( rename( { suffix: '.min' } ) )
@@ -81,9 +85,11 @@ gulp.task( 'dist-js-plugin', distJsPlugin );
 gulp.task( 'dist-js-themes', distJsThemes );
 
 gulp.task( 'dist', [ 'default' ], function() {
-    distCss();
-    distJsPlugin();
-    distJsThemes();
+    del( [ 'dist/' ] ).then( function() {
+        distCss();
+        distJsPlugin();
+        distJsThemes();
+    } );
 } );
 
 gulp.task( 'default', [ 'code-test', 'code-standards' ] );
