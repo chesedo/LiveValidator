@@ -19,6 +19,9 @@ LiveValidator.Core = function( $, element, options ) {
     // IE9 does not support the :required selector
     var required = this.$element.is( '[required] ' );
 
+    // Find HTML5 validation checks on the input
+    var autoChecks = new LiveValidator.AutoChecks( this.element );
+
     // Get the options for this element by extending the defaults with detected required (above),
     // those set on data and those passed in
     this.options = this.jq.extend(
@@ -26,6 +29,7 @@ LiveValidator.Core = function( $, element, options ) {
         {},
         this.jq.fn.LiveValidator.defaults,
         { required: required },
+        { checks: autoChecks.getChecks() },
         this.$element.data(),
         options
     );

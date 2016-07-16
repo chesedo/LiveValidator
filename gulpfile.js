@@ -21,7 +21,7 @@ function distCss() {
 }
 
 function distJsPlugin() {
-    return gulp.src( [ 'src/js/plugin/*.js', 'src/js/core/*.js', 'src/js/tester/*.js' ] )
+    return gulp.src( [ 'src/js/plugin/*.js', 'src/js/core/*.js', 'src/js/autoChecks/*.js', 'src/js/tester/*.js' ] )
             .pipe( concat( 'jquery-live-validator.js' ) )
             .pipe( gulp.dest( 'dist/js' ) )
             .pipe( uglify() )

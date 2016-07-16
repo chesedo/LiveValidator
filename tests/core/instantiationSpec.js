@@ -56,4 +56,14 @@ core.instantiationSpec = function() {
 
         expect( instance.options ).toEqual( this.options );
     } );
+
+    it( 'for input with HTML5 validation', function() {
+        setFixtures( '<input type="text" maxlength="25" pattern="[a-zA-Z]" title="Only alphabetical"/>' );
+        var instance = new LiveValidator.Core( $,  $( 'input' )[ 0 ] );
+
+        expect( instance.options.checks ).toEqual( [
+            { maxlength: 25 },
+            { pattern: { regex: '[a-zA-Z]', title: 'Only alphabetical' } }
+        ] );
+    } );
 };
