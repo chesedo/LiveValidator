@@ -1,0 +1,21 @@
+{
+  "name": "uikit",
+  "description": "",
+  "authors": [
+    "chesedo"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/chesedo/LiveValidator",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uikit": "^2.26.4"
+  }
+}

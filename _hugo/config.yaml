@@ -1,0 +1,9 @@
+baseurl: https://chesedo.github.io/LiveValidator/
+languageCode: en-us
+title: Live Validator
+
+publishdir: ../
+themedir: uikit
+
+defaultLayout: doc
+metaDataFormat: yaml
