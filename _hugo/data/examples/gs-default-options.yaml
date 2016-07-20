@@ -1,0 +1,19 @@
+html: |
+    <div id="numbers">
+        <div class="row">
+            <label>Label</label>
+            <input type="text" id="default-options1"/>
+        </div>
+        <div class="row">
+            <label>Label</label>
+            <input type="text" id="default-options2"/>
+        </div>
+    </div>
+js: |
+    $( function() {
+        // The `isNumber` check comes from html5validation.js
+        $.LiveValidator( { checks: [ 'isNumber' ] } );
+
+        // Inputs will contain the two inputs and not `div#numbers`
+        var inputs = $( '#numbers' ).LiveValidator();
+    } );

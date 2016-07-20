@@ -1,0 +1,34 @@
+html: |
+    <fieldset id="fieldset">
+        <legend>Multiple isValid checking</legend>
+        <div class="row">
+            <label>Label</label>
+            <input type="text" id="isValid1" required/>
+        </div>
+        <div class="row">
+            <label>Label</label>
+            <input type="text" id="isValid2"/>
+        </div>
+    </fieldset>
+    <p id="results"> </p>
+    <a class="uk-button uk-margin-top" id="isValid">Check all</a>
+js: |
+    $( function() {
+        var $result = $( '#results' );
+
+        $( '#fieldset' ).LiveValidator( { checks:[ "isNumber" ] } );
+
+        $( '#isValid' ).click( function() {
+            // It will filter the #fieldset's inputs only
+            var isValid = $( '#fieldset' ).LiveValidator( 'isValid' );
+            if ( isValid ) {
+                $result.text( 'Valid' )
+                    .addClass( 'uk-text-success' )
+                    .removeClass( 'uk-text-warning' );
+            } else {
+                $result.text( 'Invalid' )
+                    .addClass( 'uk-text-warning' )
+                    .removeClass( 'uk-text-success' );
+            }
+        } );
+    } );

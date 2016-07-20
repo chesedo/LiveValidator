@@ -1,0 +1,9 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="passed-options"/>
+    </div>
+js: |
+    $( function() {
+        $( '#passed-options' ).LiveValidator( { required: true } );
+    } );

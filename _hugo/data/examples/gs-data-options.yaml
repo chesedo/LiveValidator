@@ -1,0 +1,10 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <!-- The `isNumber` check comes from html5validation.js -->
+        <input type="text" id="data-options" data-checks='[ "isNumber" ]'/>
+    </div>
+js: |
+    $( function() {
+        $( '#data-options' ).LiveValidator();
+    } );

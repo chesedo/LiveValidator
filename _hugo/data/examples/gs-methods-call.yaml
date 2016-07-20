@@ -1,0 +1,22 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="methods-call" />
+    </div>
+    <a class="uk-button uk-margin-top" id="toggleRequired">Toggle Required</a>
+js: |
+    $( function() {
+        // Instatiate the plugin first
+        var input = $( '#methods-call' ).LiveValidator();
+        var required = false;
+
+        $( '#toggleRequired' ).click( function() {
+            if ( required ) {
+                input.LiveValidator( 'unsetRequired' );
+            } else {
+                input.LiveValidator( 'setRequired' );
+            }
+
+            required = !required;
+        } );
+    } );
