@@ -1,0 +1,33 @@
+{{ define "head-extra" }}
+<script type="text/javascript">
+    var injectSheet = document.createElement( 'style' );
+    document.head.appendChild( injectSheet );
+    injectSheet = injectSheet.sheet;
+
+    function insertCSS( name, css ) {
+        css.match( /.+\{(\n|.)+?\}/g )
+           .forEach( function( value ) {
+                injectSheet.insertRule( name + " " + value, injectSheet.cssRules.length );
+            } );
+    }
+</script>
+{{ end }}
+
+{{ define "main" }}
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-1-1">
+        <h1 class="uk-heading-large">{{ .Title }}</h1>
+        <p class="uk-text-large">{{ .Description }}</p>
+    </div>
+</div>
+
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-medium-3-4">
+        {{ .Content }}
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        {{ partial "toc" .Content }}
+    </div>
+</div>
+{{ end }}

@@ -3,7 +3,7 @@ languageCode: en-us
 title: Live Validator
 
 publishdir: ../
-themedir: uikit
+theme: uikit
 
 defaultLayout: doc
 metaDataFormat: yaml

@@ -1,0 +1,24 @@
+<div id="offcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            <li{{if .IsHome }} class="uk-active"{{ end }}>
+                <a href="{{ .Site.BaseURL }}">Home</a>
+            </li>
+            <!-- For normal menu items -->
+            {{- range .Site.Menus.main }}
+                {{- if .HasChildren }}
+                <li class="{{ if $.HasMenuCurrent "main" . }}uk-active {{ end }}uk-parent" aria-expanded="true">
+                    <a href="#">{{ .Name }}</a>
+                    <ul class="uk-nav-sub">
+                        {{- range .Children }}
+                        <li{{- if $.IsMenuCurrent "main" . }} class="uk-active"{{ end }}><a href="{{ .URL }}">{{ .Name }}</a></li>
+                        {{- end }}
+                    </ul>
+                </li>
+                {{- else }}
+                <li{{ if $.IsMenuCurrent "main" . }} class="uk-active"{{ end }}><a href="{{ .URL }}">{{ .Name }}</a></li>
+                {{- end }}
+            {{- end }}
+        </ul>
+    </div>
+</div>

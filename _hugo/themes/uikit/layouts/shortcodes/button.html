@@ -1,0 +1,5 @@
+{{ if .IsNamedParams }}
+<a class="uk-button{{ with .Get "type" }} uk-button-{{ . }}{{ end }}" href="{{ .Get "href" }}">{{ .Inner }}</a>
+{{ else }}
+<a class="uk-button" href="{{ .Get 0 }}">{{ .Inner }}</a>
+{{ end }}

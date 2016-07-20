@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "uikit": "^2.26.4"
+    "uikit": "^2.26.4",
+    "prism": "prismjs#^1.5.1",
+    "live-validator": "^0.0.3"
   }
 }

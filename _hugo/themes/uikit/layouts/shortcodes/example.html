@@ -1,0 +1,33 @@
+{{ if (.Get 0) }}
+{{ $name := .Get 0 }}
+{{ with index .Site.Data.examples $name }}
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-{{ $name }}', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        {{ if isset . "css" }}<li><a href="">CSS</a></li>{{ end }}
+        {{ if isset . "js" }}<li><a href="">JavaScript</a></li>{{ end }}
+    </ul>
+    <ul id="switcher-example-{{ $name }}" class="uk-switcher uk-margin">
+        <li>
+            {{ .html | safeHTML }}
+        </li>
+        <li>
+            <pre><code class="language-html">{{ .html }}</code></pre>
+        </li>
+        {{ with .css }}
+        <li>
+            <pre><code class="language-css">{{ . }}</code></pre>
+            <script type="text/javascript">
+                insertCSS( "#switcher-example-{{ $name }}", {{ . | safeCSS }} );
+            </script>
+        </li>
+        {{ end }}
+        {{ with .js }}
+        <li>
+            <pre><code class="language-javascript">{{ . }}</code></pre>
+            <script type="text/javascript">{{ . | safeJS }}</script>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+{{ end }}

@@ -1,0 +1,15 @@
+{{ $headers := findRE "<h[2-3].*?>(.|\n)*?</h[2-3]>" . }}
+
+{{ if ge (len $headers) 1 }}
+<div class="uk-panel uk-panel-box" data-uk-sticky="{top:55}">
+    <ul class="uk-nav uk-nav-side" data-uk-scrollspy-nav="{closest:'li', smoothscroll:{offset:55}, topoffset:-300}">
+    {{ range $headers }}
+        <li{{ if eq (findRE "<h2.*?>" . | len) 1 }} class="uk-nav-header"{{ end }}>
+            <a href="#{{ . | plainify | urlize }}">
+                {{ . | plainify }}
+            </a>
+        </li>
+    {{ end }}
+    </ul>
+</div>
+{{ end }}

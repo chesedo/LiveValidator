@@ -1,0 +1,62 @@
+.hook-switcher-misc {
+    .uk-switch {
+        min-height: 100px;
+    }
+}
+
+#points > div:hover i.uk-text-primary {
+    color: darken( @text-primary-color, 20% ) !important;
+}
+
+pre[class*="language-"] {
+    background: @base-pre-background !important;
+}
+
+table {
+    .uk-table();
+    /*
+     * Add margin if adjacent element
+     */
+
+    * + & { margin-top: @table-margin-vertical; }
+
+    th,
+    td {
+        padding: @table-padding-vertical @table-padding-horizontal;
+        .hook-table;
+    }
+
+    /*
+     * Set alignment
+     */
+
+    th { text-align: left; }
+    td { vertical-align: top; }
+
+    thead th { vertical-align: bottom; }
+
+    /*
+     * Caption and footer
+     */
+
+    caption,
+    tfoot {
+        font-size: @table-caption-font-size;
+        font-style: italic;
+    }
+
+    caption {
+        text-align: left;
+        color: @table-caption-color;
+    }
+
+    tbody tr:nth-of-type(odd) {
+        background: @table-striped-background;
+        .hook-table-striped;
+    }
+}
+
+.hook-nav-header {
+    padding-left: 0;
+    padding-right: 0;
+}

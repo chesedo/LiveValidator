@@ -1,0 +1,114 @@
+{{ define "head-extra" }}
+<style>
+    .row {
+        margin: 0 auto;
+        padding-bottom: 70px;
+        position: relative;
+    }
+    .row .errors {
+        position: absolute;
+        right: 0;
+        left: 0;
+    }
+    .row input { width: 250px}
+
+    #points i {
+        font-size: 5em;
+        width: 1.3em;
+        height: 1.3em;
+        line-height: 1.3em;
+        margin-bottom: 1rem;
+    }
+</style>
+<script type="text/javascript">
+    var text = 'Simplicity';
+
+    LiveValidator.Tester.prototype.key = function( val ) {
+        if ( val != text ) {
+            this.addError( 'What is key?' );
+        }
+    };
+    LiveValidator.Tester.prototype.isAlpha = function( val ) {
+        if ( !/^[a-zA-Z]+$/.test( val ) ) {
+            this.addError( 'Should only contain alphabeticals' );
+        }
+    };
+
+    $( function() {
+        var updateTimeout;
+        var restartTimeout;
+        var input = $( '#fold' ).LiveValidator( { checks: [ 'key', 'isAlpha' ] } );
+
+        function updateValue() {
+            var val = input.val();
+            var index = text.indexOf( val );
+            var newValue = '';
+            var timeout = 450;
+
+            if (val === text + 2 ) {
+                newValue = '';
+                timeout = 1500;
+            } else if ( index !== 0 ) {
+                newValue = text[ 0 ];
+            } else if ( val === text ) {
+                newValue = text + 2;
+                timeout = 4000;
+            } else {
+                newValue = val + text[ val.length ];
+            }
+
+            if ( newValue === text ) {
+                timeout = 1400;
+            }
+            input.val( newValue ).trigger( 'input' );
+            updateTimeout = window.setTimeout( updateValue, timeout );
+        }
+
+        input.focus( function() {
+            window.clearTimeout( updateTimeout );
+        } ).keydown( function() {
+            window.clearTimeout( updateTimeout );
+        } ).blur( function() {
+            restartTimeout = window.setTimeout( updateValue, 5000);
+        } );
+
+        updateValue();
+    } );
+</script>
+{{ end }}
+
+{{ define "main" }}
+
+<div class="uk-grid" data-uk-grid-margin>
+    <div id="fold" class="uk-width-medium-1-1">
+        <div class="uk-vertical-align uk-text-center uk-block uk-block-muted uk-block-large">
+            <div class="uk-vertical-align-middle uk-width-1-2">
+                <div class="uk-form row">
+                    <input type="text">
+                </div>
+                <p>
+                    <a class="uk-button uk-button-primary uk-button-large" href="download">Download</a>
+                    <a class="uk-button uk-button-large" href="docs/getting-started">Docs</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="points" class="uk-grid uk-text-center" data-uk-grid-margin>
+    {{ range .Site.Data.home }}
+    <div class="uk-width-medium-1-3">
+        <div class="uk-grid">
+            <div class="uk-width-1-1">
+                <i class="uk-icon-{{ .icon }} uk-text-primary"></i>
+            </div>
+            <div class="uk-width-1-1">
+                <h2 class="uk-h3">{{ .heading }}</h2>
+                <p>{{ .text }}</p>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+
+{{ end }}
