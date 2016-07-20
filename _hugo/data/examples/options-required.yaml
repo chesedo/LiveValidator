@@ -1,0 +1,9 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="auto-required" required />
+    </div>
+js: |
+    $( function() {
+        test = $( '#auto-required' ).LiveValidator();
+    } );

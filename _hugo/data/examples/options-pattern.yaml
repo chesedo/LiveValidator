@@ -1,0 +1,9 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="pattern" pattern="^[a-zA-Z]+$" title="Only alphabeticals allowed" />
+    </div>
+js: |
+    $( function() {
+        $( '#pattern' ).LiveValidator();
+    } );

@@ -1,0 +1,14 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="parameter" />
+    </div>
+js: |
+    $( function() {
+        $( '#parameter' ).LiveValidator( {
+            checks: [
+                { minlength: 2 },
+                { pattern: { regex: "^[0-9]+$", title: "Numbers only" } }
+            ]
+        } );
+    } );
