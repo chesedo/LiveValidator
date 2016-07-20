@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.16" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="These are the basic steps to get started with the plug-in">
+    <title>Getting Started - Live Validator</title>
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/uikit.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/prism.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/LiveValidatorTheme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/uikit.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/prism.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/live-validator.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var injectSheet = document.createElement( 'style' );
+    document.head.appendChild( injectSheet );
+    injectSheet = injectSheet.sheet;
+
+    function insertCSS( name, css ) {
+        css.match( /.+\{(\n|.)+?\}/g )
+           .forEach( function( value ) {
+                injectSheet.insertRule( name + " " + value, injectSheet.cssRules.length );
+            } );
+    }
+</script>
+
+</head>
+<body>
+    <nav class="uk-navbar uk-navbar-attached uk-margin-large-bottom" data-uk-sticky>
+    <div class="uk-container uk-container-center">
+        <a class="uk-navbar-brand uk-hidden-small" href="https://chesedo.github.io/LiveValidator/">Live Validator</a>
+        <ul class="uk-navbar-nav uk-hidden-small">
+            
+                <li><a href="/LiveValidator/download/">Download</a></li>
+                <li class="uk-active"><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+        <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+        <div class="uk-navbar-brand uk-navbar-center uk-visible-small">Getting Started - BETA</div>
+        <div class="uk-navbar-flip uk-navbar-content uk-hidden-small">BETA</div>
+    </div>
+</nav>
+
+
+    <div class="uk-container uk-container-center">
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-1-1">
+        <h1 class="uk-heading-large">Getting Started</h1>
+        <p class="uk-text-large">These are the basic steps to get started with the plug-in</p>
+    </div>
+</div>
+
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-medium-3-4">
+        
+
+<h2 id="creation">Creation</h2>
+
+<p>To start using the plug-in, just call it on a jQuery object.</p>
+
+<h3 id="calling-the-plug-in">Calling the plug-in</h3>
+
+<p>
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-options-required', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-options-required" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="auto-required" required />
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;auto-required&#34; required /&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    test = $( &#39;#auto-required&#39; ).LiveValidator();
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    test = $( '#auto-required' ).LiveValidator();
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<div class="uk-alert">Notice how the required attribute is detected on the input and handled by the theme to add the asterisk.</div>
+
+</p>
+
+<h3 id="passing-options-to-the-plug-in">Passing options to the plug-in</h3>
+
+<p>It is also possible to overwrite the plug-in options per instantiation. Just pass in a object with any of the valid <a href="https://chesedo.github.io/LiveValidator/docs/options/">options</a>.
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-options', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-gs-options" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="passed-options"/>
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;passed-options&#34;/&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    $( &#39;#passed-options&#39; ).LiveValidator( { required: true } );
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    $( '#passed-options' ).LiveValidator( { required: true } );
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+</p>
+
+<h3 id="passing-options-via-data">Passing options via data</h3>
+
+<p>The plug-in will also check for <code>data-*</code> attributes and combines them into the options. This makes it easy to have a lot of inputs with many options.
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-data-options', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-gs-data-options" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <!-- The `isNumber` check comes from html5validation.js -->
+    <input type="text" id="data-options" data-checks='[ "isNumber" ]'/>
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;!-- The `isNumber` check comes from html5validation.js --&gt;
+    &lt;input type=&#34;text&#34; id=&#34;data-options&#34; data-checks=&#39;[ &#34;isNumber&#34; ]&#39;/&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    $( &#39;#data-options&#39; ).LiveValidator();
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    $( '#data-options' ).LiveValidator();
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<div class="uk-alert">Note the example of how to set array &amp; object options correctly - with the double quotes on the inside - this insures that they are parsed correctly.</div>
+
+</p>
+
+<h3 id="changing-default-options">Changing default options</h3>
+
+<p>Sometimes it is also needed to change the default options before initiating a set of inputs - setting the theme data is a good example of this.</p>
+
+<p>To do this, just call the plug-in directly and pass in a object of <a href="https://chesedo.github.io/LiveValidator/docs/options/">options</a> to overwrite.
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-default-options', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-gs-default-options" class="uk-switcher uk-margin">
+        <li>
+            <div id="numbers">
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="default-options1"/>
+    </div>
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="default-options2"/>
+    </div>
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div id=&#34;numbers&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+        &lt;label&gt;Label&lt;/label&gt;
+        &lt;input type=&#34;text&#34; id=&#34;default-options1&#34;/&gt;
+    &lt;/div&gt;
+    &lt;div class=&#34;row&#34;&gt;
+        &lt;label&gt;Label&lt;/label&gt;
+        &lt;input type=&#34;text&#34; id=&#34;default-options2&#34;/&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    // The `isNumber` check comes from html5validation.js
+    $.LiveValidator( { checks: [ &#39;isNumber&#39; ] } );
+
+    // Inputs will contain the two inputs and not `div#numbers`
+    var inputs = $( &#39;#numbers&#39; ).LiveValidator();
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    // The `isNumber` check comes from html5validation.js
+    $.LiveValidator( { checks: [ 'isNumber' ] } );
+
+    // Inputs will contain the two inputs and not `div#numbers`
+    var inputs = $( '#numbers' ).LiveValidator();
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+</p>
+
+
+<div class="uk-alert">Also note how to instantiate multiple inputs with one call - which can be an alternative to overwriting the defaults. This is because the plug-in automatically filters the jQuery object to contain only supported inputs. They are also returned from the instantiation.</div>
+
+
+
+<h2 id="after-creation">After creation</h2>
+
+<p>Now that you know how to create a instance of the plug-in on inputs, you will be able to do two primary things with this instance.</p>
+
+<h3 id="calling-methods">Calling methods</h3>
+
+<p>The plug-in exposes some methods that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-methods-call', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-gs-methods-call" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="methods-call" />
+</div>
+<a class="uk-button uk-margin-top" id="toggleRequired">Toggle Required</a>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;methods-call&#34; /&gt;
+&lt;/div&gt;
+&lt;a class=&#34;uk-button uk-margin-top&#34; id=&#34;toggleRequired&#34;&gt;Toggle Required&lt;/a&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    // Instatiate the plugin first
+    var input = $( &#39;#methods-call&#39; ).LiveValidator();
+    var required = false;
+
+    $( &#39;#toggleRequired&#39; ).click( function() {
+        if ( required ) {
+            input.LiveValidator( &#39;unsetRequired&#39; );
+        } else {
+            input.LiveValidator( &#39;setRequired&#39; );
+        }
+
+        required = !required;
+    } );
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    // Instatiate the plugin first
+    var input = $( '#methods-call' ).LiveValidator();
+    var required = false;
+
+    $( '#toggleRequired' ).click( function() {
+        if ( required ) {
+            input.LiveValidator( 'unsetRequired' );
+        } else {
+            input.LiveValidator( 'setRequired' );
+        }
+
+        required = !required;
+    } );
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+</p>
+
+<h3 id="the-mighty-isvalid-method">The mighty isValid method</h3>
+
+<p>The most important method is the <code>isValid</code> method. It will check if the jQuery object(s) - which is filtered to inputs only - is valid and passes all their constraints.
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-isValid-call', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-gs-isValid-call" class="uk-switcher uk-margin">
+        <li>
+            <fieldset id="fieldset">
+    <legend>Multiple isValid checking</legend>
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="isValid1" required/>
+    </div>
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="isValid2"/>
+    </div>
+</fieldset>
+<p id="results"> </p>
+<a class="uk-button uk-margin-top" id="isValid">Check all</a>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;fieldset id=&#34;fieldset&#34;&gt;
+    &lt;legend&gt;Multiple isValid checking&lt;/legend&gt;
+    &lt;div class=&#34;row&#34;&gt;
+        &lt;label&gt;Label&lt;/label&gt;
+        &lt;input type=&#34;text&#34; id=&#34;isValid1&#34; required/&gt;
+    &lt;/div&gt;
+    &lt;div class=&#34;row&#34;&gt;
+        &lt;label&gt;Label&lt;/label&gt;
+        &lt;input type=&#34;text&#34; id=&#34;isValid2&#34;/&gt;
+    &lt;/div&gt;
+&lt;/fieldset&gt;
+&lt;p id=&#34;results&#34;&gt; &lt;/p&gt;
+&lt;a class=&#34;uk-button uk-margin-top&#34; id=&#34;isValid&#34;&gt;Check all&lt;/a&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    var $result = $( &#39;#results&#39; );
+
+    $( &#39;#fieldset&#39; ).LiveValidator( { checks:[ &#34;isNumber&#34; ] } );
+
+    $( &#39;#isValid&#39; ).click( function() {
+        // It will filter the #fieldset&#39;s inputs only
+        var isValid = $( &#39;#fieldset&#39; ).LiveValidator( &#39;isValid&#39; );
+        if ( isValid ) {
+            $result.text( &#39;Valid&#39; )
+                .addClass( &#39;uk-text-success&#39; )
+                .removeClass( &#39;uk-text-warning&#39; );
+        } else {
+            $result.text( &#39;Invalid&#39; )
+                .addClass( &#39;uk-text-warning&#39; )
+                .removeClass( &#39;uk-text-success&#39; );
+        }
+    } );
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    var $result = $( '#results' );
+
+    $( '#fieldset' ).LiveValidator( { checks:[ "isNumber" ] } );
+
+    $( '#isValid' ).click( function() {
+        // It will filter the #fieldset's inputs only
+        var isValid = $( '#fieldset' ).LiveValidator( 'isValid' );
+        if ( isValid ) {
+            $result.text( 'Valid' )
+                .addClass( 'uk-text-success' )
+                .removeClass( 'uk-text-warning' );
+        } else {
+            $result.text( 'Invalid' )
+                .addClass( 'uk-text-warning' )
+                .removeClass( 'uk-text-success' );
+        }
+    } );
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<div class="uk-alert">Note how the inputs with errors are marked - automatically by this method - using the theme to guide the user in fixing them.</div>
+
+</p>
+
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        
+
+
+<div class="uk-panel uk-panel-box" data-uk-sticky="{top:55}">
+    <ul class="uk-nav uk-nav-side" data-uk-scrollspy-nav="{closest:'li', smoothscroll:{offset:55}, topoffset:-300}">
+    
+        <li class="uk-nav-header">
+            <a href="#creation">
+                Creation
+            </a>
+        </li>
+    
+        <li>
+            <a href="#calling-the-plug-in">
+                Calling the plug-in
+            </a>
+        </li>
+    
+        <li>
+            <a href="#passing-options-to-the-plug-in">
+                Passing options to the plug-in
+            </a>
+        </li>
+    
+        <li>
+            <a href="#passing-options-via-data">
+                Passing options via data
+            </a>
+        </li>
+    
+        <li>
+            <a href="#changing-default-options">
+                Changing default options
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#after-creation">
+                After creation
+            </a>
+        </li>
+    
+        <li>
+            <a href="#calling-methods">
+                Calling methods
+            </a>
+        </li>
+    
+        <li>
+            <a href="#the-mighty-isvalid-method">
+                The mighty isValid method
+            </a>
+        </li>
+    
+    </ul>
+</div>
+
+
+    </div>
+</div>
+
+    </div>
+
+    <hr class="uk-grid-divider">
+    <div class="uk-grid uk-margin-bottom uk-text-center">
+        <div class="uk-width-1-1">
+            <i class="uk-icon-code-fork"></i> Fork me on <a href="https://github.com/chesedo/LiveValidator">GitHub</a> |  <i class="uk-icon-copyright"></i> Pieter Engelbrecht 2016. Released under the MIT license.
+        </div>
+    </div>
+
+    <div id="offcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            <li>
+                <a href="https://chesedo.github.io/LiveValidator/">Home</a>
+            </li>
+            
+                <li><a href="/LiveValidator/download/">Download</a></li>
+                <li class="uk-active"><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.16" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use these instructions to get Live Validator for your project">
+    <title>Download - Live Validator</title>
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/uikit.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/prism.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/LiveValidatorTheme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/uikit.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/prism.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/live-validator.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var injectSheet = document.createElement( 'style' );
+    document.head.appendChild( injectSheet );
+    injectSheet = injectSheet.sheet;
+
+    function insertCSS( name, css ) {
+        css.match( /.+\{(\n|.)+?\}/g )
+           .forEach( function( value ) {
+                injectSheet.insertRule( name + " " + value, injectSheet.cssRules.length );
+            } );
+    }
+</script>
+
+</head>
+<body>
+    <nav class="uk-navbar uk-navbar-attached uk-margin-large-bottom" data-uk-sticky>
+    <div class="uk-container uk-container-center">
+        <a class="uk-navbar-brand uk-hidden-small" href="https://chesedo.github.io/LiveValidator/">Live Validator</a>
+        <ul class="uk-navbar-nav uk-hidden-small">
+            
+                <li class="uk-active"><a href="/LiveValidator/download/">Download</a></li>
+                <li><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+        <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+        <div class="uk-navbar-brand uk-navbar-center uk-visible-small">Download - BETA</div>
+        <div class="uk-navbar-flip uk-navbar-content uk-hidden-small">BETA</div>
+    </div>
+</nav>
+
+
+    <div class="uk-container uk-container-center">
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-1-1">
+        <h1 class="uk-heading-large">Download</h1>
+        <p class="uk-text-large">Use these instructions to get Live Validator for your project</p>
+    </div>
+</div>
+
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-medium-3-4">
+        
+
+<h2 id="zip-download">Zip Download</h2>
+
+<p>To get the latest verion as a ZIP use the following button.</p>
+
+
+<a class="uk-button uk-button-primary" href="https://github.com/chesedo/LiveValidator/archive/master.zip">Download</a>
+
+
+
+<h3 id="html-markup-example">HTML Markup Example</h3>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;title&gt;Page Title&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/LiveValidatorTheme.css&quot; charset=&quot;utf-8&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+            &lt;!-- ... --&gt;
+        &lt;/form&gt;
+        &lt;script src=&quot;js/jquery.min.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;js/jquery-live-validator.min.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;js/live-validator-theme-default.min.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+            $( function() {
+                var inputs = $( 'form' ).LiveValidator();
+            } );
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+
+<div class="uk-alert">Remember to include jQuery</div>
+
+
+
+<h2 id="bower">Bower</h2>
+
+<p>If you are using Bower to manage your assets, then you will find the plugin listed as <code>live-validator</code>.</p>
+
+<h3 id="install">Install</h3>
+
+<p>It can be installed using the following</p>
+
+<pre><code>bower install --save live-validator
+</code></pre>
+
+<h3 id="file-structure">File structure</h3>
+
+<p>The zip file will contain the source JavaScript and style code under the <code>src</code> folder. It also has compiled and minified versions under the <code>dist</code> folder.</p>
+
+<h4 id="source-structure">Source structure</h4>
+
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>js</td>
+<td>Contains all the JavaScript code - the plugin code, tester and themes</td>
+</tr>
+
+<tr>
+<td>less</td>
+<td>Contains the styles for the themes, if the theme needs extra styles</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-markup">/js
+    /autoChecks
+        &lt;!-- Used to auto detect check from HTML5 attributes (like `min` and `max`) --&gt;
+        /AutoChecks.js
+
+    /core
+        &lt;!-- The core that binds everything together --&gt;
+        LiveValidator.js
+
+    /plugin
+        &lt;!-- This creates the jQuery plugin --&gt;
+        LiveValidatorPlugin.js
+
+    /tester
+        &lt;!-- Adds tests for HTML5 attributes (sort of a polyfill) - works together with AutoChecks.js --&gt;
+        html5validation.js
+
+        &lt;!-- The skeleton for the tester that can be extended with your own tests --&gt;
+        LiveValidatorTester.js
+
+    /themes
+        &lt;!-- The default theme that will be used - can be excluded if using another --&gt;
+        Default.js
+
+/less
+    &lt;!-- The styles for the default theme --&gt;
+    /LiveValidatorTheme.less
+</code></pre>
+
+<h4 id="distribution-structure">Distribution structure</h4>
+
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>js</td>
+<td>Contains compiled version of the JavaScripts</td>
+</tr>
+
+<tr>
+<td>css</td>
+<td>Contains the processed styles for the themes, if the theme needs extra styles</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code class="language-markup">/js
+    &lt;!-- Contain the core, plugin, tester and auto checks detection code --&gt;
+    /jquery-live-validator.js
+    /jquery-live-validator.min.js
+
+    &lt;!-- The JavaScript for the default theme --&gt;
+    /live-validator-theme-default.js
+    /live-validator-theme-default.min.js
+
+/css
+    &lt;!-- The styles for the default theme --&gt;
+    /LiveValidatorTheme.css
+    /LiveValidatorTheme.min.css
+</code></pre>
+
+<h3 id="needed-files">Needed files</h3>
+
+<p>If you want to include the source files into your own as a bundle maybe, then you will need these at the minimum:</p>
+
+<ul>
+<li>LiveValidatorPlugin.js</li>
+<li>LiveValidator.js</li>
+<li>LiveValidatorTester.js</li>
+</ul>
+
+<p>And if you are using the distribution files, then one of the following is needed:</p>
+
+<ul>
+<li>jquery-live-validator.js</li>
+<li>jquery-live-validator.min.js</li>
+</ul>
+
+
+<div class="uk-alert"><p>The default theme is optional <strong>as long as</strong> another is supplied and set in the options. If you do not supply another or do not set the options to use it, then an error will result and the plugin will not work.</p>
+</div>
+
+
+
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        
+
+
+<div class="uk-panel uk-panel-box" data-uk-sticky="{top:55}">
+    <ul class="uk-nav uk-nav-side" data-uk-scrollspy-nav="{closest:'li', smoothscroll:{offset:55}, topoffset:-300}">
+    
+        <li class="uk-nav-header">
+            <a href="#zip-download">
+                Zip Download
+            </a>
+        </li>
+    
+        <li>
+            <a href="#html-markup-example">
+                HTML Markup Example
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#bower">
+                Bower
+            </a>
+        </li>
+    
+        <li>
+            <a href="#install">
+                Install
+            </a>
+        </li>
+    
+        <li>
+            <a href="#file-structure">
+                File structure
+            </a>
+        </li>
+    
+        <li>
+            <a href="#needed-files">
+                Needed files
+            </a>
+        </li>
+    
+    </ul>
+</div>
+
+
+    </div>
+</div>
+
+    </div>
+
+    <hr class="uk-grid-divider">
+    <div class="uk-grid uk-margin-bottom uk-text-center">
+        <div class="uk-width-1-1">
+            <i class="uk-icon-code-fork"></i> Fork me on <a href="https://github.com/chesedo/LiveValidator">GitHub</a> |  <i class="uk-icon-copyright"></i> Pieter Engelbrecht 2016. Released under the MIT license.
+        </div>
+    </div>
+
+    <div id="offcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            <li>
+                <a href="https://chesedo.github.io/LiveValidator/">Home</a>
+            </li>
+            
+                <li class="uk-active"><a href="/LiveValidator/download/">Download</a></li>
+                <li><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

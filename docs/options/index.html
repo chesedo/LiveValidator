@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.16" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Here are all the options that can be set on instantiation or via defaults overwrite">
+    <title>Options - Live Validator</title>
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/uikit.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/prism.min.css">
+    <link rel="stylesheet" href="https://chesedo.github.io/LiveValidator/css/LiveValidatorTheme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/uikit.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/prism.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/live-validator.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    var injectSheet = document.createElement( 'style' );
+    document.head.appendChild( injectSheet );
+    injectSheet = injectSheet.sheet;
+
+    function insertCSS( name, css ) {
+        css.match( /.+\{(\n|.)+?\}/g )
+           .forEach( function( value ) {
+                injectSheet.insertRule( name + " " + value, injectSheet.cssRules.length );
+            } );
+    }
+</script>
+
+</head>
+<body>
+    <nav class="uk-navbar uk-navbar-attached uk-margin-large-bottom" data-uk-sticky>
+    <div class="uk-container uk-container-center">
+        <a class="uk-navbar-brand uk-hidden-small" href="https://chesedo.github.io/LiveValidator/">Live Validator</a>
+        <ul class="uk-navbar-nav uk-hidden-small">
+            
+                <li><a href="/LiveValidator/download/">Download</a></li>
+                <li><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li class="uk-active"><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+        <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+        <div class="uk-navbar-brand uk-navbar-center uk-visible-small">Options - BETA</div>
+        <div class="uk-navbar-flip uk-navbar-content uk-hidden-small">BETA</div>
+    </div>
+</nav>
+
+
+    <div class="uk-container uk-container-center">
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-1-1">
+        <h1 class="uk-heading-large">Options</h1>
+        <p class="uk-text-large">Here are all the options that can be set on instantiation or via defaults overwrite</p>
+    </div>
+</div>
+
+<div class="uk-grid" data-uk-grid-margin>
+    <div class="uk-width-medium-3-4">
+        
+
+<h2 id="checks">Checks</h2>
+
+<p><p class="uk-text-muted">Default: empty</p>
+
+This is an array that holds the checks for the input(s). It is important to use valid object syntax when it is set via the <code>data-checks</code> attribute.</p>
+
+<h3 id="valid-options">Valid options</h3>
+
+<p>These options are valid when <code>html5validation.js</code> is included - they are all from their HTML5 equivalent and auto detected if <code>AutoChecks.js</code> is included.</p>
+
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>min</td>
+<td>Minimum number that can be set on an input</td>
+</tr>
+
+<tr>
+<td>max</td>
+<td>Maximum number that can be set on an input</td>
+</tr>
+
+<tr>
+<td>minlength</td>
+<td>The minimum number of characters needed on the input</td>
+</tr>
+
+<tr>
+<td>maxlength</td>
+<td>The maximum number of characters allowed on the input</td>
+</tr>
+
+<tr>
+<td>pattern</td>
+<td>A regex pattern that the input has to match. Include the helper text in the <code>title</code> as it will be used if the pattern fails</td>
+</tr>
+
+<tr>
+<td>isNumber</td>
+<td>Not an official HTML5 validator, but is used by &ldquo;min&rdquo; and &ldquo;max&rdquo; to make sure the input is a number.</td>
+</tr>
+</tbody>
+</table>
+
+<p>This list can be extended by adding your own checks to the tester.</p>
+
+<h4 id="pattern-example-auto-detected">Pattern example (Auto detected)</h4>
+
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-options-pattern', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-options-pattern" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="pattern" pattern="^[a-zA-Z]+$" title="Only alphabeticals allowed" />
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;pattern&#34; pattern=&#34;^[a-zA-Z]&#43;$&#34; title=&#34;Only alphabeticals allowed&#34; /&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    $( &#39;#pattern&#39; ).LiveValidator();
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    $( '#pattern' ).LiveValidator();
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<h3 id="checks-with-parameters">Checks with parameters</h3>
+
+<p>Some checks need to be called with extra parameters. These can be passed to the check by setting the check to an object with the key as the check&rsquo;s name and the value will be the parameter.</p>
+
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Parameter</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>min</td>
+<td>int</td>
+</tr>
+
+<tr>
+<td>max</td>
+<td>int</td>
+</tr>
+
+<tr>
+<td>minlength</td>
+<td>int</td>
+</tr>
+
+<tr>
+<td>maxlength</td>
+<td>int</td>
+</tr>
+
+<tr>
+<td>pattern</td>
+<td>object with a <code>regex</code> and <code>title</code> as keys</td>
+</tr>
+
+<tr>
+<td>isNumber</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="parameters-example">Parameters example</h4>
+
+<p>
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-options-parameters', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-options-parameters" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="parameter" />
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;parameter&#34; /&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    $( &#39;#parameter&#39; ).LiveValidator( {
+        checks: [
+            { minlength: 2 },
+            { pattern: { regex: &#34;^[0-9]&#43;$&#34;, title: &#34;Numbers only&#34; } }
+        ]
+    } );
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    $( '#parameter' ).LiveValidator( {
+        checks: [
+            { minlength: 2 },
+            { pattern: { regex: "^[0-9]+$", title: "Numbers only" } }
+        ]
+    } );
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<div class="uk-alert">Note how the value can be a string, int or object.</div>
+
+</p>
+
+<h2 id="live-enabled">Live Enabled</h2>
+
+<p><p class="uk-text-muted">Default: true</p>
+
+<code>liveEnabled</code> is used to set whether checking should happen live as the user types. Setting it to false results in checking only happening once the input looses focus.</p>
+
+<h3 id="disabling-live-results">Disabling live results</h3>
+
+
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-options-live-enabled', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-options-live-enabled" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="live" pattern="^[a-zA-Z]+$" title="Only alphabeticals allowed" />
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;live&#34; pattern=&#34;^[a-zA-Z]&#43;$&#34; title=&#34;Only alphabeticals allowed&#34; /&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    $( &#39;#live&#39; ).LiveValidator( {liveEnabled: false } );
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    $( '#live' ).LiveValidator( {liveEnabled: false } );
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<h2 id="required">Required</h2>
+
+<p><p class="uk-text-muted">Default: false</p>
+
+Used to indicate if the input is required. It is automatically set when the input has the <code>required</code> property.</p>
+
+<h3 id="setting-required-via-property-detection">Setting required via property detection</h3>
+
+<p>
+
+
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-options-required', animation: 'slide-horizontal'}">
+        <li class="uk-active"><a href="">Example</a></li>
+        <li><a href="">HTML</a></li>
+        
+        <li><a href="">JavaScript</a></li>
+    </ul>
+    <ul id="switcher-example-options-required" class="uk-switcher uk-margin">
+        <li>
+            <div class="row">
+    <label>Label</label>
+    <input type="text" id="auto-required" required />
+</div>
+
+        </li>
+        <li>
+            <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;auto-required&#34; required /&gt;
+&lt;/div&gt;
+</code></pre>
+        </li>
+        
+        
+        <li>
+            <pre><code class="language-javascript">$( function() {
+    test = $( &#39;#auto-required&#39; ).LiveValidator();
+} );
+</code></pre>
+            <script type="text/javascript">$( function() {
+    test = $( '#auto-required' ).LiveValidator();
+} );
+</script>
+        </li>
+        
+    </ul>
+    
+
+
+
+<div class="uk-alert">Note that the theme automatically handles the asterisk</div>
+
+</p>
+
+<h2 id="theme">Theme</h2>
+
+<p><p class="uk-text-muted">Default: undefined</p>
+
+Set the theme object that you want to use here - see themes to get the correct name. If no theme is set or if the theme is invalid, then the default will be used.</p>
+
+<h3 id="theme-data">Theme Data</h3>
+
+<p><p class="uk-text-muted">Default: { error: &lsquo;error&rsquo;, missing: &lsquo;missing&rsquo;, parentSelector: &lsquo;.row&rsquo; }</p>
+
+The data, array or object that is set here will be passed to the theme as is. Consult the theme you are using to know how to overwrite some options.</p>
+
+<h2 id="debug">Debug</h2>
+
+<p><p class="uk-text-muted">Default: false</p>
+
+This option can be used to log debug information to the console. These can be helpful to find out why something is not working - like in a bug report.</p>
+
+<h3 id="options">Options</h3>
+
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1 | true</td>
+<td>Show only &lsquo;DEBUG&rsquo; data</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Also show &lsquo;INFO&rsquo; data</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Also show &lsquo;ERROR&rsquo; data</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        
+
+
+<div class="uk-panel uk-panel-box" data-uk-sticky="{top:55}">
+    <ul class="uk-nav uk-nav-side" data-uk-scrollspy-nav="{closest:'li', smoothscroll:{offset:55}, topoffset:-300}">
+    
+        <li class="uk-nav-header">
+            <a href="#checks">
+                Checks
+            </a>
+        </li>
+    
+        <li>
+            <a href="#valid-options">
+                Valid options
+            </a>
+        </li>
+    
+        <li>
+            <a href="#checks-with-parameters">
+                Checks with parameters
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#live-enabled">
+                Live Enabled
+            </a>
+        </li>
+    
+        <li>
+            <a href="#disabling-live-results">
+                Disabling live results
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#required">
+                Required
+            </a>
+        </li>
+    
+        <li>
+            <a href="#setting-required-via-property-detection">
+                Setting required via property detection
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#theme">
+                Theme
+            </a>
+        </li>
+    
+        <li>
+            <a href="#theme-data">
+                Theme Data
+            </a>
+        </li>
+    
+        <li class="uk-nav-header">
+            <a href="#debug">
+                Debug
+            </a>
+        </li>
+    
+        <li>
+            <a href="#options">
+                Options
+            </a>
+        </li>
+    
+    </ul>
+</div>
+
+
+    </div>
+</div>
+
+    </div>
+
+    <hr class="uk-grid-divider">
+    <div class="uk-grid uk-margin-bottom uk-text-center">
+        <div class="uk-width-1-1">
+            <i class="uk-icon-code-fork"></i> Fork me on <a href="https://github.com/chesedo/LiveValidator">GitHub</a> |  <i class="uk-icon-copyright"></i> Pieter Engelbrecht 2016. Released under the MIT license.
+        </div>
+    </div>
+
+    <div id="offcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            <li>
+                <a href="https://chesedo.github.io/LiveValidator/">Home</a>
+            </li>
+            
+                <li><a href="/LiveValidator/download/">Download</a></li>
+                <li><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
+                <li class="uk-active"><a href="/LiveValidator/docs/options/">Options</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
