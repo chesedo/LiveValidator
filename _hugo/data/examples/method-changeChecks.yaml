@@ -1,0 +1,32 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="changeChecks" required/>
+        <button type="button" class="uk-button" id="btn-addCheck">Add a Check</button>
+        <button type="button" class="uk-button" id="btn-removeLast">Remove Last Added</button>
+        <button type="button" class="uk-button" id="btn-removeAll">Remove All Checks</button>
+    </div>
+js: |
+    $( function() {
+        var input = $( '#changeChecks' ).LiveValidator();
+
+        var checks = [
+            "isNumber",
+            {"min": 5},
+            {"max": 15}
+        ];
+        var i = 0;
+
+        $( '#btn-addCheck' ).click( function( e ) {
+            if ( i < checks.length )
+                $( input ).LiveValidator( 'addChecks', checks[i++] );
+        } );
+        $( '#btn-removeLast' ).click( function( e ) {
+            if ( i > 0 )
+                $( input ).LiveValidator( 'removeChecks', checks[--i] );
+        } );
+        $( '#btn-removeAll' ).click( function( e ) {
+            i = 0;
+            $( input ).LiveValidator( 'removeAllChecks' );
+        } );
+    } );

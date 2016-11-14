@@ -1,0 +1,18 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="changeLiveValidation" pattern="^[0-9]+$" title="Only numerics allowed"/>
+        <button type="button" class="uk-button" id="btn-enableLive">Enable Live Validation</button>
+        <button type="button" class="uk-button" id="btn-disableLive">Disable Live Validation</button>
+    </div>
+js: |
+    $( function() {
+        var input = $( '#changeLiveValidation' ).LiveValidator();
+
+        $( '#btn-enableLive' ).click( function( e ) {
+            $( input ).LiveValidator( 'enableLive' );
+        } );
+        $( '#btn-disableLive' ).click( function( e ) {
+            $( input ).LiveValidator( 'disableLive' );
+        } );
+    } );

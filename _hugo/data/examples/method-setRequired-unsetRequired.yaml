@@ -1,0 +1,18 @@
+html: |
+    <div class="row">
+        <label>Label</label>
+        <input type="text" id="changeRequired"/>
+        <button type="button" class="uk-button" id="btn-setRequired">Set Required</button>
+        <button type="button" class="uk-button" id="btn-unsetRequired">Unset Required</button>
+    </div>
+js: |
+    $( function() {
+        var input = $( '#changeRequired' ).LiveValidator();
+
+        $( '#btn-setRequired' ).click( function( e ) {
+            $( input ).LiveValidator( 'setRequired' );
+        } );
+        $( '#btn-unsetRequired' ).click( function( e ) {
+            $( input ).LiveValidator( 'unsetRequired' );
+        } );
+    } );

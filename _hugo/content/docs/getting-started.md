@@ -35,8 +35,8 @@ To do this, just call the plug-in directly and pass in a object of [options]({{<
 Now that you know how to create a instance of the plug-in on inputs, you will be able to do two primary things with this instance.
 
 ### Calling methods
-The plug-in exposes some methods that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
-{{% example "gs-methods-call" %}}
+The plug-in exposes some [methods]({{<ref "methods.md" >}}) that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
+{{% example "method-setRequired-unsetRequired" %}}
 
 ### The mighty isValid method
 The most important method is the `isValid` method. It will check if the jQuery object(s) - which is filtered to inputs only - is valid and passes all their constraints.
