@@ -4,11 +4,19 @@ theme.default = theme.default || {};
 theme.default.addErrorsSpec = function() {
     beforeEach( function() {
         this.row = helper.themes.default.getRow();
-        this.theme = new LiveValidator.themes.Default( $, $( this.row ).find( 'input' ) );
+        this.theme = new LiveValidator.themes.Default( helper.themes.getInput( this.row ) );
     } );
 
     it( 'already has errors', function() {
-        this.row.addClass( 'error' ).append( '<ul class="errors"><li>Old Error</li></ul>' );
+        LiveValidator.utils.addClass( this.row, 'error' );
+        var li = document.createElement( 'li' );
+        li.innerHTML = 'Old Error';
+
+        var ul = document.createElement( 'ul' );
+        LiveValidator.utils.addClass( ul, 'errors' );
+        ul.appendChild( li );
+
+        this.row.appendChild( ul );
         expect( this.row ).toContainHtml( '<ul class="errors"><li>Old Error</li></ul>' );
         this.theme.addErrors( [ 'New Error' ] );
         expect( this.row ).not.toContainText( 'Old Error' );

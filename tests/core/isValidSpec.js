@@ -7,7 +7,7 @@ core.isValidSpec = function() {
     beforeEach( function() {
         this.createInstance = function( required, checks ) {
             this.input = helper.bareInput();
-            return new LiveValidator.Core( $, this.input, { checks: checks, required: required } );
+            return new LiveValidator.Core( this.input, { checks: checks, required: required } );
         };
     } );
 
@@ -35,13 +35,13 @@ core.isValidSpec = function() {
 
     it( 'not required and checks passes - has value', function() {
         var instance = this.createInstance( false, [ 'checkPass' ] );
-        this.input.val( 'value' );
+        this.input.value = 'value';
         expect( instance.isValid() ).toBe( true );
     } );
 
     it( 'not required and checks fails - has value', function() {
         var instance = this.createInstance( false, [ 'checkFail' ] );
-        this.input.val( 'value' );
+        this.input.value = 'value';
         expect( instance.isValid() ).toBe( false );
     } );
 

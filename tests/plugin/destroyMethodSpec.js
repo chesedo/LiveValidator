@@ -4,7 +4,7 @@
 var plugin = plugin || {};
 plugin.destroyMethodSpec = function() {
     it( 'called on input having instance', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( $.data( input[ 0 ] ).LiveValidator ).toBeDefined();

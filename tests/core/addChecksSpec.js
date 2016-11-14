@@ -6,7 +6,7 @@ var core = core || {};
 core.addChecksSpec = function() {
     function setupInstance( checks ) {
         checks = checks || [];
-        return new LiveValidator.Core( $, helper.bareInput(), { checks: checks } );
+        return new LiveValidator.Core( helper.bareInput(), { checks: checks } );
     }
 
     beforeAll( function() {

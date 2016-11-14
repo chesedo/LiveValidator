@@ -10,7 +10,7 @@ plugin.methodsSpec = function() {
     } );
 
     it( 'can been called through the plugin', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( this.setRequired ).not.toHaveBeenCalled();
@@ -20,7 +20,7 @@ plugin.methodsSpec = function() {
     } );
 
     it( 'can been called through the plugin with options', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( this.setRequired ).not.toHaveBeenCalled();
@@ -30,7 +30,7 @@ plugin.methodsSpec = function() {
     } );
 
     it( 'can not be called as an array', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( this.setRequired ).not.toHaveBeenCalled();
@@ -39,7 +39,7 @@ plugin.methodsSpec = function() {
     } );
 
     it( 'can not call a private function (should still return input)', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( this._blur ).not.toHaveBeenCalled();
@@ -48,14 +48,14 @@ plugin.methodsSpec = function() {
     } );
 
     it( 'can not call a non-existing function (should still return input)', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( input.LiveValidator( 'nonExisting' )[ 0 ] ).toEqual( input );
     } );
 
     it( 'can not call on a non-instantiated input (should still return input)', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         expect( input.LiveValidator( 'nonExisting' )[ 0 ] ).toEqual( input );
     } );

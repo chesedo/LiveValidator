@@ -8,7 +8,7 @@ core.setRequiredSpec = function() {
         var input = helper.bareInput(),
             spyTheme = helper.createSpyTheme();
 
-        this.instance = new LiveValidator.Core( $, input, { theme: spyTheme } );
+        this.instance = new LiveValidator.Core( input, { theme: spyTheme } );
         this._blur = spyOn( LiveValidator.Core.prototype, '_blur' );
         this.markRequired = spyOn( spyTheme.prototype, 'markRequired' );
     } );

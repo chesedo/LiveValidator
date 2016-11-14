@@ -25,6 +25,8 @@
 
         "console": true,
         "document": true,
-        "window": true
+        "window": true,
+        "Event": true,
+        "Element": true
     }
 }

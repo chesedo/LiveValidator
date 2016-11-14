@@ -5,7 +5,7 @@ var core = core || {};
 
 core._isValidThemeSpec = function() {
     beforeEach( function() {
-        this.instance = new LiveValidator.Core( $, helper.bareInput() );
+        this.instance = new LiveValidator.Core( helper.bareInput() );
 
         this.theme = function testTheme() {};
         this.theme.prototype.markRequired = function() {};
