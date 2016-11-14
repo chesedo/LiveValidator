@@ -1,11 +1,8 @@
 {
   "name": "live-validator",
   "version": "0.0.3",
-  "description": "A themeable jQuery plugin that does live validation for form inputs based on buildin or custom checks",
+  "description": "A themeable jQuery or JS plugin that does live validation for form inputs based on buildin or custom checks",
   "main": "src/js/core/LiveValidator.js",
-  "dependencies": {
-    "jquery": "^3.0.0"
-  },
   "devDependencies": {
     "bower": "^1.7.9",
     "coveralls": "^2.11.11",
@@ -28,16 +25,19 @@
     "karma-jasmine-jquery": "^0.1.1",
     "karma-notify-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.1",
-    "karma-spec-reporter": "0.0.26"
+    "karma-spec-reporter": "0.0.26",
+    "jquery": "^3.0.0"
   },
   "scripts": {
     "test": "node_modules/.bin/gulp"
   },
   "keywords": [
     "jQuery",
+    "JS",
     "validation",
     "forms",
     "themeable",
+    "modular",
     "customizable"
   ],
   "author": "chesedo",

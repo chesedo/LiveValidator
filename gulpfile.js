@@ -21,9 +21,29 @@ function distCss() {
             .pipe( gulp.dest( 'dist/css' ) );
 }
 
-function distJsPlugin() {
-    return gulp.src( [ 'src/js/plugin/*.js', 'src/js/core/*.js', 'src/js/autoChecks/*.js', 'src/js/tester/*.js' ] )
+function distJqPlugin() {
+    return gulp.src( [
+        'src/js/plugin/*.js',
+        'src/js/core/*.js',
+        'src/js/autoChecks/*.js',
+        'src/js/tester/*.js',
+        'src/js/utils/*.js'
+    ] )
             .pipe( concat( 'jquery-live-validator.js' ) )
+            .pipe( gulp.dest( 'dist/js' ) )
+            .pipe( uglify() )
+            .pipe( rename( { suffix: '.min' } ) )
+            .pipe( gulp.dest( 'dist/js' ) );
+}
+
+function distJsPlugin() {
+    return gulp.src( [
+        'src/js/core/*.js',
+        'src/js/autoChecks/*.js',
+        'src/js/tester/*.js',
+        'src/js/utils/*.js'
+    ] )
+            .pipe( concat( 'js-live-validator.js' ) )
             .pipe( gulp.dest( 'dist/js' ) )
             .pipe( uglify() )
             .pipe( rename( { suffix: '.min' } ) )
@@ -80,6 +100,8 @@ gulp.task( 'code-standards', function() {
 
 gulp.task( 'dist-css', distCss );
 
+gulp.task( 'dist-jq-plugin', distJqPlugin );
+
 gulp.task( 'dist-js-plugin', distJsPlugin );
 
 gulp.task( 'dist-js-themes', distJsThemes );
@@ -87,6 +109,7 @@ gulp.task( 'dist-js-themes', distJsThemes );
 gulp.task( 'dist', [ 'default' ], function() {
     del( [ 'dist/' ] ).then( function() {
         distCss();
+        distJqPlugin();
         distJsPlugin();
         distJsThemes();
     } );
