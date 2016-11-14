@@ -13,7 +13,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://chesedo.github.io/LiveValidator/js/uikit.min.js" charset="utf-8"></script>
     <script src="https://chesedo.github.io/LiveValidator/js/prism.min.js" charset="utf-8"></script>
-    <script src="https://chesedo.github.io/LiveValidator/js/live-validator.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/jquery-live-validator.min.js" charset="utf-8"></script>
+    <script src="https://chesedo.github.io/LiveValidator/js/live-validator-theme-default.min.js" charset="utf-8"></script>
+<style media="screen">
+    .row .uk-button { vertical-align: top }
+</style>
+
 <script type="text/javascript">
     var injectSheet = document.createElement( 'style' );
     document.head.appendChild( injectSheet );
@@ -37,6 +42,7 @@
                 <li><a href="/LiveValidator/download/">Download</a></li>
                 <li class="uk-active"><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
                 <li><a href="/LiveValidator/docs/options/">Options</a></li>
+                <li><a href="/LiveValidator/docs/methods/">Methods</a></li>
         </ul>
         <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
         <div class="uk-navbar-brand uk-navbar-center uk-visible-small">Getting Started - BETA</div>
@@ -283,65 +289,57 @@
 
 <h3 id="calling-methods">Calling methods</h3>
 
-<p>The plug-in exposes some methods that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
+<p>The plug-in exposes some <a href="https://chesedo.github.io/LiveValidator/docs/methods/">methods</a> that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
 
 
 
-    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-gs-methods-call', animation: 'slide-horizontal'}">
+    <ul class="uk-tab" data-uk-tab="{connect:'#switcher-example-method-setRequired-unsetRequired', animation: 'slide-horizontal'}">
         <li class="uk-active"><a href="">Example</a></li>
         <li><a href="">HTML</a></li>
         
         <li><a href="">JavaScript</a></li>
     </ul>
-    <ul id="switcher-example-gs-methods-call" class="uk-switcher uk-margin">
+    <ul id="switcher-example-method-setRequired-unsetRequired" class="uk-switcher uk-margin">
         <li>
             <div class="row">
     <label>Label</label>
-    <input type="text" id="methods-call" />
+    <input type="text" id="changeRequired"/>
+    <button type="button" class="uk-button" id="btn-setRequired">Set Required</button>
+    <button type="button" class="uk-button" id="btn-unsetRequired">Unset Required</button>
 </div>
-<a class="uk-button uk-margin-top" id="toggleRequired">Toggle Required</a>
 
         </li>
         <li>
             <pre><code class="language-html">&lt;div class=&#34;row&#34;&gt;
     &lt;label&gt;Label&lt;/label&gt;
-    &lt;input type=&#34;text&#34; id=&#34;methods-call&#34; /&gt;
+    &lt;input type=&#34;text&#34; id=&#34;changeRequired&#34;/&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-setRequired&#34;&gt;Set Required&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-unsetRequired&#34;&gt;Unset Required&lt;/button&gt;
 &lt;/div&gt;
-&lt;a class=&#34;uk-button uk-margin-top&#34; id=&#34;toggleRequired&#34;&gt;Toggle Required&lt;/a&gt;
 </code></pre>
         </li>
         
         
         <li>
             <pre><code class="language-javascript">$( function() {
-    // Instatiate the plugin first
-    var input = $( &#39;#methods-call&#39; ).LiveValidator();
-    var required = false;
+    var input = $( &#39;#changeRequired&#39; ).LiveValidator();
 
-    $( &#39;#toggleRequired&#39; ).click( function() {
-        if ( required ) {
-            input.LiveValidator( &#39;unsetRequired&#39; );
-        } else {
-            input.LiveValidator( &#39;setRequired&#39; );
-        }
-
-        required = !required;
+    $( &#39;#btn-setRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;setRequired&#39; );
+    } );
+    $( &#39;#btn-unsetRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;unsetRequired&#39; );
     } );
 } );
 </code></pre>
             <script type="text/javascript">$( function() {
-    // Instatiate the plugin first
-    var input = $( '#methods-call' ).LiveValidator();
-    var required = false;
+    var input = $( '#changeRequired' ).LiveValidator();
 
-    $( '#toggleRequired' ).click( function() {
-        if ( required ) {
-            input.LiveValidator( 'unsetRequired' );
-        } else {
-            input.LiveValidator( 'setRequired' );
-        }
-
-        required = !required;
+    $( '#btn-setRequired' ).click( function( e ) {
+        $( input ).LiveValidator( 'setRequired' );
+    } );
+    $( '#btn-unsetRequired' ).click( function( e ) {
+        $( input ).LiveValidator( 'unsetRequired' );
     } );
 } );
 </script>
@@ -534,6 +532,7 @@
                 <li><a href="/LiveValidator/download/">Download</a></li>
                 <li class="uk-active"><a href="/LiveValidator/docs/getting-started/">Getting Started</a></li>
                 <li><a href="/LiveValidator/docs/options/">Options</a></li>
+                <li><a href="/LiveValidator/docs/methods/">Methods</a></li>
         </ul>
     </div>
 </div>

@@ -25,8 +25,9 @@ var prismJS =  [
             'assets/bower_components/prism/components/prism-css.js',
         ];
 var liveValidatorJS =  [
-            'assets/bower_components/live-validator/dist/js/jquery-live-validator.js',
-            'assets/bower_components/live-validator/dist/js/live-validator-theme-default.js'
+            'assets/bower_components/live-validator/dist/js/jquery-live-validator.min.js',
+            'assets/bower_components/live-validator/dist/js/js-live-validator.min.js',
+            'assets/bower_components/live-validator/dist/js/live-validator-theme-default.min.js'
         ];
 
 function cssUikit() {
@@ -75,8 +76,6 @@ function cssLiveValidator() {
 
 function jsLiveValidator() {
     return gulp.src( liveValidatorJS )
-        .pipe( uglify() )
-        .pipe( concat('live-validator.min.js' ) )
         .pipe( gulp.dest( 'static/js' ) );
 }
 

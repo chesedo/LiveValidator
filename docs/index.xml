@@ -6,8 +6,294 @@
     <description>Recent content in Docs on Live Validator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Jul 2016 16:01:23 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 12 Oct 2016 14:27:57 +0200</lastBuildDate>
     <atom:link href="https://chesedo.github.io/LiveValidator/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Methods</title>
+      <link>https://chesedo.github.io/LiveValidator/docs/methods/</link>
+      <pubDate>Wed, 12 Oct 2016 14:27:57 +0200</pubDate>
+      
+      <guid>https://chesedo.github.io/LiveValidator/docs/methods/</guid>
+      <description>
+
+&lt;h3 id=&#34;setrequired&#34;&gt;setRequired&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: {boolean} &amp;lt;doCheck = false&amp;gt;&lt;/p&gt;
+
+This will mark the input(s) as required. The theme should take care of any visuals that it will use to indicate that the input is required. You can specify if a check should be done to see if the input(s) is/are currently empty at the same time (false by default), else this will happen automatically when the input is changed.&lt;/p&gt;
+
+&lt;h3 id=&#34;unsetrequired&#34;&gt;unsetRequired&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: None&lt;/p&gt;
+
+Use this to make the input(s) unrequired. Like &lt;a href=&#34;#setrequired&#34;&gt;setRequired&lt;/a&gt;, the theme should handle the removal of the visual mark which indicated that the input was required. A check is automatically run with this call to remove any visuals that may no longer be needed.&lt;/p&gt;
+
+&lt;h4 id=&#34;example-of-changing-required-state&#34;&gt;Example of changing required state&lt;/h4&gt;
+
+&lt;p&gt;
+
+
+    &lt;ul class=&#34;uk-tab&#34; data-uk-tab=&#34;{connect:&#39;#switcher-example-method-setRequired-unsetRequired&#39;, animation: &#39;slide-horizontal&#39;}&#34;&gt;
+        &lt;li class=&#34;uk-active&#34;&gt;&lt;a href=&#34;&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;HTML&lt;/a&gt;&lt;/li&gt;
+        
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul id=&#34;switcher-example-method-setRequired-unsetRequired&#34; class=&#34;uk-switcher uk-margin&#34;&gt;
+        &lt;li&gt;
+            &lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;changeRequired&#34;/&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-setRequired&#34;&gt;Set Required&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-unsetRequired&#34;&gt;Unset Required&lt;/button&gt;
+&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;div class=&amp;#34;row&amp;#34;&amp;gt;
+    &amp;lt;label&amp;gt;Label&amp;lt;/label&amp;gt;
+    &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;changeRequired&amp;#34;/&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-setRequired&amp;#34;&amp;gt;Set Required&amp;lt;/button&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-unsetRequired&amp;#34;&amp;gt;Unset Required&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/li&gt;
+        
+        
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$( function() {
+    var input = $( &amp;#39;#changeRequired&amp;#39; ).LiveValidator();
+
+    $( &amp;#39;#btn-setRequired&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;setRequired&amp;#39; );
+    } );
+    $( &amp;#39;#btn-unsetRequired&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;unsetRequired&amp;#39; );
+    } );
+} );
+&lt;/code&gt;&lt;/pre&gt;
+            &lt;script type=&#34;text/javascript&#34;&gt;$( function() {
+    var input = $( &#39;#changeRequired&#39; ).LiveValidator();
+
+    $( &#39;#btn-setRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;setRequired&#39; );
+    } );
+    $( &#39;#btn-unsetRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;unsetRequired&#39; );
+    } );
+} );
+&lt;/script&gt;
+        &lt;/li&gt;
+        
+    &lt;/ul&gt;
+    
+
+
+
+&lt;div class=&#34;uk-alert&#34;&gt;Notice how the input is marked as missing when setRequired is clicked because it has true for the &lt;code&gt;doCheck&lt;/code&gt; option. Also notice how unsetRequired automatically removes the missing visual if needed.&lt;/div&gt;
+
+&lt;/p&gt;
+
+&lt;h3 id=&#34;enablelive&#34;&gt;enableLive&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: {boolean} &amp;lt;doCheck = false&amp;gt;&lt;/p&gt;
+
+This turns live validation on - validation that happens as the user types input. It cause all the checks set in &lt;a href=&#34;https://chesedo.github.io/LiveValidator/docs/options/#checks&#34;&gt;checks&lt;/a&gt; to be checked on each input event. Here the option &lt;code&gt;doCheck&lt;/code&gt; can also be used to indicate that a full check should be run after live validation has been enabled.&lt;/p&gt;
+
+&lt;h3 id=&#34;disablelive&#34;&gt;disableLive&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: None&lt;/p&gt;
+
+Use this if you want to disable the live validation. This will cause the set &lt;a href=&#34;https://chesedo.github.io/LiveValidator/docs/options/#checks&#34;&gt;checks&lt;/a&gt; to only be run when the input looses focus.&lt;/p&gt;
+
+&lt;h4 id=&#34;example-of-changing-live-validation-state&#34;&gt;Example of changing live validation state&lt;/h4&gt;
+
+
+
+
+    &lt;ul class=&#34;uk-tab&#34; data-uk-tab=&#34;{connect:&#39;#switcher-example-method-enableLive-disableLive&#39;, animation: &#39;slide-horizontal&#39;}&#34;&gt;
+        &lt;li class=&#34;uk-active&#34;&gt;&lt;a href=&#34;&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;HTML&lt;/a&gt;&lt;/li&gt;
+        
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul id=&#34;switcher-example-method-enableLive-disableLive&#34; class=&#34;uk-switcher uk-margin&#34;&gt;
+        &lt;li&gt;
+            &lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;changeLiveValidation&#34; pattern=&#34;^[0-9]+$&#34; title=&#34;Only numerics allowed&#34;/&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-enableLive&#34;&gt;Enable Live Validation&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-disableLive&#34;&gt;Disable Live Validation&lt;/button&gt;
+&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;div class=&amp;#34;row&amp;#34;&amp;gt;
+    &amp;lt;label&amp;gt;Label&amp;lt;/label&amp;gt;
+    &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;changeLiveValidation&amp;#34; pattern=&amp;#34;^[0-9]&amp;#43;$&amp;#34; title=&amp;#34;Only numerics allowed&amp;#34;/&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-enableLive&amp;#34;&amp;gt;Enable Live Validation&amp;lt;/button&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-disableLive&amp;#34;&amp;gt;Disable Live Validation&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/li&gt;
+        
+        
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$( function() {
+    var input = $( &amp;#39;#changeLiveValidation&amp;#39; ).LiveValidator();
+
+    $( &amp;#39;#btn-enableLive&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;enableLive&amp;#39; );
+    } );
+    $( &amp;#39;#btn-disableLive&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;disableLive&amp;#39; );
+    } );
+} );
+&lt;/code&gt;&lt;/pre&gt;
+            &lt;script type=&#34;text/javascript&#34;&gt;$( function() {
+    var input = $( &#39;#changeLiveValidation&#39; ).LiveValidator();
+
+    $( &#39;#btn-enableLive&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;enableLive&#39; );
+    } );
+    $( &#39;#btn-disableLive&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;disableLive&#39; );
+    } );
+} );
+&lt;/script&gt;
+        &lt;/li&gt;
+        
+    &lt;/ul&gt;
+    
+
+
+
+&lt;h3 id=&#34;addchecks&#34;&gt;addChecks&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: {array} checks&lt;/p&gt;
+
+This method allows you to add a check or multiple checks after LiveValidator has been instantiated. This can be useful when you want to change the validation based on other inputs.&lt;/p&gt;
+
+&lt;h3 id=&#34;removechecks&#34;&gt;removeChecks&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: {array} checks&lt;/p&gt;
+
+It is also possible to remove checks as is needed after instantiation.&lt;/p&gt;
+
+&lt;h3 id=&#34;removeallchecks&#34;&gt;removeAllChecks&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: None&lt;/p&gt;
+
+You can also clear all checks and start fresh using this.&lt;/p&gt;
+
+&lt;h4 id=&#34;example-of-changing-the-checks&#34;&gt;Example of changing the checks&lt;/h4&gt;
+
+
+
+
+    &lt;ul class=&#34;uk-tab&#34; data-uk-tab=&#34;{connect:&#39;#switcher-example-method-changeChecks&#39;, animation: &#39;slide-horizontal&#39;}&#34;&gt;
+        &lt;li class=&#34;uk-active&#34;&gt;&lt;a href=&#34;&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;HTML&lt;/a&gt;&lt;/li&gt;
+        
+        &lt;li&gt;&lt;a href=&#34;&#34;&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul id=&#34;switcher-example-method-changeChecks&#34; class=&#34;uk-switcher uk-margin&#34;&gt;
+        &lt;li&gt;
+            &lt;div class=&#34;row&#34;&gt;
+    &lt;label&gt;Label&lt;/label&gt;
+    &lt;input type=&#34;text&#34; id=&#34;changeChecks&#34; required/&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-addCheck&#34;&gt;Add a Check&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-removeLast&#34;&gt;Remove Last Added&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-removeAll&#34;&gt;Remove All Checks&lt;/button&gt;
+&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;div class=&amp;#34;row&amp;#34;&amp;gt;
+    &amp;lt;label&amp;gt;Label&amp;lt;/label&amp;gt;
+    &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;changeChecks&amp;#34; required/&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-addCheck&amp;#34;&amp;gt;Add a Check&amp;lt;/button&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-removeLast&amp;#34;&amp;gt;Remove Last Added&amp;lt;/button&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-removeAll&amp;#34;&amp;gt;Remove All Checks&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+        &lt;/li&gt;
+        
+        
+        &lt;li&gt;
+            &lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$( function() {
+    var input = $( &amp;#39;#changeChecks&amp;#39; ).LiveValidator();
+
+    var checks = [
+        &amp;#34;isNumber&amp;#34;,
+        {&amp;#34;min&amp;#34;: 5},
+        {&amp;#34;max&amp;#34;: 15}
+    ];
+    var i = 0;
+
+    $( &amp;#39;#btn-addCheck&amp;#39; ).click( function( e ) {
+        if ( i &amp;lt; checks.length )
+            $( input ).LiveValidator( &amp;#39;addChecks&amp;#39;, checks[i&amp;#43;&amp;#43;] );
+    } );
+    $( &amp;#39;#btn-removeLast&amp;#39; ).click( function( e ) {
+        if ( i &amp;gt; 0 )
+            $( input ).LiveValidator( &amp;#39;removeChecks&amp;#39;, checks[--i] );
+    } );
+    $( &amp;#39;#btn-removeAll&amp;#39; ).click( function( e ) {
+        i = 0;
+        $( input ).LiveValidator( &amp;#39;removeAllChecks&amp;#39; );
+    } );
+} );
+&lt;/code&gt;&lt;/pre&gt;
+            &lt;script type=&#34;text/javascript&#34;&gt;$( function() {
+    var input = $( &#39;#changeChecks&#39; ).LiveValidator();
+
+    var checks = [
+        &#34;isNumber&#34;,
+        {&#34;min&#34;: 5},
+        {&#34;max&#34;: 15}
+    ];
+    var i = 0;
+
+    $( &#39;#btn-addCheck&#39; ).click( function( e ) {
+        if ( i &lt; checks.length )
+            $( input ).LiveValidator( &#39;addChecks&#39;, checks[i++] );
+    } );
+    $( &#39;#btn-removeLast&#39; ).click( function( e ) {
+        if ( i &gt; 0 )
+            $( input ).LiveValidator( &#39;removeChecks&#39;, checks[--i] );
+    } );
+    $( &#39;#btn-removeAll&#39; ).click( function( e ) {
+        i = 0;
+        $( input ).LiveValidator( &#39;removeAllChecks&#39; );
+    } );
+} );
+&lt;/script&gt;
+        &lt;/li&gt;
+        
+    &lt;/ul&gt;
+    
+
+
+
+&lt;h3 id=&#34;isvalid&#34;&gt;isValid&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: None&lt;/p&gt;
+
+This can be used to check if an input is valid. It will rerun the required check and then the other testers if needed.
+
+&lt;div class=&#34;uk-alert&#34;&gt;When called using jQuery it will run on all inputs in the selector and on all children of the selector(s).&lt;/div&gt;
+
+&lt;/p&gt;
+
+&lt;h3 id=&#34;destroy&#34;&gt;destroy&lt;/h3&gt;
+
+&lt;p&gt;&lt;p class=&#34;uk-text-muted&#34;&gt;Parameters: None&lt;/p&gt;
+
+Use this when you want to destroy the plug-in.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Getting Started</title>
@@ -243,65 +529,57 @@
 
 &lt;h3 id=&#34;calling-methods&#34;&gt;Calling methods&lt;/h3&gt;
 
-&lt;p&gt;The plug-in exposes some methods that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
+&lt;p&gt;The plug-in exposes some &lt;a href=&#34;https://chesedo.github.io/LiveValidator/docs/methods/&#34;&gt;methods&lt;/a&gt; that can be called after instantiation. They can be called by passing them in as a string when calling the plug-in.
 
 
 
-    &lt;ul class=&#34;uk-tab&#34; data-uk-tab=&#34;{connect:&#39;#switcher-example-gs-methods-call&#39;, animation: &#39;slide-horizontal&#39;}&#34;&gt;
+    &lt;ul class=&#34;uk-tab&#34; data-uk-tab=&#34;{connect:&#39;#switcher-example-method-setRequired-unsetRequired&#39;, animation: &#39;slide-horizontal&#39;}&#34;&gt;
         &lt;li class=&#34;uk-active&#34;&gt;&lt;a href=&#34;&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a href=&#34;&#34;&gt;HTML&lt;/a&gt;&lt;/li&gt;
         
         &lt;li&gt;&lt;a href=&#34;&#34;&gt;JavaScript&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
-    &lt;ul id=&#34;switcher-example-gs-methods-call&#34; class=&#34;uk-switcher uk-margin&#34;&gt;
+    &lt;ul id=&#34;switcher-example-method-setRequired-unsetRequired&#34; class=&#34;uk-switcher uk-margin&#34;&gt;
         &lt;li&gt;
             &lt;div class=&#34;row&#34;&gt;
     &lt;label&gt;Label&lt;/label&gt;
-    &lt;input type=&#34;text&#34; id=&#34;methods-call&#34; /&gt;
+    &lt;input type=&#34;text&#34; id=&#34;changeRequired&#34;/&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-setRequired&#34;&gt;Set Required&lt;/button&gt;
+    &lt;button type=&#34;button&#34; class=&#34;uk-button&#34; id=&#34;btn-unsetRequired&#34;&gt;Unset Required&lt;/button&gt;
 &lt;/div&gt;
-&lt;a class=&#34;uk-button uk-margin-top&#34; id=&#34;toggleRequired&#34;&gt;Toggle Required&lt;/a&gt;
 
         &lt;/li&gt;
         &lt;li&gt;
             &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;div class=&amp;#34;row&amp;#34;&amp;gt;
     &amp;lt;label&amp;gt;Label&amp;lt;/label&amp;gt;
-    &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;methods-call&amp;#34; /&amp;gt;
+    &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;changeRequired&amp;#34;/&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-setRequired&amp;#34;&amp;gt;Set Required&amp;lt;/button&amp;gt;
+    &amp;lt;button type=&amp;#34;button&amp;#34; class=&amp;#34;uk-button&amp;#34; id=&amp;#34;btn-unsetRequired&amp;#34;&amp;gt;Unset Required&amp;lt;/button&amp;gt;
 &amp;lt;/div&amp;gt;
-&amp;lt;a class=&amp;#34;uk-button uk-margin-top&amp;#34; id=&amp;#34;toggleRequired&amp;#34;&amp;gt;Toggle Required&amp;lt;/a&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
         &lt;/li&gt;
         
         
         &lt;li&gt;
             &lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$( function() {
-    // Instatiate the plugin first
-    var input = $( &amp;#39;#methods-call&amp;#39; ).LiveValidator();
-    var required = false;
+    var input = $( &amp;#39;#changeRequired&amp;#39; ).LiveValidator();
 
-    $( &amp;#39;#toggleRequired&amp;#39; ).click( function() {
-        if ( required ) {
-            input.LiveValidator( &amp;#39;unsetRequired&amp;#39; );
-        } else {
-            input.LiveValidator( &amp;#39;setRequired&amp;#39; );
-        }
-
-        required = !required;
+    $( &amp;#39;#btn-setRequired&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;setRequired&amp;#39; );
+    } );
+    $( &amp;#39;#btn-unsetRequired&amp;#39; ).click( function( e ) {
+        $( input ).LiveValidator( &amp;#39;unsetRequired&amp;#39; );
     } );
 } );
 &lt;/code&gt;&lt;/pre&gt;
             &lt;script type=&#34;text/javascript&#34;&gt;$( function() {
-    // Instatiate the plugin first
-    var input = $( &#39;#methods-call&#39; ).LiveValidator();
-    var required = false;
+    var input = $( &#39;#changeRequired&#39; ).LiveValidator();
 
-    $( &#39;#toggleRequired&#39; ).click( function() {
-        if ( required ) {
-            input.LiveValidator( &#39;unsetRequired&#39; );
-        } else {
-            input.LiveValidator( &#39;setRequired&#39; );
-        }
-
-        required = !required;
+    $( &#39;#btn-setRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;setRequired&#39; );
+    } );
+    $( &#39;#btn-unsetRequired&#39; ).click( function( e ) {
+        $( input ).LiveValidator( &#39;unsetRequired&#39; );
     } );
 } );
 &lt;/script&gt;

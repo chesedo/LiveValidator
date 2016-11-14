@@ -23,61 +23,6 @@
         margin-bottom: 1rem;
     }
 </style>
-<script type="text/javascript">
-    var text = 'Simplicity';
-
-    LiveValidator.Tester.prototype.key = function( val ) {
-        if ( val != text ) {
-            this.addError( 'What is key?' );
-        }
-    };
-    LiveValidator.Tester.prototype.isAlpha = function( val ) {
-        if ( !/^[a-zA-Z]+$/.test( val ) ) {
-            this.addError( 'Should only contain alphabeticals' );
-        }
-    };
-
-    $( function() {
-        var updateTimeout;
-        var restartTimeout;
-        var input = $( '#fold' ).LiveValidator( { checks: [ 'key', 'isAlpha' ] } );
-
-        function updateValue() {
-            var val = input.val();
-            var index = text.indexOf( val );
-            var newValue = '';
-            var timeout = 450;
-
-            if (val === text + 2 ) {
-                newValue = '';
-                timeout = 1500;
-            } else if ( index !== 0 ) {
-                newValue = text[ 0 ];
-            } else if ( val === text ) {
-                newValue = text + 2;
-                timeout = 4000;
-            } else {
-                newValue = val + text[ val.length ];
-            }
-
-            if ( newValue === text ) {
-                timeout = 1400;
-            }
-            input.val( newValue ).trigger( 'input' );
-            updateTimeout = window.setTimeout( updateValue, timeout );
-        }
-
-        input.focus( function() {
-            window.clearTimeout( updateTimeout );
-        } ).keydown( function() {
-            window.clearTimeout( updateTimeout );
-        } ).blur( function() {
-            restartTimeout = window.setTimeout( updateValue, 5000);
-        } );
-
-        updateValue();
-    } );
-</script>
 {{ end }}
 
 {{ define "main" }}
@@ -87,7 +32,7 @@
         <div class="uk-vertical-align uk-text-center uk-block uk-block-muted uk-block-large">
             <div class="uk-vertical-align-middle uk-width-1-2">
                 <div class="row">
-                    <input type="text">
+                    <input type="text" id="inputBox">
                 </div>
                 <p>
                     <a class="uk-button uk-button-primary uk-button-large" href="download">Download</a>
@@ -114,4 +59,64 @@
     {{ end }}
 </div>
 
+
+<script type="text/javascript">
+    var text = 'Simplicity';
+
+    LiveValidator.Tester.prototype.key = function( val ) {
+        if ( val != text ) {
+            this.addError( 'What is key?' );
+        }
+    };
+    LiveValidator.Tester.prototype.isAlpha = function( val ) {
+        if ( !/^[a-zA-Z]+$/.test( val ) ) {
+            this.addError( 'Should only contain alphabeticals' );
+        }
+    };
+
+    var updateTimeout;
+    var restartTimeout;
+    var input = document.getElementById( 'inputBox' );
+    console.log(input);
+    var validator = new LiveValidator.Core( input, { checks: [ 'key', 'isAlpha' ] } );
+    var eventInput = new Event( 'input' );
+
+    function updateValue() {
+        var val = input.value;
+        var index = text.indexOf( val );
+        var newValue = '';
+        var timeout = 450;
+
+        if (val === text + 2 ) {
+            newValue = '';
+            timeout = 1500;
+        } else if ( index !== 0 ) {
+            newValue = text[ 0 ];
+        } else if ( val === text ) {
+            newValue = text + 2;
+            timeout = 4000;
+        } else {
+            newValue = val + text[ val.length ];
+        }
+
+        if ( newValue === text ) {
+            timeout = 1400;
+        }
+        input.value = newValue;
+        input.dispatchEvent(  eventInput );
+        updateTimeout = window.setTimeout( updateValue, timeout );
+    }
+
+    input.addEventListener( 'focus', function() {
+        window.clearTimeout( updateTimeout );
+    } );
+    input.addEventListener( 'keydown', function() {
+        window.clearTimeout( updateTimeout );
+    } );
+    input.addEventListener( 'blur', function() {
+        restartTimeout = window.setTimeout( updateValue, 5000);
+    } );
+
+    updateValue();
+</script>
 {{ end }}
