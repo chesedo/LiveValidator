@@ -122,5 +122,5 @@ And if you are using the distribution files, then one of the following is needed
 - jquery-live-validator.min.js
 
 {{% alert %}}
-The default theme is optional **as long as** another is supplied and set in the options. If you do not supply another or do not set the options to use it, then an error will result and the plugin will not work.
+The default theme is optional **as long as** another is supplied and set in the [options]({{< ref "docs/options.md#theme" >}}). If you do not supply another or do not set the options to use it, then an error will result and the plugin will not work.
 {{% /alert %}}
