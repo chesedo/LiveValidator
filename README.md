@@ -4,8 +4,10 @@
 
 This jquery plugin is a complete re-write of its predecessor [jQuery-liveVal](https://github.com/chesedo/jQuery-liveVal). It is now theme-able (major frameworks to be added soon) and it is easier to extend the checks. And finally, the entire code is unit tested.
 
+The core of the plugin is also pure JS, so no need to use jQuery if you do not want to.
+
 The following is still needed before it will be considered usable:
 - [ ] Create GitHub page
 - [ ] Add Bootstrap theme
-- [ ] Write test for Tester
-- [ ] Auto-detect checkers needed for input attributes such as `min`, `max`, `maxlength`, etc.
+- [ x ] Write test for Tester
+- [ x ] Auto-detect checkers needed for input attributes such as `min`, `max`, `maxlength`, etc.
