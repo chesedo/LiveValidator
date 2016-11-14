@@ -561,6 +561,8 @@ LiveValidator.Tester.prototype.isNumber = function( value ) {
     }
 };
 
+/* globals Element */
+
 // Get namespace ready
 var LiveValidator = LiveValidator || {};
 

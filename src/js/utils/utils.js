@@ -1,3 +1,5 @@
+/* globals Element */
+
 // Get namespace ready
 var LiveValidator = LiveValidator || {};
 

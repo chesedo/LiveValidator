@@ -27,5 +27,6 @@ helper.createSpyTheme = function() {
     return spyTheme;
 };
 
+/* globals Event */
 helper.inputEvent = new Event( 'input' );
 helper.blurEvent = new Event( 'blur' );

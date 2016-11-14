@@ -90,7 +90,7 @@ gulp.task( 'tdd', function( done ) {
 
 gulp.task( 'code-standards', function() {
     return gulp.src( [ 'src/js/**/*.js', 'tests/**/*.js', '*.js' ] )
-            .pipe( jshint( '.jshintrc' ) )
+            .pipe( jshint() )
             .pipe( jscs( { configPath: '.jscsrc' } ) )
             .pipe( stylish.combineWithHintResults() )
             .pipe( jshint.reporter( 'jshint-stylish' ) )
