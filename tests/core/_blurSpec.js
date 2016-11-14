@@ -15,7 +15,7 @@ core._blurSpec = function() {
         this.createInstance = function( required ) {
             this.input = helper.bareInput();
 
-            return new LiveValidator.Core( $, this.input, { theme: this.spyTheme, required: required } );
+            return new LiveValidator.Core( this.input, { theme: this.spyTheme, required: required } );
         };
     } );
 
@@ -41,7 +41,7 @@ core._blurSpec = function() {
 
     it( 'not empty and not required', function() {
         var instance = this.createInstance( false );
-        $( this.input ).val( 'test' );
+        this.input.value = 'test';
         instance._blur();
         expect( this.setMissing ).not.toHaveBeenCalled();
         expect( this.unsetMissing ).toHaveBeenCalled();
@@ -52,7 +52,7 @@ core._blurSpec = function() {
 
     it( 'not empty and required', function() {
         var instance = this.createInstance( true );
-        $( this.input ).val( 'test' );
+        this.input.value = 'test';
         instance._blur();
         expect( this.setMissing ).not.toHaveBeenCalled();
         expect( this.unsetMissing ).toHaveBeenCalled();
@@ -63,7 +63,7 @@ core._blurSpec = function() {
 
     it( 'filled with spaces and not required', function() {
         var instance = this.createInstance( false );
-        $( this.input ).val( ' ' );
+        this.input.value = ' ';
         instance._blur();
         expect( this.setMissing ).not.toHaveBeenCalled();
         expect( this.unsetMissing ).toHaveBeenCalled();
@@ -74,7 +74,7 @@ core._blurSpec = function() {
 
     it( 'filled with spaces and required', function() {
         var instance = this.createInstance( true );
-        $( this.input ).val( ' ' );
+        this.input.value = ' ';
         instance._blur();
         expect( this.setMissing ).toHaveBeenCalled();
         expect( this.unsetMissing ).not.toHaveBeenCalled();

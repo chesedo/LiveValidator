@@ -6,7 +6,7 @@ var core = core || {};
 core._initSpec = function() {
     function setupInstance( options ) {
         options = options || {};
-        return new LiveValidator.Core( $, helper.bareInput(), options );
+        return new LiveValidator.Core( helper.bareInput(), options );
     }
 
     it( 'theme is invalid', function() {

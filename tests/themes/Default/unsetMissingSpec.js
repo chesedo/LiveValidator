@@ -4,11 +4,12 @@ theme.default = theme.default || {};
 theme.default.unsetMissingSpec = function() {
     beforeEach( function() {
         this.row = helper.themes.default.getRow();
-        this.theme = new LiveValidator.themes.Default( $, $( this.row ).find( 'input' ) );
+        this.theme = new LiveValidator.themes.Default( helper.themes.getInput( this.row ) );
     } );
 
     it( 'already missing', function() {
-        expect( this.row.addClass( 'missing' ) ).toHaveClass( 'missing' );
+        LiveValidator.utils.addClass( this.row, 'missing' );
+        expect( this.row ).toHaveClass( 'missing' );
         this.theme.unsetMissing();
         expect( this.row ).not.toHaveClass( 'missing' );
     } );

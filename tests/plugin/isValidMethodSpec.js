@@ -4,14 +4,14 @@
 var plugin = plugin || {};
 plugin.isValidMethodSpec = function() {
     it( 'one input passes', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         expect( input.LiveValidator( 'isValid' ) ).toBe( true );
     } );
 
     it( 'one input fails', function() {
-        var input = helper.requiredInput();
+        var input = $( helper.requiredInput() );
 
         input.LiveValidator();
         expect( input.LiveValidator( 'isValid' ) ).toBe( false );
@@ -42,7 +42,7 @@ plugin.isValidMethodSpec = function() {
     } );
 
     it( 'input does not have plugin instance', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         expect( input.LiveValidator( 'isValid' ) ).toBe( false );
     } );

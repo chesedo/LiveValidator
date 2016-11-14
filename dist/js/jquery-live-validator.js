@@ -10,7 +10,7 @@
 
         // If this is only to change the defaults
         if ( !( this instanceof $ ) ) {
-            $.extend( true, $.fn[ pluginName ].defaults, options );
+            $.extend( true, LiveValidator.defaults, options );
             return;
         }
 
@@ -49,7 +49,7 @@
 
                 // Only set when not already set
                 if ( !$.data( this, pluginName ) ) {
-                    $.data( this, pluginName, new LiveValidator.Core( $, this, options ) );
+                    $.data( this, pluginName, new LiveValidator.Core( this, options ) );
                 }
             } );
         }
@@ -104,54 +104,48 @@
 
         return this;
     };
-
-    // Stores the defaults for the plugin - allow a system-wide overrite
-    $.fn[ pluginName ].defaults =  {
-        themeData: {
-            error: 'error',
-            missing: 'missing',
-            parentSelector: '.row'
-        },
-        required: false,
-        liveEnabled: true,
-        checks: [],
-        debug: false
-    };
 } )( jQuery, window, document );
 
 // Get namespace ready
 var LiveValidator = LiveValidator || {};
 
-LiveValidator.Core = function( $, element, options ) {
+// Stores the defaults for the plugin - allow a system-wide overrite
+LiveValidator.defaults =  {
+    themeData: {
+        error: 'error',
+        missing: 'missing',
+        parentSelector: '.row'
+    },
+    required: false,
+    liveEnabled: true,
+    checks: [],
+    debug: false
+};
+
+LiveValidator.Core = function( element, options ) {
 
     // Scope-safe the object
     if ( !( this instanceof LiveValidator.Core ) ) {
-        return new LiveValidator.Core( $, element, options );
+        return new LiveValidator.Core( element, options );
     }
-
-    // Stores a reference to jQuery
-    this.jq = $;
 
     // Store a reference to this input
     this.element = element;
-    this.$element = this.jq( element );
 
     // Check if required attribute is set
-    // IE9 does not support the :required selector
-    var required = this.$element.is( '[required] ' );
+    var required = this.element.hasAttribute( 'required' );
 
     // Find HTML5 validation checks on the input
     var autoChecks = new LiveValidator.AutoChecks( this.element );
 
     // Get the options for this element by extending the defaults with detected required (above),
     // those set on data and those passed in
-    this.options = this.jq.extend(
-        true,
+    this.options = LiveValidator.utils.extend(
         {},
-        this.jq.fn.LiveValidator.defaults,
+        LiveValidator.defaults,
         { required: required },
         { checks: autoChecks.getChecks() },
-        this.$element.data(),
+        LiveValidator.utils.getData( this.element ),
         options
     );
 
@@ -163,6 +157,10 @@ LiveValidator.Core = function( $, element, options ) {
 
     // This will hold all the input errors if there are any
     this.errors = [];
+
+    // Store events so that they can be unset when needed
+    this._blurEvent = this._blur.bind( this );
+    this._inputEvent = this._input.bind( this );
 
     // Holds the debugging levels
     this.logLevels = [ 'DEBUG', 'INFO', 'ERROR' ];
@@ -179,10 +177,10 @@ LiveValidator.Core.prototype = {
 
         // Setup the needed theme
         if ( this._isValidTheme( this.options.theme ) ) {
-            this.theme = new this.options.theme( this.jq, this.element, this.options.themeData );
+            this.theme = new this.options.theme( this.element, this.options.themeData );
             this._log( 'LiveValidator is using the theme ' + this.theme.constructor.name );
         } else {
-            this.theme = new LiveValidator.themes.Default( this.jq, this.element, this.options.themeData );
+            this.theme = new LiveValidator.themes.Default( this.element, this.options.themeData );
             this._log( 'LiveValidator is using the default theme' );
         }
 
@@ -202,7 +200,7 @@ LiveValidator.Core.prototype = {
 
         // Bind `blur` function
         this._log( 'Binding the blur event', 2 );
-        this.$element.on( 'blur.LiveValidator', this._blur.bind( this ) );
+        this.element.addEventListener( 'blur', this._blurEvent );
 
         // Filter checks to remove duplicates and invalids/undeclared
         this.options.checks = this._filterChecks( this.options.checks );
@@ -283,14 +281,14 @@ LiveValidator.Core.prototype = {
      * Function that gets triggered on blur event
      */
     _blur: function() {
-        var value = this.$element.val(),
-            trimmedValue = this.jq.trim( value );
+        var value = this.element.value,
+            trimmedValue = value.trim();
 
         this._log( 'Blur triggered' );
 
         // Update value if trim was successful
         if ( value !== trimmedValue ) {
-            this.$element.val( trimmedValue );
+            this.element.value = trimmedValue;
             this._log( 'Trimed spaces from input', 2 );
         }
 
@@ -314,6 +312,21 @@ LiveValidator.Core.prototype = {
             this.theme.setMissing();
         } else {
             this.theme.unsetMissing();
+        }
+    },
+    /**
+     * Function that gets triggered on input event
+     */
+    _input: function() {
+        var value = this.element.value;
+
+        // Cannot do checks on empty value
+        if ( value !== '' ) {
+            this._log( 'Value not empty so will perform checks', 2 );
+            this._performChecks( value );
+        } else {
+            this._log( 'Value is empty so am removing errors', 2 );
+            this.theme.clearErrors();
         }
     },
     /**
@@ -389,22 +402,11 @@ LiveValidator.Core.prototype = {
         this.liveEnabled = true;
 
         // Bind to the input event
-        this.$element.on( 'input.LiveValidator', function() {
-            var value = this.$element.val();
-
-            // Cannot do checks on empty value
-            if ( value !== '' ) {
-                this._log( 'Value not empty so will perform checks', 2 );
-                this._performChecks( this.$element.val() );
-            } else {
-                this._log( 'Value is empty so am removing errors', 2 );
-                this.theme.clearErrors();
-            }
-        }.bind( this ) );
+        this.element.addEventListener( 'input', this._inputEvent );
 
         if ( doCheck ) {
             this._log( 'Performing checks after enabling live checking', 2 );
-            this._performChecks( this.$element.val() );
+            this._performChecks( this.element.value );
         }
     },
     /**
@@ -413,7 +415,7 @@ LiveValidator.Core.prototype = {
     disableLive: function() {
         this._log( 'Live checking is now disabled' );
         this.liveEnabled = false;
-        this.$element.off( 'input.LiveValidator' );
+        this.element.removeEventListener( 'input', this._inputEvent );
     },
     /**
      * Add extra checks to the current ones
@@ -473,7 +475,8 @@ LiveValidator.Core.prototype = {
     destroy: function() {
         this._log( 'Destroying plugin instance and reseting the input\'s state' );
 
-        this.$element.off( '.LiveValidator' );
+        this.element.removeEventListener( 'blur', this._blurEvent );
+        this.element.removeEventListener( 'input', this._inputEvent );
         this.theme.clearErrors();
         this.theme.unsetMissing();
     },
@@ -505,7 +508,7 @@ LiveValidator.AutoChecks = function( element ) {
 
     // Scope-safe the object
     if ( !( this instanceof LiveValidator.AutoChecks ) ) {
-        return new LiveValidator.AutoChecks( $, element );
+        return new LiveValidator.AutoChecks( element );
     }
 
     this.element = element;
@@ -665,3 +668,124 @@ LiveValidator.Tester.prototype.isNumber = function( value ) {
         return true;
     }
 };
+
+/* globals Element */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.utils = {
+    /**
+     * Function to extend object - used in place of jQuery's extend()
+     */
+    extend: function( out ) {
+        out = out || {};
+
+        for ( var i = 1; i < arguments.length; i++ ) {
+            var obj = arguments[ i ];
+
+            if ( !obj ) {
+                continue;
+            }
+
+            for ( var key in obj ) {
+                if ( obj.hasOwnProperty( key ) ) {
+                    if ( Object.prototype.toString.call( obj[ key ] ) ===  '[object Object]' ) {
+                        out[ key ] = LiveValidator.utils.extend( out[ key ], obj[ key ] );
+                    } else {
+                        out[ key ] = obj[ key ];
+                    }
+                }
+            }
+        }
+
+        return out;
+    },
+    /**
+     * Function to get data from element like jQuery's data()
+     */
+    getData: function( element ) {
+        var data = {};
+
+        for ( var key in element.dataset ) {
+            try {
+                data[ key ] = JSON.parse( element.dataset[ key ] );
+            } catch ( e ) {
+                data[ key ] = element.dataset[ key ];
+            }
+        }
+
+        return data;
+    },
+    /**
+     * Get the parent of element based on function
+     */
+    parentSelector: function( element, parentSel ) {
+        while ( element ) {
+            if ( element.matches( parentSel ) ) {
+                return element;
+            }
+            element = element.parentElement;
+        }
+    },
+    /**
+     * Add a class to the element depending on browser support
+     */
+    addClass: function( element, className ) {
+        if ( element instanceof Element ) {
+            if ( element.classList ) {
+                element.classList.add( className );
+            } else {
+                element.className += ' ' + className;
+            }
+        }
+    },
+    /**
+     * Remove a class from the element depending on browser support
+     */
+    removeClass: function( element, className ) {
+        if ( element instanceof Element ) {
+            if ( element.classList ) {
+                element.classList.remove( className );
+            } else {
+                element.className = element.className.replace(
+                    new RegExp( '(^|\\b)' + className.split( ' ' ).join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
+            }
+        }
+    },
+    /**
+     * Remove a child element from this element if the child can be found
+     */
+    removeChild: function( element, childSelector ) {
+        if ( element instanceof Element ) {
+            var child =  element.querySelector( childSelector );
+            if ( child ) {
+                element.removeChild( child );
+            }
+        }
+    },
+    /**
+     * Add child to element if the element is valid
+     */
+    appendChild: function( element, child ) {
+        if ( element instanceof Element ) {
+            element.appendChild( child );
+        }
+    }
+};
+
+// Element.matches polyfill from https://developer.mozilla.org/en/docs/Web/API/Element/matches#Polyfill
+if ( !Element.prototype.matches ) {
+    Element.prototype.matches =
+        Element.prototype.matchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
+        Element.prototype.webkitMatchesSelector ||
+        function( s ) {
+            var matches = ( this.document || this.ownerDocument ).querySelectorAll( s ),
+                i = matches.length;
+            while ( --i >= 0 && matches.item( i ) !== this ) {}
+            return i > -1;
+        };
+}

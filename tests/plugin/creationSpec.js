@@ -5,7 +5,7 @@ var plugin = plugin || {};
 
 plugin.creationSpec = function() {
     it( 'allows only the first instantiation', function() {
-        var input = helper.bareInput();
+        var input = helper.bareJqInput();
 
         input.LiveValidator();
         input.LiveValidator( { required: true } );

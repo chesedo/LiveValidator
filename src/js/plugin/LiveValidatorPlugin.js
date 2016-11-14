@@ -10,7 +10,7 @@
 
         // If this is only to change the defaults
         if ( !( this instanceof $ ) ) {
-            $.extend( true, $.fn[ pluginName ].defaults, options );
+            $.extend( true, LiveValidator.defaults, options );
             return;
         }
 
@@ -49,7 +49,7 @@
 
                 // Only set when not already set
                 if ( !$.data( this, pluginName ) ) {
-                    $.data( this, pluginName, new LiveValidator.Core( $, this, options ) );
+                    $.data( this, pluginName, new LiveValidator.Core( this, options ) );
                 }
             } );
         }
@@ -103,18 +103,5 @@
         }
 
         return this;
-    };
-
-    // Stores the defaults for the plugin - allow a system-wide overrite
-    $.fn[ pluginName ].defaults =  {
-        themeData: {
-            error: 'error',
-            missing: 'missing',
-            parentSelector: '.row'
-        },
-        required: false,
-        liveEnabled: true,
-        checks: [],
-        debug: false
     };
 } )( jQuery, window, document );

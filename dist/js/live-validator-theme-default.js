@@ -2,17 +2,15 @@
 var LiveValidator = LiveValidator || {};
 LiveValidator.themes = LiveValidator.themes || {};
 
-LiveValidator.themes.Default = function LiveValidatorTheme( $, element, options ) {
+LiveValidator.themes.Default = function LiveValidatorTheme( element, options ) {
 
     // Scope-safe the object
     if ( !( this instanceof LiveValidator.themes.Default ) ) {
-        return new LiveValidator.themes.Default( $, element, options );
+        return new LiveValidator.themes.Default( element, options );
     }
 
-    this.jq = $;
-    this.$element = this.jq( element );
-    this.options = this.jq.extend(
-        true,
+    this.element = element;
+    this.options = LiveValidator.utils.extend(
         {},
         {
             error: 'error',
@@ -21,34 +19,42 @@ LiveValidator.themes.Default = function LiveValidatorTheme( $, element, options 
         },
         options
     );
-    this.$parent = this.$element.parent( this.options.parentSelector );
+    this.parentEl = LiveValidator.utils.parentSelector( this.element, this.options.parentSelector );
 };
 
 LiveValidator.themes.Default.prototype.markRequired = function() {
-    this.$parent.addClass( 'required' );
+    LiveValidator.utils.addClass( this.parentEl, 'required' );
 };
 LiveValidator.themes.Default.prototype.unmarkRequired = function() {
-    this.$parent.removeClass( 'required' );
+    LiveValidator.utils.removeClass( this.parentEl, 'required' );
 };
 LiveValidator.themes.Default.prototype.setMissing = function() {
-    this.$parent.addClass( this.options.missing );
+    LiveValidator.utils.addClass( this.parentEl, this.options.missing );
 };
 LiveValidator.themes.Default.prototype.unsetMissing = function() {
-    this.$parent.removeClass( this.options.missing );
+    LiveValidator.utils.removeClass( this.parentEl, this.options.missing );
 };
 LiveValidator.themes.Default.prototype.clearErrors = function() {
-    this.$parent.removeClass( this.options.error ).find( 'ul' ).remove();
+    LiveValidator.utils.removeClass( this.parentEl, this.options.error );
+    LiveValidator.utils.removeChild( this.parentEl, 'ul' );
 };
 LiveValidator.themes.Default.prototype.addErrors = function( errors ) {
 
     // Remove old errors
     this.clearErrors();
 
-    var $ul = $( '<ul class="errors" />' );
+    // Create ul
+    var ul = document.createElement( 'ul' );
+    LiveValidator.utils.addClass( ul, 'errors' );
 
+    // Add each error li
     for ( var i = 0; i < errors.length; i++ ) {
-        $ul.append( '<li>' + errors[ i ] + '</li>' );
+        var li = document.createElement( 'li' );
+        li.innerHTML = errors[ i ];
+        ul.appendChild( li );
     }
 
-    this.$parent.append( $ul ).addClass( this.options.error );
+    // Add ul to row
+    LiveValidator.utils.appendChild( this.parentEl, ul );
+    LiveValidator.utils.addClass( this.parentEl, this.options.error );
 };

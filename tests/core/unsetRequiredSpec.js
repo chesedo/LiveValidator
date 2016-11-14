@@ -8,7 +8,7 @@ core.unsetRequiredSpec = function() {
         var input = helper.bareInput(),
             spyTheme = helper.createSpyTheme();
 
-        this.instance = new LiveValidator.Core( $, input, { theme: spyTheme } );
+        this.instance = new LiveValidator.Core( input, { theme: spyTheme } );
         this.unmarkRequired = spyOn( spyTheme.prototype, 'unmarkRequired' );
         this.unsetMissing = spyOn( spyTheme.prototype, 'unsetMissing' );
     } );

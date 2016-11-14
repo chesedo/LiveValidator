@@ -7,23 +7,23 @@ plugin.defaultsSpec = function() {
 
     // To restore the defaults when done
     beforeAll( function() {
-        this._defaults = $.extend( {}, $.fn.LiveValidator.defaults );
+        this._defaults = $.extend( {}, LiveValidator.defaults );
     } );
 
     beforeEach( function() {
-        $.fn.LiveValidator.defaults = $.extend( {}, this._defaults );
+        LiveValidator.defaults = $.extend( {}, this._defaults );
     } );
 
     afterAll( function() {
-        $.fn.LiveValidator.defaults = $.extend( {}, this._defaults );
+        LiveValidator.defaults = $.extend( {}, this._defaults );
     } );
 
-    it( 'can be overwritten through `$.fn.LiveValidator.defaults`', function() {
-        $.fn.LiveValidator.defaults.requiredHTML = '*';
-        $.fn.LiveValidator.defaults.themeData.parentSelector = 'group';
+    it( 'can be overwritten through `LiveValidator.defaults`', function() {
+        LiveValidator.defaults.requiredHTML = '*';
+        LiveValidator.defaults.themeData.parentSelector = 'group';
 
-        expect( $.fn.LiveValidator.defaults.requiredHTML ).toEqual( '*' );
-        expect( $.fn.LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
+        expect( LiveValidator.defaults.requiredHTML ).toEqual( '*' );
+        expect( LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
     } );
 
     it( 'can be overwritten by calling `LiveValidator`', function() {
@@ -34,7 +34,7 @@ plugin.defaultsSpec = function() {
             }
         } );
 
-        expect( $.fn.LiveValidator.defaults.requiredHTML ).toEqual( '*' );
-        expect( $.fn.LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
+        expect( LiveValidator.defaults.requiredHTML ).toEqual( '*' );
+        expect( LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
     } );
 };

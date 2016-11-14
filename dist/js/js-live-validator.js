@@ -387,3 +387,297 @@ LiveValidator.Core.prototype = {
         }
     }
 };
+
+/**
+ * Try to detect checks based on some input attributes ( to 'polyfill' for browsers not supporting them )
+ * Based on https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+ */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.AutoChecks = function( element ) {
+
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidator.AutoChecks ) ) {
+        return new LiveValidator.AutoChecks( element );
+    }
+
+    this.element = element;
+    this.checks = [];
+
+    // TODO: date-time input also have `min` and `max` support which is still missing
+    // Types of inputs to look for in each group
+    this.types = {
+        numerics: [ 'number', 'range' ],
+        text: [ 'email', 'password', 'search', 'tel', 'text', 'url' ]
+    };
+};
+
+LiveValidator.AutoChecks.prototype = {
+    /**
+     * Get the checks for this input
+     *
+     * @return {Array} Array of checks detected with their parameters
+     */
+    getChecks: function() {
+        var type = this.element.type;
+
+        if ( this.types.numerics.indexOf( type ) !== -1 ) {
+            this._filterNumeric();
+        }
+
+        if ( this.types.text.indexOf( type ) !== -1 ) {
+            this._filterText();
+        }
+
+        return this.checks;
+    },
+    /**
+     * Check for `min` and `max` attributes on numeric inputs
+     */
+    _filterNumeric: function() {
+        this._addCheck( 'min' );
+        this._addCheck( 'max' );
+    },
+    /**
+     * Check for `minlength`, `maxlength` and `pattern` attributes on "text" inputs
+     */
+    _filterText: function() {
+        this._addCheck( 'minlength' );
+        this._addCheck( 'maxlength' );
+
+        if ( this.element.hasAttribute( 'pattern' ) ) {
+            var params = {};
+            params.regex = this.element.getAttribute( 'pattern' );
+            params.title = this.element.getAttribute( 'title' );
+            this.checks.push( { 'pattern':  params } );
+        }
+    },
+    /**
+     * Try to find the 'check' attribute and add its check if it exists
+     *
+     * @param  {string} check The attribte to look for. Eg. `min`
+     */
+    _addCheck: function( check ) {
+        if ( this.element.hasAttribute( check ) ) {
+            var checkObj = {};
+            checkObj[ check ] = parseInt( this.element.getAttribute( check ) );
+            this.checks.push( checkObj );
+        }
+    }
+};
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Tester = function() {
+
+    // Scope-safe the object
+    if ( !( this instanceof LiveValidator.Tester ) ) {
+        return new LiveValidator.Tester();
+    }
+
+    this.errors = [];
+};
+
+LiveValidator.Tester.prototype.clearErrors = function() {
+    this.errors = [];
+};
+
+LiveValidator.Tester.prototype.addError = function( error ) {
+    this.errors.push( error );
+};
+
+LiveValidator.Tester.prototype.getErrors = function() {
+    return this.errors;
+};
+
+/**
+ * This adds the testers for the auto checks detector
+ */
+
+LiveValidator.Tester.prototype.min = function( value, min ) {
+    if ( this.isNumber( value ) ) {
+        if ( value < min ) {
+            this.addError( 'Should be more than or equal %d'.replace( '%d', min ) );
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+LiveValidator.Tester.prototype.max = function( value, max ) {
+    if ( this.isNumber( value ) ) {
+        if ( value > max ) {
+            this.addError( 'Should be less than or equal %d'.replace( '%d', max ) );
+            return false;
+        } else {
+            return true;
+        }
+    }
+    return false;
+};
+
+LiveValidator.Tester.prototype.minlength = function( value, min ) {
+    if ( value.length < min ) {
+        this.addError( 'Should be %d characters or more'.replace( '%d', min ) );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.maxlength = function( value, max ) {
+    if ( value.length > max ) {
+        this.addError( 'Should be %d characters or less'.replace( '%d', max ) );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.pattern = function( value, params ) {
+
+    // TODO: Add the `u` - the docs state that this is used
+    var regex = new RegExp( params.regex );
+    if ( !regex.test( value ) ) {
+        this.addError( params.title );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+LiveValidator.Tester.prototype.isNumber = function( value ) {
+    if ( isNaN( Number( value ) ) ) {
+        this.addError( 'Value should be a number' );
+        return false;
+    } else {
+        return true;
+    }
+};
+
+/* globals Element */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.utils = {
+    /**
+     * Function to extend object - used in place of jQuery's extend()
+     */
+    extend: function( out ) {
+        out = out || {};
+
+        for ( var i = 1; i < arguments.length; i++ ) {
+            var obj = arguments[ i ];
+
+            if ( !obj ) {
+                continue;
+            }
+
+            for ( var key in obj ) {
+                if ( obj.hasOwnProperty( key ) ) {
+                    if ( Object.prototype.toString.call( obj[ key ] ) ===  '[object Object]' ) {
+                        out[ key ] = LiveValidator.utils.extend( out[ key ], obj[ key ] );
+                    } else {
+                        out[ key ] = obj[ key ];
+                    }
+                }
+            }
+        }
+
+        return out;
+    },
+    /**
+     * Function to get data from element like jQuery's data()
+     */
+    getData: function( element ) {
+        var data = {};
+
+        for ( var key in element.dataset ) {
+            try {
+                data[ key ] = JSON.parse( element.dataset[ key ] );
+            } catch ( e ) {
+                data[ key ] = element.dataset[ key ];
+            }
+        }
+
+        return data;
+    },
+    /**
+     * Get the parent of element based on function
+     */
+    parentSelector: function( element, parentSel ) {
+        while ( element ) {
+            if ( element.matches( parentSel ) ) {
+                return element;
+            }
+            element = element.parentElement;
+        }
+    },
+    /**
+     * Add a class to the element depending on browser support
+     */
+    addClass: function( element, className ) {
+        if ( element instanceof Element ) {
+            if ( element.classList ) {
+                element.classList.add( className );
+            } else {
+                element.className += ' ' + className;
+            }
+        }
+    },
+    /**
+     * Remove a class from the element depending on browser support
+     */
+    removeClass: function( element, className ) {
+        if ( element instanceof Element ) {
+            if ( element.classList ) {
+                element.classList.remove( className );
+            } else {
+                element.className = element.className.replace(
+                    new RegExp( '(^|\\b)' + className.split( ' ' ).join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
+            }
+        }
+    },
+    /**
+     * Remove a child element from this element if the child can be found
+     */
+    removeChild: function( element, childSelector ) {
+        if ( element instanceof Element ) {
+            var child =  element.querySelector( childSelector );
+            if ( child ) {
+                element.removeChild( child );
+            }
+        }
+    },
+    /**
+     * Add child to element if the element is valid
+     */
+    appendChild: function( element, child ) {
+        if ( element instanceof Element ) {
+            element.appendChild( child );
+        }
+    }
+};
+
+// Element.matches polyfill from https://developer.mozilla.org/en/docs/Web/API/Element/matches#Polyfill
+if ( !Element.prototype.matches ) {
+    Element.prototype.matches =
+        Element.prototype.matchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
+        Element.prototype.webkitMatchesSelector ||
+        function( s ) {
+            var matches = ( this.document || this.ownerDocument ).querySelectorAll( s ),
+                i = matches.length;
+            while ( --i >= 0 && matches.item( i ) !== this ) {}
+            return i > -1;
+        };
+}

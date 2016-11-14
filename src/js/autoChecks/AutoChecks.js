@@ -10,7 +10,7 @@ LiveValidator.AutoChecks = function( element ) {
 
     // Scope-safe the object
     if ( !( this instanceof LiveValidator.AutoChecks ) ) {
-        return new LiveValidator.AutoChecks( $, element );
+        return new LiveValidator.AutoChecks( element );
     }
 
     this.element = element;
