@@ -7,4 +7,7 @@ describe( 'Utils', function() {
     describe( 'check extend', function() {
         utils.extend();
     } );
+    describe( 'check getData', function() {
+        utils.getData();
+    } );
 } );

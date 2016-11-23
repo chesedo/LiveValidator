@@ -34,6 +34,10 @@ LiveValidator.utils = {
     },
     /**
      * Function to get data from element like jQuery's data()
+     *
+     * @param {Element} The element to get the data from
+     *
+     * @return {Object} An object with the data in JSON
      */
     getData: function( element ) {
         var data = {};
