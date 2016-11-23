@@ -7,5 +7,6 @@ LiveValidator.translations[ 'en-us' ] = {
     'maxNumber': 'Should be less than or equal %d',
     'minlength': 'Should be %d characters or more',
     'maxlength': 'Should be %d characters or less',
-    'beNumber': 'Value should be a number'
+    'beNumber': 'Value should be a number',
+    'default': 'There is an unspecified error with this input'
 };

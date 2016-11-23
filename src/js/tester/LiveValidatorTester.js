@@ -39,3 +39,7 @@ LiveValidator.Tester.prototype.addError = function( error ) {
 LiveValidator.Tester.prototype.getErrors = function() {
     return this.errors;
 };
+
+LiveValidator.Tester.prototype.getMessage = function( message ) {
+    return this.messages[ message ] || this.messages[ 'default' ] ;
+};
