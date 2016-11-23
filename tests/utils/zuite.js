@@ -19,4 +19,7 @@ describe( 'Utils', function() {
     describe( 'check removeClass', function() {
         utils.removeClass();
     } );
+    describe( 'check removeChild', function() {
+        utils.removeChild();
+    } );
 } );

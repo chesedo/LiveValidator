@@ -108,15 +108,19 @@ LiveValidator.utils = {
         return false;
     },
     /**
-     * Remove a child element from this element if the child can be found
+     * Remove a child element from this element if the child can be found (in a safe way)
+     *
+     * @param {Element} The element to remove the child from
+     * @param {string}  A selector for the child element
      */
     removeChild: function( element, childSelector ) {
         if ( element instanceof Element ) {
             var child =  element.querySelector( childSelector );
             if ( child ) {
-                element.removeChild( child );
+                return element.removeChild( child );
             }
         }
+        return null;
     },
     /**
      * Add child to element if the element is valid
