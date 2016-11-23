@@ -11,6 +11,7 @@ LiveValidator.defaults =  {
     required: false,
     liveEnabled: true,
     checks: [],
+    locale: 'en-us',
     debug: false
 };
 
@@ -42,7 +43,7 @@ LiveValidator.Core = function( element, options ) {
     );
 
     // This holds the tester object which performs the tests
-    this.tester = new LiveValidator.Tester();
+    this.tester = new LiveValidator.Tester( this.options.locale );
 
     // Holds wheter the input is missing - blank and required
     this.missing = false;

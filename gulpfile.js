@@ -27,6 +27,7 @@ function distJqPlugin() {
         'src/js/core/*.js',
         'src/js/autoChecks/*.js',
         'src/js/tester/*.js',
+        'src/js/translations/en-us.js',
         'src/js/utils/*.js'
     ] )
             .pipe( concat( 'jquery-live-validator.js' ) )
@@ -41,6 +42,7 @@ function distJsPlugin() {
         'src/js/core/*.js',
         'src/js/autoChecks/*.js',
         'src/js/tester/*.js',
+        'src/js/translations/en-us.js',
         'src/js/utils/*.js'
     ] )
             .pipe( concat( 'js-live-validator.js' ) )
@@ -59,6 +61,14 @@ function distJsThemes() {
             .pipe( uglify() )
             .pipe( rename( { suffix: '.min' } ) )
             .pipe( gulp.dest( 'dist/js' ) );
+}
+
+function distJsTranslations() {
+    return gulp.src( 'src/js/translations/*.js' )
+        .pipe( gulp.dest( 'dist/js/translations' ) )
+        .pipe( uglify() )
+        .pipe( rename( { suffix: '.min' } ) )
+        .pipe( gulp.dest( 'dist/js/translations' ) );
 }
 
 gulp.task( 'code-test', function( done ) {
@@ -106,12 +116,15 @@ gulp.task( 'dist-js-plugin', distJsPlugin );
 
 gulp.task( 'dist-js-themes', distJsThemes );
 
+gulp.task( 'dist-js-translations', distJsTranslations );
+
 gulp.task( 'dist', [ 'default' ], function() {
     del( [ 'dist/' ] ).then( function() {
         distCss();
         distJqPlugin();
         distJsPlugin();
         distJsThemes();
+        distJsTranslations();
     } );
 } );
 

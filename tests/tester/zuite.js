@@ -16,6 +16,9 @@ describe( 'Tester', function() {
     describe( 'check `getErrors` when', function() {
         tester.getErrorsSpec();
     } );
+    describe( 'check `getMessage` when', function() {
+        tester.getMessageSpec();
+    } );
 
     describe( 'HTML5 validation attribute', function() {
         describe( 'min is', function() {
