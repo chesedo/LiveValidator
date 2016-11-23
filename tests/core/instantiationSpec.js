@@ -11,6 +11,7 @@ core.instantiationSpec = function() {
             required: false,
             liveEnabled: true,
             checks: [],
+            locale: 'en-us',
             debug: false
         };
     } );
@@ -64,5 +65,11 @@ core.instantiationSpec = function() {
             { maxlength: 25 },
             { pattern: { regex: '[a-zA-Z]', title: 'Only alphabetical' } }
         ] );
+    } );
+
+    it( 'for locale specified in options', function() {
+        var instance = new LiveValidator.Core( helper.bareInput(), { locale: 'af' } );
+
+        expect( instance.tester.messages ).toEqual( LiveValidator.translations.af );
     } );
 };
