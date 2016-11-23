@@ -6,6 +6,7 @@ var LiveValidator = LiveValidator || {};
 LiveValidator.utils = {
     /**
      * Function to extend object - used in place of jQuery's extend()
+     * Will always deep extend the first passed object
      */
     extend: function( out ) {
         out = out || {};
@@ -18,8 +19,9 @@ LiveValidator.utils = {
             }
 
             for ( var key in obj ) {
+                /* istanbul ignore else  */
                 if ( obj.hasOwnProperty( key ) ) {
-                    if ( Object.prototype.toString.call( obj[ key ] ) ===  '[object Object]' ) {
+                    if ( obj[ key ].toString() ===  '[object Object]' ) {
                         out[ key ] = LiveValidator.utils.extend( out[ key ], obj[ key ] );
                     } else {
                         out[ key ] = obj[ key ];

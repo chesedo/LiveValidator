@@ -10,7 +10,7 @@
 
         // If this is only to change the defaults
         if ( !( this instanceof $ ) ) {
-            $.extend( true, LiveValidator.defaults, options );
+            LiveValidator.utils.extend( LiveValidator.defaults, options );
             return;
         }
 
