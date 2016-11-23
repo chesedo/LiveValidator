@@ -144,6 +144,7 @@ if ( !Element.prototype.matches ) {
         Element.prototype.msMatchesSelector ||
         Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
+        /* istanbul ignore next  */
         function( s ) {
             var matches = ( this.document || this.ownerDocument ).querySelectorAll( s ),
                 i = matches.length;
