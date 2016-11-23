@@ -22,4 +22,7 @@ describe( 'Utils', function() {
     describe( 'check removeChild', function() {
         utils.removeChild();
     } );
+    describe( 'check appendChild', function() {
+        utils.appendChild();
+    } );
 } );

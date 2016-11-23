@@ -123,12 +123,16 @@ LiveValidator.utils = {
         return null;
     },
     /**
-     * Add child to element if the element is valid
+     * Add child (element) to an element only if the element is valid
+     *
+     * @param {Element} The element to add the child to
+     * @param {Element} The child element to add
      */
     appendChild: function( element, child ) {
         if ( element instanceof Element ) {
-            element.appendChild( child );
+            return element.appendChild( child );
         }
+        return null;
     }
 };
 
