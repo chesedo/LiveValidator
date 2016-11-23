@@ -6,6 +6,7 @@ var LiveValidator = LiveValidator || {};
 LiveValidator.utils = {
     /**
      * Function to extend object - used in place of jQuery's extend()
+     * Will always deep extend the first passed object
      */
     extend: function( out ) {
         out = out || {};
@@ -18,8 +19,9 @@ LiveValidator.utils = {
             }
 
             for ( var key in obj ) {
+                /* istanbul ignore else  */
                 if ( obj.hasOwnProperty( key ) ) {
-                    if ( Object.prototype.toString.call( obj[ key ] ) ===  '[object Object]' ) {
+                    if ( obj[ key ].toString() ===  '[object Object]' ) {
                         out[ key ] = LiveValidator.utils.extend( out[ key ], obj[ key ] );
                     } else {
                         out[ key ] = obj[ key ];
@@ -32,6 +34,10 @@ LiveValidator.utils = {
     },
     /**
      * Function to get data from element like jQuery's data()
+     *
+     * @param {Element} The element to get the data from
+     *
+     * @return {Object} An object with the data in JSON
      */
     getData: function( element ) {
         var data = {};
@@ -47,59 +53,86 @@ LiveValidator.utils = {
         return data;
     },
     /**
-     * Get the parent of element based on function
+     * Get the parent of element based on a selector
+     *
+     * @param {Element} Element to start from (who's parent we are searching)
+     * @param {string}  The selector to match the parent against
+     *
+     * @return {Element} Returns the parent element if found, else null if non found;
      */
     parentSelector: function( element, parentSel ) {
+        element = element.parentElement;
         while ( element ) {
             if ( element.matches( parentSel ) ) {
                 return element;
             }
             element = element.parentElement;
         }
+        return null;
     },
     /**
      * Add a class to the element depending on browser support
+     *
+     * @param {Element} The element to add the class to
+     * @param {string}  The class to add
      */
     addClass: function( element, className ) {
         if ( element instanceof Element ) {
+            /* istanbul ignore else  */
             if ( element.classList ) {
                 element.classList.add( className );
             } else {
                 element.className += ' ' + className;
             }
+            return true;
         }
+        return false;
     },
     /**
      * Remove a class from the element depending on browser support
+     *
+     * @param {Element} The element to remove the class from
+     * @param {string}  The class to remove
      */
     removeClass: function( element, className ) {
         if ( element instanceof Element ) {
+            /* istanbul ignore else  */
             if ( element.classList ) {
                 element.classList.remove( className );
             } else {
                 element.className = element.className.replace(
                     new RegExp( '(^|\\b)' + className.split( ' ' ).join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
             }
+            return true;
         }
+        return false;
     },
     /**
-     * Remove a child element from this element if the child can be found
+     * Remove a child element from this element if the child can be found (in a safe way)
+     *
+     * @param {Element} The element to remove the child from
+     * @param {string}  A selector for the child element
      */
     removeChild: function( element, childSelector ) {
         if ( element instanceof Element ) {
             var child =  element.querySelector( childSelector );
             if ( child ) {
-                element.removeChild( child );
+                return element.removeChild( child );
             }
         }
+        return null;
     },
     /**
-     * Add child to element if the element is valid
+     * Add child (element) to an element only if the element is valid
+     *
+     * @param {Element} The element to add the child to
+     * @param {Element} The child element to add
      */
     appendChild: function( element, child ) {
         if ( element instanceof Element ) {
-            element.appendChild( child );
+            return element.appendChild( child );
         }
+        return null;
     }
 };
 
@@ -111,6 +144,7 @@ if ( !Element.prototype.matches ) {
         Element.prototype.msMatchesSelector ||
         Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
+        /* istanbul ignore next  */
         function( s ) {
             var matches = ( this.document || this.ownerDocument ).querySelectorAll( s ),
                 i = matches.length;

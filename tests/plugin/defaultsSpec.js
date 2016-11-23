@@ -7,15 +7,15 @@ plugin.defaultsSpec = function() {
 
     // To restore the defaults when done
     beforeAll( function() {
-        this._defaults = $.extend( {}, LiveValidator.defaults );
+        this._defaults = LiveValidator.utils.extend( {}, LiveValidator.defaults );
     } );
 
     beforeEach( function() {
-        LiveValidator.defaults = $.extend( {}, this._defaults );
+        LiveValidator.defaults = LiveValidator.utils.extend( {}, this._defaults );
     } );
 
     afterAll( function() {
-        LiveValidator.defaults = $.extend( {}, this._defaults );
+        LiveValidator.defaults = LiveValidator.utils.extend( {}, this._defaults );
     } );
 
     it( 'can be overwritten through `LiveValidator.defaults`', function() {
