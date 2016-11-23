@@ -10,4 +10,7 @@ describe( 'Utils', function() {
     describe( 'check getData', function() {
         utils.getData();
     } );
+    describe( 'check parentSelector', function() {
+        utils.parentSelector();
+    } );
 } );

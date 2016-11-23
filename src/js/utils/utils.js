@@ -53,15 +53,22 @@ LiveValidator.utils = {
         return data;
     },
     /**
-     * Get the parent of element based on function
+     * Get the parent of element based on a selector
+     *
+     * @param {Element} Element to start from (who's parent we are searching)
+     * @param {string}  The selector to match the parent against
+     *
+     * @return {Element} Returns the parent element if found, else null if non found;
      */
     parentSelector: function( element, parentSel ) {
+        element = element.parentElement;
         while ( element ) {
             if ( element.matches( parentSel ) ) {
                 return element;
             }
             element = element.parentElement;
         }
+        return null;
     },
     /**
      * Add a class to the element depending on browser support
