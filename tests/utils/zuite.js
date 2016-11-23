@@ -13,4 +13,7 @@ describe( 'Utils', function() {
     describe( 'check parentSelector', function() {
         utils.parentSelector();
     } );
+    describe( 'check addClass', function() {
+        utils.addClass();
+    } );
 } );

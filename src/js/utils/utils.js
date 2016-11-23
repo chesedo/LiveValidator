@@ -75,12 +75,15 @@ LiveValidator.utils = {
      */
     addClass: function( element, className ) {
         if ( element instanceof Element ) {
+            /* istanbul ignore else  */
             if ( element.classList ) {
                 element.classList.add( className );
             } else {
                 element.className += ' ' + className;
             }
+            return true;
         }
+        return false;
     },
     /**
      * Remove a class from the element depending on browser support
