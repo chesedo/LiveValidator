@@ -16,4 +16,7 @@ describe( 'Utils', function() {
     describe( 'check addClass', function() {
         utils.addClass();
     } );
+    describe( 'check removeClass', function() {
+        utils.removeClass();
+    } );
 } );

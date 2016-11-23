@@ -72,6 +72,9 @@ LiveValidator.utils = {
     },
     /**
      * Add a class to the element depending on browser support
+     *
+     * @param {Element} The element to add the class to
+     * @param {string}  The class to add
      */
     addClass: function( element, className ) {
         if ( element instanceof Element ) {
@@ -87,16 +90,22 @@ LiveValidator.utils = {
     },
     /**
      * Remove a class from the element depending on browser support
+     *
+     * @param {Element} The element to remove the class from
+     * @param {string}  The class to remove
      */
     removeClass: function( element, className ) {
         if ( element instanceof Element ) {
+            /* istanbul ignore else  */
             if ( element.classList ) {
                 element.classList.remove( className );
             } else {
                 element.className = element.className.replace(
                     new RegExp( '(^|\\b)' + className.split( ' ' ).join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
             }
+            return true;
         }
+        return false;
     },
     /**
      * Remove a child element from this element if the child can be found
