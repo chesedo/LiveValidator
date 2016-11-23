@@ -1,14 +1,31 @@
 // Get namespace ready
 var LiveValidator = LiveValidator || {};
 
-LiveValidator.Tester = function() {
+LiveValidator.Tester = function( locale ) {
 
     // Scope-safe the object
     if ( !( this instanceof LiveValidator.Tester ) ) {
         return new LiveValidator.Tester();
     }
 
+    // Set default locale
+    locale = locale || 'en-us';
+
     this.errors = [];
+
+    // Build messages based on locale
+    this.messages = {};
+    if ( locale !== 'en-us' ) {
+
+        // Extend on default in case the locale is partially complete
+        LiveValidator.utils.extend(
+            this.messages,
+            LiveValidator.translations[ 'en-us' ],
+            LiveValidator.translations[ locale ]
+        );
+    } else {
+        LiveValidator.utils.extend( this.messages, LiveValidator.translations[ 'en-us' ] );
+    }
 };
 
 LiveValidator.Tester.prototype.clearErrors = function() {
