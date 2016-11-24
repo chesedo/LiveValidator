@@ -23,8 +23,8 @@ function distCss() {
 
 function distJqPlugin() {
     return gulp.src( [
-        'src/js/plugin/*.js',
         'src/js/core/*.js',
+        'src/js/plugin/*.js',
         'src/js/autoChecks/*.js',
         'src/js/tester/*.js',
         'src/js/translations/en-us.js',
@@ -40,6 +40,7 @@ function distJqPlugin() {
 function distJsPlugin() {
     return gulp.src( [
         'src/js/core/*.js',
+        'src/js/plugin/LiveValidatorPlugin.js',
         'src/js/autoChecks/*.js',
         'src/js/tester/*.js',
         'src/js/translations/en-us.js',

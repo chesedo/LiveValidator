@@ -3,24 +3,32 @@
  */
 var plugin = plugin || {};
 plugin.destroyMethodSpec = function() {
-    it( 'called on input having instance', function() {
-        var input = helper.bareJqInput();
+    it( 'when called on input having instance', function() {
+        var input = helper.bareInput();
+        var inputValidation = input.getLiveValidator();
 
-        input.LiveValidator();
-        expect( $.data( input[ 0 ] ).LiveValidator ).toBeDefined();
-        input.LiveValidator( 'destroy' );
-        expect( $.data( input[ 0 ] ).LiveValidator ).toBeUndefined();
+        expect( input.LiveValidator ).toBeDefined();
+        inputValidation.destroy();
+        expect( input.LiveValidator ).toBeUndefined();
     } );
 
-    it( 'called on multiple inputs - each having instance', function() {
+    it( 'when called on multiple inputs - each having instance', function() {
         setFixtures( '<input type="text" /><input type="number" />' );
-        var input = $( 'input' );
+        var inputs = document.getElementsByTagName( 'input' );
+        var inputsValidation = inputs.getLiveValidator();
 
-        input.LiveValidator();
-        expect( $.data( input[ 0 ] ).LiveValidator ).toBeDefined();
-        expect( $.data( input[ 1 ] ).LiveValidator ).toBeDefined();
-        input.LiveValidator( 'destroy' );
-        expect( $.data( input[ 0 ] ).LiveValidator ).toBeUndefined();
-        expect( $.data( input[ 1 ] ).LiveValidator ).toBeUndefined();
+        expect( inputs[ 0 ].LiveValidator ).toBeDefined();
+        expect( inputs[ 1 ].LiveValidator ).toBeDefined();
+        inputsValidation.destroy();
+        expect( inputs[ 0 ].LiveValidator ).toBeUndefined();
+        expect( inputs[ 1 ].LiveValidator ).toBeUndefined();
+    } );
+
+    it( 'to make list empty', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( inputValidation.getInputs() ).not.toEqual( [ ] );
+        inputValidation.destroy();
+        expect( inputValidation.getInputs() ).toEqual( [ ] );
     } );
 };

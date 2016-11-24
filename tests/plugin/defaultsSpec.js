@@ -26,8 +26,20 @@ plugin.defaultsSpec = function() {
         expect( LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
     } );
 
-    it( 'can be overwritten by calling `LiveValidator`', function() {
+    it( 'can be overwritten by calling `$.LiveValidator`', function() {
         $.LiveValidator( {
+            requiredHTML: '*',
+            themeData: {
+                parentSelector: 'group'
+            }
+        } );
+
+        expect( LiveValidator.defaults.requiredHTML ).toEqual( '*' );
+        expect( LiveValidator.defaults.themeData.parentSelector ).toEqual( 'group' );
+    } );
+
+    it( 'can be overwritten by calling `LiveValidator.Plugin`', function() {
+        LiveValidator.Plugin( {
             requiredHTML: '*',
             themeData: {
                 parentSelector: 'group'

@@ -1,107 +1,130 @@
-;( function( $, window, document, undefined ) {
+/* globals HTMLElement, HTMLCollection, NodeList */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Plugin = function LiveValidatorPlugin( options ) {
+
+    // If this is only to change the defaults
+    if ( this.name === 'LiveValidator' || this instanceof Function ) {
+        LiveValidator.utils.extend( LiveValidator.defaults, options );
+        return;
+    }
+
+    // Check if options are valid before continuing
+    if ( options !== undefined && !( typeof options === 'object' && options.constructor.name !== 'Array' ) ) {
+        return false;
+    }
+
     /**
-     * Name of the plugin that is used when setting the data
+    * Filtering used to prevent plugin to bind to unsupported inputs
+    *
+    * @type {String}
+    */
+    var validInputsFilter = 'input:not([type="button"])' +
+    ':not([type="file"])' +
+    ':not([type="hidden"])' +
+    ':not([type="image"])' +
+    ':not([type="radio"])' +
+    ':not([type="reset"])' +
+    ':not([type="submit"])' +
+    ', textarea';
+
+    /**
+    * Holds all valid inputs
+    *
+    * @type  {array}
+    */
+    var validInputs = [];
+
+    /**
+     * Holds the prepared elements
      *
-     * @type {String}
+     * @type {Array}
      */
-    var pluginName = 'LiveValidator';
+    var elements = [];
 
-    $[ pluginName ] = $.fn[ pluginName ] = function( options ) {
+    // Get inputs ready if this is an HTMLElement
+    if ( this instanceof HTMLElement ) {
+        elements = [ this ];
+    }
 
-        // If this is only to change the defaults
-        if ( !( this instanceof $ ) ) {
-            LiveValidator.utils.extend( LiveValidator.defaults, options );
-            return;
+    // Else get input ready if this is HTMLCollection
+    else if ( this instanceof HTMLCollection || this instanceof NodeList || this instanceof jQuery ) {
+        elements = [].slice.call( this );
+    }
+
+    // Filter all elements
+    validInputs = elements.filter( function( element ) {
+        return element.matches( validInputsFilter );
+    } );
+
+    // Get inner inputs
+    validInputs = [].concat.apply( validInputs, elements.map( function( element ) {
+        return [].slice.call( element.querySelectorAll( validInputsFilter ) );
+    } ) );
+
+    // Create core instance on each inputs
+    validInputs.forEach( function( input ) {
+
+        // Only set when not already set
+        if ( !input.LiveValidator ) {
+            input.LiveValidator = new LiveValidator.Core( input, options );
         }
+    } );
 
-        /**
-         * Filtering used to prevent plugin to bind to unsupported inputs
-         *
-         * @type {String}
-         */
-        var validInputsFilter = 'input[type!="button"]' +
-                               '[type!="file"]' +
-                               '[type!="hidden"]' +
-                               '[type!="image"]' +
-                               '[type!="radio"]' +
-                               '[type!="reset"]' +
-                               '[type!="submit"]' +
-                          ', textarea';
+    // Closure to allow calling methods on the input instances as a whole
+    function callMethod( method, args ) {
 
-        /**
-         * Holds all valid inputs
-         *
-         * @type  {array}
-         */
-        var validInputs = this.filter( validInputsFilter )
-                         .add( this.find( validInputsFilter ) );
+        // Call the method on each input
+        validInputs.forEach( function( input ) {
+            var instance = input.LiveValidator;
 
-        /**
-         * Holds all arguments for this call to prevent out of scope issues below
-         *
-         * @type {array like}
-         */
-        var args = arguments;
-
-        // Check if new plugin instance is to be created
-        if ( options === undefined || typeof options === 'object' && options.constructor.name !== 'Array' ) {
-            return validInputs.each( function() {
-
-                // Only set when not already set
-                if ( !$.data( this, pluginName ) ) {
-                    $.data( this, pluginName, new LiveValidator.Core( this, options ) );
-                }
-            } );
-        }
-
-        // If a plugin method was called - private methods start with an underscore
-        else if ( typeof options === 'string' && options[ 0 ] !== '_' ) {
-
-            // If calling the `isValid` method
-            if ( options === 'isValid' ) {
-
-                // Assume is valid
-                var valid = true;
-
-                // Check for each input
-                validInputs.each( function() {
-                    var instance = $.data( this, pluginName );
-                    if ( instance instanceof LiveValidator.Core ) {
-
-                        // All invalid when one is invalid
-                        if ( !instance.isValid() ) {
-                            valid = false;
-                        }
-                    } else {
-
-                        // Does not have plugin instance so am assuming invalid
-                        valid = false;
-                    }
-                } );
-
-                return valid;
+            // If this was destroy - then also remove the instance
+            if ( method === 'destroy' ) {
+                instance.destroy();
+                delete input.LiveValidator;
+            } else {
+                instance[ method ].apply( instance, args );
             }
+        } );
+    }
 
-            // Call the method on each input
-            return validInputs.each( function() {
-                var instance = $.data( this, pluginName );
-                if ( instance instanceof LiveValidator.Core ) {
-                    if ( typeof instance[ options ] === 'function' ) {
+    return {
+        getInputs: function() {
+            return validInputs;
+        },
+        isValid: function() {
 
-                        // If this was destroy - then also remove the instance
-                        if ( options === 'destroy' ) {
-                            instance.destroy();
-                            $( this ).removeData( pluginName );
-                        } else {
-                            instance[ options ].apply( instance, Array.prototype.slice.call( args, 1 ) );
-                        }
-                    } else {
-                        instance._log( '`' + options + '` method does not exist on plugin', 1 );
-                    }
+            // Assume is valid
+            var valid = true;
+
+            // Check for each input
+            validInputs.forEach( function( input ) {
+
+                // All invalid when one is invalid
+                if ( !input.LiveValidator.isValid() ) {
+                    valid = false;
                 }
             } );
-        }
 
-        return this;
+            return valid;
+        },
+        setRequired: function() { callMethod( 'setRequired', arguments ); },
+        unsetRequired: function() { callMethod( 'unsetRequired' ); },
+        enableLive: function() { callMethod( 'enableLive', arguments ); },
+        disableLive: function() { callMethod( 'disableLive' ); },
+        addChecks: function() { callMethod( 'addChecks', arguments ); },
+        removeAllChecks: function() { callMethod( 'removeAllChecks' ); },
+        removeChecks: function() { callMethod( 'removeChecks', arguments ); },
+        destroy: function() {
+            callMethod( 'destroy' );
+            validInputs = [];
+        }
     };
-} )( jQuery, window, document );
+};
+
+// Add to some element prototypes for easy calling
+HTMLElement.prototype.getLiveValidator = LiveValidator.Plugin;
+HTMLCollection.prototype.getLiveValidator = LiveValidator.Plugin;
+NodeList.prototype.getLiveValidator = LiveValidator.Plugin;

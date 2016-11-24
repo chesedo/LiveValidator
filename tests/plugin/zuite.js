@@ -19,7 +19,10 @@ describe( 'Plugin', function() {
     describe( 'check the `isValid` method when', function() {
         plugin.isValidMethodSpec();
     } );
-    describe( 'check the `destroy` method when', function() {
+    describe( 'check the `destroy` method', function() {
         plugin.destroyMethodSpec();
+    } );
+    describe( 'creation via jQuery', function() {
+        plugin.creationjQuerySpec();
     } );
 } );

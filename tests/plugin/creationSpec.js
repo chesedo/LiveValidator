@@ -5,10 +5,31 @@ var plugin = plugin || {};
 
 plugin.creationSpec = function() {
     it( 'allows only the first instantiation', function() {
-        var input = helper.bareJqInput();
+        var input = helper.bareInput();
 
-        input.LiveValidator();
-        input.LiveValidator( { required: true } );
-        expect( $.data( input[ 0 ] ).LiveValidator.options.required ).toEqual( false );
+        input.getLiveValidator();
+        input.getLiveValidator( { required: true } );
+        expect( input.LiveValidator.options.required ).toEqual( false );
+    } );
+
+    it( 'does not allow invalid array options', function() {
+        var input = helper.bareInput();
+
+        input.getLiveValidator( [ 'array' ] );
+        expect( input.LiveValidator ).not.toBeDefined();
+    } );
+
+    it( 'does not allow invalid string options', function() {
+        var input = helper.bareInput();
+
+        input.getLiveValidator( 'string' );
+        expect( input.LiveValidator ).not.toBeDefined();
+    } );
+
+    it( 'does not allow invalid boolean options', function() {
+        var input = helper.bareInput();
+
+        input.getLiveValidator( true );
+        expect( input.LiveValidator ).not.toBeDefined();
     } );
 };
