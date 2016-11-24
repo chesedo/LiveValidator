@@ -9,12 +9,16 @@ var gulp = require( 'gulp' ),
     less = require( 'gulp-less' ),
     cleanCSS = require( 'gulp-clean-css' ),
     concat = require( 'gulp-concat' ),
-    uglify = require( 'gulp-uglify' );
+    uglify = require( 'gulp-uglify' ),
+    autoprefixer = require( 'gulp-autoprefixer' );
 
 /* jshint undef: false */
 function distCss() {
     return gulp.src( 'src/less/*.less' )
             .pipe( less() )
+            .pipe( autoprefixer( {
+                browsers: [ 'last 2 versions', '> 1%' ]
+            } ) )
             .pipe( gulp.dest( 'dist/css' ) )
             .pipe( cleanCSS() )
             .pipe( rename( { suffix: '.min' } ) )

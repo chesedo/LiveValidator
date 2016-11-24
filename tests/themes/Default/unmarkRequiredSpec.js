@@ -8,7 +8,7 @@ theme.default.unmarkRequiredSpec = function() {
     } );
 
     it( 'already required', function() {
-        LiveValidator.utils.addClass( this.row, 'required' );
+        this.row.classList.add( 'required' );
         expect( this.row ).toHaveClass( 'required' );
         this.theme.unmarkRequired();
         expect( this.row ).not.toHaveClass( 'required' );

@@ -8,12 +8,12 @@ theme.default.addErrorsSpec = function() {
     } );
 
     it( 'already has errors', function() {
-        LiveValidator.utils.addClass( this.row, 'error' );
+        this.row.classList.add( 'error' );
         var li = document.createElement( 'li' );
         li.innerHTML = 'Old Error';
 
         var ul = document.createElement( 'ul' );
-        LiveValidator.utils.addClass( ul, 'errors' );
+        ul.classList.add( 'errors' );
         ul.appendChild( li );
 
         this.row.appendChild( ul );
