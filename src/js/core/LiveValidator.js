@@ -150,7 +150,6 @@ LiveValidator.Core.prototype = {
             return [];
         }
 
-        var validArr = [];
         var validChecks = checks.filter( function( check ) {
 
             // Check if it is a check that has parameters
@@ -162,14 +161,14 @@ LiveValidator.Core.prototype = {
             if ( typeof this.tester[ check ] === 'function' ) {
 
                 // Check for duplicate
-                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true && validArr.push( check );
+                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true;
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
 
-        this._log( 'Valid checks are: ' + validArr );
+        this._log( 'Valid checks are: ' + Object.keys( seen ) );
         return validChecks;
     },
     /**
