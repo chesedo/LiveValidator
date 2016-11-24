@@ -15,6 +15,8 @@ LiveValidator.defaults =  {
     debug: false
 };
 
+LiveValidator.name = 'LiveValidator';
+
 LiveValidator.Core = function( element, options ) {
 
     // Scope-safe the object

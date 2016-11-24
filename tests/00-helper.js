@@ -5,10 +5,6 @@ helper.bareInput = function() {
     return document.getElementsByTagName( 'input' )[ 0 ];
 };
 
-helper.bareJqInput = function() {
-    return $( helper.bareInput() );
-};
-
 helper.requiredInput = function() {
     setFixtures( '<input required />' );
     return document.getElementsByTagName( 'input' )[ 0 ];

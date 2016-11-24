@@ -6,57 +6,113 @@ var plugin = plugin || {};
 plugin.methodsSpec = function() {
     beforeEach( function() {
         this.setRequired = spyOn( LiveValidator.Core.prototype, 'setRequired' );
+        this.unsetRequired = spyOn( LiveValidator.Core.prototype, 'unsetRequired' );
+        this.enableLive = spyOn( LiveValidator.Core.prototype, 'enableLive' );
+        this.disableLive = spyOn( LiveValidator.Core.prototype, 'disableLive' );
+        this.addChecks = spyOn( LiveValidator.Core.prototype, 'addChecks' );
+        this.removeAllChecks = spyOn( LiveValidator.Core.prototype, 'removeAllChecks' );
+        this.removeChecks = spyOn( LiveValidator.Core.prototype, 'removeChecks' );
+        this.isValid = spyOn( LiveValidator.Core.prototype, 'isValid' );
+        this.destroy = spyOn( LiveValidator.Core.prototype, 'destroy' );
         this._blur = spyOn( LiveValidator.Core.prototype, '_blur' );
     } );
 
-    it( 'can been called through the plugin', function() {
-        var input = helper.bareJqInput();
+    it( 'setRequired can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        input.LiveValidator();
         expect( this.setRequired ).not.toHaveBeenCalled();
-        input.LiveValidator( 'setRequired' );
+        inputValidation.setRequired();
         expect( this.setRequired ).toHaveBeenCalled();
         expect( this.setRequired ).toHaveBeenCalledWith();
     } );
 
-    it( 'can been called through the plugin with options', function() {
-        var input = helper.bareJqInput();
+    it( 'setRequired can be called with options', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        input.LiveValidator();
         expect( this.setRequired ).not.toHaveBeenCalled();
-        input.LiveValidator( 'setRequired', true );
+        inputValidation.setRequired( true );
         expect( this.setRequired ).toHaveBeenCalled();
         expect( this.setRequired ).toHaveBeenCalledWith( true );
     } );
 
-    it( 'can not be called as an array', function() {
-        var input = helper.bareJqInput();
+    it( 'unsetRequired can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        input.LiveValidator();
-        expect( this.setRequired ).not.toHaveBeenCalled();
-        input.LiveValidator( [ 'setRequired' ] );
-        expect( this.setRequired ).not.toHaveBeenCalled();
+        expect( this.unsetRequired ).toHaveBeenCalledTimes( 1 );
+        inputValidation.unsetRequired();
+        expect( this.unsetRequired ).toHaveBeenCalledTimes( 2 );
+        expect( this.unsetRequired ).toHaveBeenCalledWith();
     } );
 
-    it( 'can not call a private function (should still return input)', function() {
-        var input = helper.bareJqInput();
+    it( 'enableLive can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        input.LiveValidator();
-        expect( this._blur ).not.toHaveBeenCalled();
-        input.LiveValidator( [ '_blur' ] );
-        expect( this._blur ).not.toHaveBeenCalled();
+        expect( this.enableLive ).toHaveBeenCalledTimes( 1 );
+        inputValidation.enableLive();
+        expect( this.enableLive ).toHaveBeenCalledTimes( 2 );
+        expect( this.enableLive ).toHaveBeenCalledWith();
     } );
 
-    it( 'can not call a non-existing function (should still return input)', function() {
-        var input = helper.bareJqInput();
+    it( 'enableLive can be called with options', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        input.LiveValidator();
-        expect( input.LiveValidator( 'nonExisting' )[ 0 ] ).toEqual( input );
+        expect( this.enableLive ).toHaveBeenCalledTimes( 1 );
+        inputValidation.enableLive( true );
+        expect( this.enableLive ).toHaveBeenCalledTimes( 2 );
+        expect( this.enableLive ).toHaveBeenCalledWith( true );
     } );
 
-    it( 'can not call on a non-instantiated input (should still return input)', function() {
-        var input = helper.bareJqInput();
+    it( 'disableLive can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
 
-        expect( input.LiveValidator( 'nonExisting' )[ 0 ] ).toEqual( input );
+        expect( this.disableLive ).not.toHaveBeenCalled();
+        inputValidation.disableLive();
+        expect( this.disableLive ).toHaveBeenCalled();
+        expect( this.disableLive ).toHaveBeenCalledWith();
+    } );
+
+    it( 'addChecks can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( this.addChecks ).not.toHaveBeenCalled();
+        inputValidation.addChecks( [ 'check' ] );
+        expect( this.addChecks ).toHaveBeenCalled();
+        expect( this.addChecks ).toHaveBeenCalledWith( [ 'check' ] );
+    } );
+
+    it( 'removeAllChecks can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( this.removeAllChecks ).not.toHaveBeenCalled();
+        inputValidation.removeAllChecks();
+        expect( this.removeAllChecks ).toHaveBeenCalled();
+        expect( this.removeAllChecks ).toHaveBeenCalledWith();
+    } );
+
+    it( 'removeChecks can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( this.removeChecks ).not.toHaveBeenCalled();
+        inputValidation.removeChecks( [ 'check' ] );
+        expect( this.removeChecks ).toHaveBeenCalled();
+        expect( this.removeChecks ).toHaveBeenCalledWith( [ 'check' ] );
+    } );
+
+    it( 'isValid can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( this.isValid ).not.toHaveBeenCalled();
+        inputValidation.isValid();
+        expect( this.isValid ).toHaveBeenCalled();
+        expect( this.isValid ).toHaveBeenCalledWith();
+    } );
+
+    it( 'destroy can be called', function() {
+        var inputValidation = helper.bareInput().getLiveValidator();
+
+        expect( this.destroy ).not.toHaveBeenCalled();
+        inputValidation.destroy();
+        expect( this.destroy ).toHaveBeenCalled();
+        expect( this.destroy ).toHaveBeenCalledWith();
     } );
 };
