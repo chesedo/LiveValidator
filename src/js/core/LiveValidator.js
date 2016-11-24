@@ -271,7 +271,7 @@ LiveValidator.Core.prototype = {
 
         if ( doCheck ) {
             this._log( 'Checking input after making it required', 2 );
-            this._blur.apply( this );
+            this._blur();
         }
     },
     /**
@@ -300,7 +300,7 @@ LiveValidator.Core.prototype = {
 
         if ( doCheck ) {
             this._log( 'Performing checks after enabling live checking', 2 );
-            this._performChecks( this.element.value );
+            this._blur();
         }
     },
     /**
