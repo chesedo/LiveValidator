@@ -3,11 +3,7 @@ var LiveValidator = LiveValidator || {};
 
 // Stores the defaults for the plugin - allow a system-wide overrite
 LiveValidator.defaults =  {
-    themeData: {
-        error: 'error',
-        missing: 'missing',
-        parentSelector: '.row'
-    },
+    themeData: {},
     required: false,
     liveEnabled: true,
     checks: [],
