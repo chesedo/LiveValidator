@@ -16,6 +16,7 @@ module.exports = function( config ) {
         files: [
             'bower_components/jquery/dist/jquery.js',
             'node_modules/bootstrap/js/tooltip.js',
+            'node_modules/bootstrap/js/popover.js',
             'src/js/**/*.js',
             'tests/**/*.js'
         ],
