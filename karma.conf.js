@@ -15,6 +15,7 @@ module.exports = function( config ) {
         // List of files / patterns to load in the browser
         files: [
             'bower_components/jquery/dist/jquery.js',
+            'node_modules/bootstrap/js/tooltip.js',
             'src/js/**/*.js',
             'tests/**/*.js'
         ],

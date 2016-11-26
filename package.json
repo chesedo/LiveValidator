@@ -4,6 +4,7 @@
   "description": "A themeable jQuery or JS plugin that does live validation for form inputs based on buildin or custom checks",
   "main": "src/js/core/LiveValidator.js",
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "bower": "^1.7.9",
     "coveralls": "^2.11.11",
     "del": "^2.2.1",
