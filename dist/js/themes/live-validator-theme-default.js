@@ -48,11 +48,11 @@ LiveValidator.themes.Default.prototype.addErrors = function( errors ) {
     LiveValidator.utils.addClass( ul, 'errors' );
 
     // Add each error li
-    for ( var i = 0; i < errors.length; i++ ) {
+    errors.forEach( function( error ) {
         var li = document.createElement( 'li' );
-        li.innerHTML = errors[ i ];
+        li.innerHTML = error;
         ul.appendChild( li );
-    }
+    } );
 
     // Add ul to row
     LiveValidator.utils.appendChild( this.parentEl, ul );

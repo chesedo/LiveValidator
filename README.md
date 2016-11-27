@@ -8,6 +8,6 @@ The core of the plugin is also pure JS, so no need to use jQuery if you do not w
 
 The following is still needed before it will be considered usable:
 - [ ] Create GitHub page
-- [ ] Add Bootstrap theme
+- [x] Add Bootstrap theme - also added some other themes
 - [x] Write test for Tester
 - [x] Auto-detect checkers needed for input attributes such as `min`, `max`, `maxlength`, etc.

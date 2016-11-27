@@ -3,17 +3,15 @@ var LiveValidator = LiveValidator || {};
 
 // Stores the defaults for the plugin - allow a system-wide overrite
 LiveValidator.defaults =  {
-    themeData: {
-        error: 'error',
-        missing: 'missing',
-        parentSelector: '.row'
-    },
+    themeData: {},
     required: false,
     liveEnabled: true,
     checks: [],
     locale: 'en-us',
     debug: false
 };
+
+LiveValidator.name = 'LiveValidator';
 
 LiveValidator.Core = function( element, options ) {
 
@@ -79,9 +77,9 @@ LiveValidator.Core.prototype = {
 
         // Set required if needed
         if ( this.options.required ) {
-            this.setRequired();
+            this.theme.markRequired();
         } else {
-            this.unsetRequired();
+            this.theme.unmarkRequired();
         }
 
         // Set if live is enabled
@@ -148,7 +146,6 @@ LiveValidator.Core.prototype = {
             return [];
         }
 
-        var validArr = [];
         var validChecks = checks.filter( function( check ) {
 
             // Check if it is a check that has parameters
@@ -160,14 +157,14 @@ LiveValidator.Core.prototype = {
             if ( typeof this.tester[ check ] === 'function' ) {
 
                 // Check for duplicate
-                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true && validArr.push( check );
+                return seen.hasOwnProperty( check ) ? false :  seen[ check ] = true;
             } else {
                 this._log( '`' + check + '` check does not exist so it will not be added to checks' );
                 return false;
             }
         }, this );
 
-        this._log( 'Valid checks are: ' + validArr );
+        this._log( 'Valid checks are: ' + Object.keys( seen ) );
         return validChecks;
     },
     /**
@@ -192,19 +189,17 @@ LiveValidator.Core.prototype = {
             if ( this.options.required ) {
                 this._log( 'Input is empty and required', 2 );
                 this.missing = true;
+                this.theme.setMissing();
+                this.theme.clearErrors();
+                return;
             }
             this._log( 'Input is empty and not required', 2 );
+            this.theme.unsetMissing();
             this.theme.clearErrors();
         } else {
+            this.theme.unsetMissing();
             this._log( 'Input has data so will perform checks', 2 );
             this._performChecks( trimmedValue );
-        }
-
-        // Update missing state
-        if ( this.missing ) {
-            this.theme.setMissing();
-        } else {
-            this.theme.unsetMissing();
         }
     },
     /**
@@ -270,7 +265,7 @@ LiveValidator.Core.prototype = {
 
         if ( doCheck ) {
             this._log( 'Checking input after making it required', 2 );
-            this._blur.apply( this );
+            this._blur();
         }
     },
     /**
@@ -299,7 +294,7 @@ LiveValidator.Core.prototype = {
 
         if ( doCheck ) {
             this._log( 'Performing checks after enabling live checking', 2 );
-            this._performChecks( this.element.value );
+            this._blur();
         }
     },
     /**
@@ -388,6 +383,137 @@ LiveValidator.Core.prototype = {
         }
     }
 };
+
+/* globals HTMLElement, HTMLCollection, NodeList */
+
+// Get namespace ready
+var LiveValidator = LiveValidator || {};
+
+LiveValidator.Plugin = function LiveValidatorPlugin( options ) {
+
+    // If this is only to change the defaults
+    if ( this.name === 'LiveValidator' || this instanceof Function ) {
+        LiveValidator.utils.extend( LiveValidator.defaults, options );
+        return;
+    }
+
+    // Check if options are valid before continuing
+    if ( options !== undefined && !( typeof options === 'object' && options.constructor.name !== 'Array' ) ) {
+        return false;
+    }
+
+    /**
+    * Filtering used to prevent plugin to bind to unsupported inputs
+    *
+    * @type {String}
+    */
+    var validInputsFilter = 'input:not([type="button"])' +
+    ':not([type="file"])' +
+    ':not([type="hidden"])' +
+    ':not([type="image"])' +
+    ':not([type="radio"])' +
+    ':not([type="reset"])' +
+    ':not([type="submit"])' +
+    ', textarea';
+
+    /**
+    * Holds all valid inputs
+    *
+    * @type  {array}
+    */
+    var validInputs = [];
+
+    /**
+     * Holds the prepared elements
+     *
+     * @type {Array}
+     */
+    var elements = [];
+
+    // Get inputs ready if this is an HTMLElement
+    if ( this instanceof HTMLElement ) {
+        elements = [ this ];
+    }
+
+    // Else get input ready if this is HTMLCollection
+    else if ( this instanceof HTMLCollection || this instanceof NodeList || this instanceof jQuery ) {
+        elements = [].slice.call( this );
+    }
+
+    // Filter all elements
+    validInputs = elements.filter( function( element ) {
+        return element.matches( validInputsFilter );
+    } );
+
+    // Get inner inputs
+    validInputs = [].concat.apply( validInputs, elements.map( function( element ) {
+        return [].slice.call( element.querySelectorAll( validInputsFilter ) );
+    } ) );
+
+    // Create core instance on each inputs
+    validInputs.forEach( function( input ) {
+
+        // Only set when not already set
+        if ( !input.LiveValidator ) {
+            input.LiveValidator = new LiveValidator.Core( input, options );
+        }
+    } );
+
+    // Closure to allow calling methods on the input instances as a whole
+    function callMethod( method, args ) {
+
+        // Call the method on each input
+        validInputs.forEach( function( input ) {
+            var instance = input.LiveValidator;
+
+            // If this was destroy - then also remove the instance
+            if ( method === 'destroy' ) {
+                instance.destroy();
+                delete input.LiveValidator;
+            } else {
+                instance[ method ].apply( instance, args );
+            }
+        } );
+    }
+
+    return {
+        getInputs: function() {
+            return validInputs;
+        },
+        isValid: function() {
+
+            // Assume is valid
+            var valid = true;
+
+            // Check for each input
+            validInputs.forEach( function( input ) {
+
+                // All invalid when one is invalid
+                if ( !input.LiveValidator.isValid() ) {
+                    valid = false;
+                }
+            } );
+
+            return valid;
+        },
+        setRequired: function() { callMethod( 'setRequired', arguments ); },
+        unsetRequired: function() { callMethod( 'unsetRequired' ); },
+        enableLive: function() { callMethod( 'enableLive', arguments ); },
+        disableLive: function() { callMethod( 'disableLive' ); },
+        addChecks: function() { callMethod( 'addChecks', arguments ); },
+        removeAllChecks: function() { callMethod( 'removeAllChecks' ); },
+        removeChecks: function() { callMethod( 'removeChecks', arguments ); },
+        destroy: function() {
+            callMethod( 'destroy' );
+            validInputs = [];
+        }
+    };
+};
+
+// Add to some element prototypes for easy calling
+HTMLElement.prototype.getLiveValidator = LiveValidator.Plugin;
+HTMLCollection.prototype.getLiveValidator = LiveValidator.Plugin;
+NodeList.prototype.getLiveValidator = LiveValidator.Plugin;
 
 /**
  * Try to detect checks based on some input attributes ( to 'polyfill' for browsers not supporting them )
