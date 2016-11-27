@@ -1,23 +1,21 @@
 {
   "name": "live-validator",
-  "description": "A themeable jQuery or JS plugin that does live validation for form inputs based on buildin or custom checks",
-  "main": [
-      "src/js/core/LiveValidator.js",
-      "src/js/plugin/LiveValidatorPlugin.js"
-  ],
-  "moduleType": "globals",
+  "description": "A modular vanilla JS plugin (also jQuery callable) that does live validation for form inputs based on buildin or custom checks.",
   "authors": [
     "chesedo"
   ],
   "license": "MIT",
   "keywords": [
     "jQuery",
-    "JS",
+    "vanilla JS",
     "validation",
     "forms",
     "themeable",
+    "translatable",
     "modular",
-    "customizable"
+    "customizable",
+    "bootstrap",
+    "uikit"
   ],
   "homepage": "https://chesedo.github.io/LiveValidator/",
   "repository": {
@@ -32,8 +30,5 @@
     "gulpfile.js",
     "karma.conf.js",
     "package.json"
-  ],
-  "devDependencies": {
-    "jquery": "^3.0.0"
-  }
+  ]
 }

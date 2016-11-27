@@ -38,9 +38,9 @@ plugin.methodsSpec = function() {
     it( 'unsetRequired can be called', function() {
         var inputValidation = helper.bareInput().getLiveValidator();
 
-        expect( this.unsetRequired ).toHaveBeenCalledTimes( 1 );
+        expect( this.unsetRequired ).not.toHaveBeenCalled();
         inputValidation.unsetRequired();
-        expect( this.unsetRequired ).toHaveBeenCalledTimes( 2 );
+        expect( this.unsetRequired ).toHaveBeenCalled();
         expect( this.unsetRequired ).toHaveBeenCalledWith();
     } );
 

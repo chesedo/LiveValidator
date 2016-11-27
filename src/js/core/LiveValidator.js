@@ -3,11 +3,7 @@ var LiveValidator = LiveValidator || {};
 
 // Stores the defaults for the plugin - allow a system-wide overrite
 LiveValidator.defaults =  {
-    themeData: {
-        error: 'error',
-        missing: 'missing',
-        parentSelector: '.row'
-    },
+    themeData: {},
     required: false,
     liveEnabled: true,
     checks: [],
@@ -81,9 +77,9 @@ LiveValidator.Core.prototype = {
 
         // Set required if needed
         if ( this.options.required ) {
-            this.setRequired();
+            this.theme.markRequired();
         } else {
-            this.unsetRequired();
+            this.theme.unmarkRequired();
         }
 
         // Set if live is enabled
@@ -193,19 +189,17 @@ LiveValidator.Core.prototype = {
             if ( this.options.required ) {
                 this._log( 'Input is empty and required', 2 );
                 this.missing = true;
+                this.theme.setMissing();
+                this.theme.clearErrors();
+                return;
             }
             this._log( 'Input is empty and not required', 2 );
+            this.theme.unsetMissing();
             this.theme.clearErrors();
         } else {
+            this.theme.unsetMissing();
             this._log( 'Input has data so will perform checks', 2 );
             this._performChecks( trimmedValue );
-        }
-
-        // Update missing state
-        if ( this.missing ) {
-            this.theme.setMissing();
-        } else {
-            this.theme.unsetMissing();
         }
     },
     /**

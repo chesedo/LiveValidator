@@ -30,19 +30,19 @@ core._initSpec = function() {
     } );
 
     it( 'required is false', function() {
-        var unsetRequired = spyOn( LiveValidator.Core.prototype, 'unsetRequired' );
+        var unmarkRequired = spyOn( LiveValidator.themes.Default.prototype, 'unmarkRequired' );
 
-        expect( unsetRequired ).not.toHaveBeenCalled();
+        expect( unmarkRequired ).not.toHaveBeenCalled();
         setupInstance( { required: false } );
-        expect( unsetRequired ).toHaveBeenCalled();
+        expect( unmarkRequired ).toHaveBeenCalled();
     } );
 
     it( 'required is true', function() {
-        var setRequired = spyOn( LiveValidator.Core.prototype, 'setRequired' );
+        var markRequired = spyOn( LiveValidator.themes.Default.prototype, 'markRequired' );
 
-        expect( setRequired ).not.toHaveBeenCalled();
+        expect( markRequired ).not.toHaveBeenCalled();
         setupInstance( { required: true } );
-        expect( setRequired ).toHaveBeenCalled();
+        expect( markRequired ).toHaveBeenCalled();
     } );
 
     it( 'liveEnabled is false', function() {

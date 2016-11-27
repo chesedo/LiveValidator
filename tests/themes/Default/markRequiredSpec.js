@@ -8,7 +8,7 @@ theme.default.markRequiredSpec = function() {
     } );
 
     it( 'already required', function() {
-        LiveValidator.utils.addClass( this.row, 'required' );
+        this.row.classList.add( 'required' );
         expect( this.row ).toHaveClass( 'required' );
         this.theme.markRequired();
         expect( this.row ).toHaveClass( 'required' );

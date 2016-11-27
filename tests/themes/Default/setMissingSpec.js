@@ -8,7 +8,7 @@ theme.default.setMissingSpec = function() {
     } );
 
     it( 'already missing', function() {
-        LiveValidator.utils.addClass( this.row, 'missing' );
+        this.row.classList.add( 'missing' );
         expect( this.row ).toHaveClass( 'missing' );
         this.theme.setMissing();
         expect( this.row ).toHaveClass( 'missing' );

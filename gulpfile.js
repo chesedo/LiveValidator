@@ -9,16 +9,23 @@ var gulp = require( 'gulp' ),
     less = require( 'gulp-less' ),
     cleanCSS = require( 'gulp-clean-css' ),
     concat = require( 'gulp-concat' ),
-    uglify = require( 'gulp-uglify' );
+    uglify = require( 'gulp-uglify' ),
+    autoprefixer = require( 'gulp-autoprefixer' );
 
 /* jshint undef: false */
 function distCss() {
-    return gulp.src( 'src/less/*.less' )
+    return gulp.src( 'src/less/themes/*.less' )
+            .pipe( rename( function( path ) {
+                path.basename = 'live-validator-theme-' + path.basename.toLowerCase();
+            } ) )
             .pipe( less() )
-            .pipe( gulp.dest( 'dist/css' ) )
+            .pipe( autoprefixer( {
+                browsers: [ 'last 2 versions', '> 1%' ]
+            } ) )
+            .pipe( gulp.dest( 'dist/css/themes' ) )
             .pipe( cleanCSS() )
             .pipe( rename( { suffix: '.min' } ) )
-            .pipe( gulp.dest( 'dist/css' ) );
+            .pipe( gulp.dest( 'dist/css/themes' ) );
 }
 
 function distJqPlugin() {
@@ -58,10 +65,10 @@ function distJsThemes() {
             .pipe( rename( function( path ) {
                 path.basename = 'live-validator-theme-' + path.basename.toLowerCase();
             } ) )
-            .pipe( gulp.dest( 'dist/js' ) )
+            .pipe( gulp.dest( 'dist/js/themes' ) )
             .pipe( uglify() )
             .pipe( rename( { suffix: '.min' } ) )
-            .pipe( gulp.dest( 'dist/js' ) );
+            .pipe( gulp.dest( 'dist/js/themes' ) );
 }
 
 function distJsTranslations() {

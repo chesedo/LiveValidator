@@ -1,13 +1,18 @@
 {
   "name": "live-validator",
   "version": "0.0.3",
-  "description": "A themeable jQuery or JS plugin that does live validation for form inputs based on buildin or custom checks",
-  "main": "src/js/core/LiveValidator.js",
+  "description": "A modular vanilla JS plugin (also jQuery callable) that does live validation for form inputs based on buildin or custom checks. Some popular CSS framework themes are available and custom ones can be created quickly. Errors are also translatable.",
+  "files": [
+      "src/js/",
+      "src/less/"
+  ],
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "bower": "^1.7.9",
     "coveralls": "^2.11.11",
     "del": "^2.2.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-clean-css": "^2.0.11",
     "gulp-concat": "^2.6.0",
     "gulp-jscs": "^4.0.0",
@@ -17,6 +22,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
     "jasmine-core": "^2.4.1",
+    "jquery": "^3.0.0",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
     "karma": "^1.1.0",
@@ -26,19 +32,22 @@
     "karma-notify-reporter": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-spec-reporter": "0.0.26",
-    "jquery": "^3.0.0"
+    "uikit": "^2.27.2"
   },
   "scripts": {
     "test": "node_modules/.bin/gulp"
   },
   "keywords": [
     "jQuery",
-    "JS",
+    "vanilla JS",
     "validation",
     "forms",
     "themeable",
+    "translatable",
     "modular",
-    "customizable"
+    "customizable",
+    "bootstrap",
+    "uikit"
   ],
   "author": "chesedo",
   "license": "MIT",
@@ -46,8 +55,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/chesedo/LiveValidator.git"
-  },
-  "dependencies": {
-    "gulp-uglify": "^2.0.0"
   }
 }

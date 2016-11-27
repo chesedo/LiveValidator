@@ -3,11 +3,7 @@ var core = core || {};
 core.instantiationSpec = function() {
     beforeEach( function() {
         this.options = {
-            themeData: {
-                error: 'error',
-                missing: 'missing',
-                parentSelector: '.row'
-            },
+            themeData: {},
             required: false,
             liveEnabled: true,
             checks: [],

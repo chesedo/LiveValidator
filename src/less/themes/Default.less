@@ -1,0 +1,110 @@
+@primary: #2ac5d5;
+@error: #cb801c;
+@missing: #cb1e1e;
+@light: #fafcfc;
+@dark: #3b3a3a;
+
+.row-color( @color ) when (iscolor( @color )) {
+    color: @color;
+
+    input, textarea {
+        border: 1px solid @color;
+    }
+}
+
+form {
+    color: @dark;
+
+    .row {
+
+        @media (min-width: 480px) {
+            position: relative;
+            display: table;
+        }
+
+        input, textarea {
+            border: 1px solid @primary;
+            padding: .3rem;
+            background: @light;
+            color: darken(@dark, 5%);
+            border-radius: 2px;
+            margin-bottom: .7rem;
+            line-height: 1.3rem;
+            width: 100%;
+            box-sizing: border-box;
+            @media (min-width: 480px) {
+                min-width: 15rem;
+                width: auto;
+                margin-left: 12rem;
+            }
+        }
+
+        &.error {
+            .row-color( @error );
+
+            input, textarea {
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+            }
+        }
+        &.missing { .row-color( @missing ); }
+
+        label {
+            display: block;
+            line-height: 1.9rem;
+            margin-left: .6rem;
+            position: relative;
+            @media (min-width: 480px) {
+                position: absolute;
+                width: 10rem;
+            }
+        }
+
+        &.required label:after {
+            content: '*';
+            line-height: 1.6em;
+            vertical-align: bottom;
+            color: @missing;
+            position: absolute;
+            left: -.6rem;
+            @media (min-width: 480px) {
+                right: -1rem;
+                left: auto;
+            }
+        }
+    }
+
+    .errors {
+        margin: 0 0 1em;
+        padding: 0.6em 0;
+        list-style: none;
+        border-right: 2px solid @error;
+        text-align: right;
+
+        li:after {
+            content: '-';
+            margin-left: 0.4em;
+            margin-right: -1px;
+            font-weight: 600;
+        }
+    }
+
+    fieldset {
+        border: 0;
+        display: inline-block;
+        margin-top: .9rem;
+        width: 100%;
+        box-sizing: border-box;
+
+        @media (min-width: 480px) {
+            width: auto;
+        }
+
+        legend {
+            width: 100%;
+            border-bottom: 2px solid lighten(@dark, 20%);
+            margin-bottom: .9rem;
+            padding: .4rem;
+        }
+    }
+}
