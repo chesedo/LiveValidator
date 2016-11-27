@@ -35,6 +35,7 @@
   ],
   "devDependencies": {
     "bootstrap": "^3.3.7",
-    "jquery": "^3.0.0"
+    "jquery": "^3.0.0",
+    "uikit": "^2.27.2"
   }
 }
