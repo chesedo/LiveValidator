@@ -33,4 +33,20 @@ utils.extend = function() {
         LiveValidator.utils.extend( first, second );
         expect( first ).toEqual( { 1: { '1.1': true, '1.2': false } } );
     } );
+
+    it( 'that arrays are handled as arrays', function() {
+        var initial = { array: [] };
+        var second = { array: [ 'string' ] };
+        var extend = LiveValidator.utils.extend( {}, initial, second );
+        expect( extend.array ).toEqual( [ 'string' ] );
+    } );
+
+    it( 'that arrays are not linked', function() {
+        var initial = {};
+        var added = { array: [ 'string' ] };
+        LiveValidator.utils.extend( initial, added );
+
+        // Their reference should not equal
+        expect( initial.array ).not.toBe( added.array );
+    } );
 };
