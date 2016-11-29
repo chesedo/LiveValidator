@@ -33,7 +33,9 @@ LiveValidator.Tester.prototype.clearErrors = function() {
 };
 
 LiveValidator.Tester.prototype.addError = function( error ) {
-    this.errors.push( error );
+    if ( this.errors.indexOf( error ) === -1 ) {
+        this.errors.push( error );
+    }
 };
 
 LiveValidator.Tester.prototype.getErrors = function() {
