@@ -19,4 +19,12 @@ tester.addErrorSpec = function() {
         this.tester.addError( 'Error1' );
         expect( this.tester.errors ).toEqual( [ 'Error1' ] );
     } );
+
+    it( 'when adding a duplicate message', function() {
+        this.tester.addError( 'Duplicate Error' );
+        expect( this.tester.errors ).toEqual( [ 'Duplicate Error' ] );
+
+        this.tester.addError( 'Duplicate Error' );
+        expect( this.tester.errors ).toEqual( [ 'Duplicate Error' ] );
+    } );
 };
