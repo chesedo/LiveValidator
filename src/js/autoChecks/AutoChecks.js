@@ -41,7 +41,12 @@ LiveValidator.AutoChecks.prototype = {
             this._filterText();
         }
 
-        return this.checks;
+        // Return null if no checks are found for overwrites to work correctly
+        if ( this.checks.length > 0 ) {
+            return this.checks;
+        } else {
+            return null;
+        }
     },
     /**
      * Check for `min` and `max` attributes on numeric inputs
