@@ -7,6 +7,9 @@ describe( 'AutoChecks', function() {
     describe( 'check instantiation', function() {
         autoChecks.instantiationSpec();
     } );
+    describe( 'check getChecks', function() {
+        autoChecks.getChecksSpec();
+    } );
     describe( 'check checkbox input', function() {
         autoChecks.inputCheckboxSpec();
     } );

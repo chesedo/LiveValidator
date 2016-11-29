@@ -20,7 +20,7 @@ LiveValidator.utils = {
 
             for ( var key in obj ) {
                 /* istanbul ignore else  */
-                if ( obj.hasOwnProperty( key ) ) {
+                if ( obj.hasOwnProperty( key ) && obj[ key ] !== null ) {
                     if ( obj[ key ].toString() ===  '[object Object]' ) {
                         out[ key ] = LiveValidator.utils.extend( out[ key ], obj[ key ] );
                     } else {

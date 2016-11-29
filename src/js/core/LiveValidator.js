@@ -23,8 +23,8 @@ LiveValidator.Core = function( element, options ) {
     // Store a reference to this input
     this.element = element;
 
-    // Check if required attribute is set
-    var required = this.element.hasAttribute( 'required' );
+    // Check if required attribute is set, but also allow default overwrite
+    var required = this.element.hasAttribute( 'required' ) || LiveValidator.defaults.required;
 
     // Find HTML5 validation checks on the input
     var autoChecks = new LiveValidator.AutoChecks( this.element );

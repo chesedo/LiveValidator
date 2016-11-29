@@ -19,6 +19,14 @@ utils.extend = function() {
         expect( extend ).toEqual( { 1: { '1.1': true, '1.2': false } } );
     } );
 
+    // Null values should not overwrite previous values for defaults to work correctly
+    it( 'when value is null', function() {
+        var first = { 1: { '1.1': true, '1.2': true } };
+        var second = { 1: { '1.2': null } };
+        LiveValidator.utils.extend( first, second );
+        expect( first ).toEqual( { 1: { '1.1': true, '1.2': true } } );
+    } );
+
     it( 'that first object is changed', function() {
         var first = { 1: { '1.1': true, '1.2': true } };
         var second = { 1: { '1.2': false } };

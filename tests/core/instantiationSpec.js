@@ -25,6 +25,23 @@ core.instantiationSpec = function() {
         expect( instance.options ).toEqual( this.options );
     } );
 
+    // Required should be set if either defaults or options has it (ie options should not overwrite defaults if false)
+    it( 'for overwritten key default options', function() {
+
+        // Copy defaults to restore it
+        var defaults = LiveValidator.utils.extend( {}, LiveValidator.defaults );
+        LiveValidator.Plugin( { checks: [ 'isNumber' ], required: true } );
+        var instance = new LiveValidator.Core( helper.bareInput() );
+
+        this.options.required = true;
+        this.options.checks = [ 'isNumber' ];
+
+        expect( instance.options ).toEqual( this.options );
+
+        // Restore defaults
+        LiveValidator.defaults = defaults;
+    } );
+
     it( 'for passed options', function() {
         var instance = new LiveValidator.Core(
             helper.bareInput(),
