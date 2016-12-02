@@ -2,43 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    {{ .Hugo.Generator }}
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ .Param "description" }}">
-
-    {{- if .IsHome }}
-    <title>{{ .Title }}</title>
-    {{- else }}
-    <title>{{ .Title }} - {{ .Site.Title }}</title>
-    {{- end }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/uikit.min.css">
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/prism.min.css">
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/LiveValidatorTheme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="{{ .Site.BaseURL }}js/uikit.min.js" charset="utf-8"></script>
-    <script src="{{ .Site.BaseURL }}js/prism.min.js" charset="utf-8"></script>
-    <script src="{{ .Site.BaseURL }}js/jquery-live-validator.min.js" charset="utf-8"></script>
-    <script src="{{ .Site.BaseURL }}js/live-validator-theme-default.min.js" charset="utf-8"></script>
-
-    {{- block "head-extra" . }}
-    {{- end }}
+    <meta http-equiv="refresh" content="2;url=https://chesedo.gitlab.io/LiveValidator/">
 </head>
 <body>
-    {{ partial "nav-top" . }}
-
-    <div class="uk-container uk-container-center">
-    {{- block "main" . }}
-    {{- end }}
-    </div>
-
-    <hr class="uk-grid-divider">
-    <div class="uk-grid uk-margin-bottom uk-text-center">
-        <div class="uk-width-1-1">
-            <i class="uk-icon-code-fork"></i> Fork me on <a href="https://github.com/chesedo/LiveValidator">GitHub</a> |  <i class="uk-icon-copyright"></i> Pieter Engelbrecht 2016. Released under the MIT license.
-        </div>
-    </div>
-
-    {{ partial "nav-offcanvas" . }}
+    Project moved to <a href="https://chesedo.gitlab.io/LiveValidator/"> Gitlab</a>
 </body>
 </html>
